@@ -77,7 +77,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     setIsSubmit(true);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
+    if (Object.keys(formErrors).length === 0) {
       try {
         // if (!captcha) {
         //   console.log("fill the captcha");
