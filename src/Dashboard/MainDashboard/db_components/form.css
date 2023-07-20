@@ -1,0 +1,48 @@
+.radio_btn_wrapper {
+    @apply flex flex-wrap lg:flex-nowrap justify-start lg:justify-between gap-3
+}
+
+.radio_btn_wrapper .radio_field {
+    @apply w-full max-w-[200px]
+}
+
+.radio_text {
+    transition: 0.3s;
+    @apply text-lg text-grey-text
+}
+
+.radio_circle {
+    @apply inline-block w-[30px] h-[30px] rounded-full bg-grey-text  relative
+}
+
+.radio_field label {
+    @apply flex flex-wrap items-center gap-2 cursor-pointer
+}
+
+.radio_circle::before {
+    transform: translate(-50%,-50%) scale(0);
+    transition: 0.3s;
+    content: '';
+    @apply w-[18px] h-[18px] bg-orange absolute rounded-full top-1/2 left-1/2 
+}
+
+.radio_field input:checked + label .radio_circle {
+    @apply bg-transparent border-2 border-orange
+}
+
+.radio_field input:checked + label .radio_circle::before {
+    transform: translate(-50%,-50%) scale(1);
+}
+
+.radio_field input:checked + label .radio_text {
+    @apply text-orange
+}
+@media ( min-width:768px ){
+    .input_field_2{
+        padding: 2px;
+        background: linear-gradient(46deg, #F79220 55.15%, #F94A2B 82%);
+    }
+    .input_field_2 label{
+        background: linear-gradient(46deg, #F79220 55.15%, #F94A2B 82%);
+    }
+}
