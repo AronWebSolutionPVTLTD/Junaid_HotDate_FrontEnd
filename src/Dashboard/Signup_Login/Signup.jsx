@@ -79,10 +79,10 @@ const Signup = () => {
     setIsSubmit(true);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       try {
-        if (!captcha) {
-          console.log("fill the captcha");
-          return;
-        }
+        // if (!captcha) {
+        //   console.log("fill the captcha");
+        //   return;
+        // }
         const { data } = await axios.post(`${BASE_URL}/api/register`, {
           ...form,
         });
@@ -307,10 +307,10 @@ const Signup = () => {
                     )}
                   </div>
                   <div className="flex items-center recaptcha_field">
-                    <ReCAPTCHA
+{/*                     <ReCAPTCHA
                       sitekey={Captcha_Key}
                       onChange={onChangeCaptcha}
-                    />
+                    /> */}
                     {/* <label for="remember" className="ml-2 text-sm md:text-lg font-normal text-gray">You are
                                             Human</label> */}
                   </div>
