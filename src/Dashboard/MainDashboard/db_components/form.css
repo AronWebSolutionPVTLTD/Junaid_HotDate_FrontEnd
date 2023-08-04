@@ -37,6 +37,21 @@
 .radio_field input:checked + label .radio_text {
     @apply text-orange
 }
+.range_fields{
+    @apply w-full flex gap-2 md:gap-0 md:grid  md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)]
+}
+.range_fields input {
+    text-align: center;
+    background: #000;
+    width: 100%;
+    border-radius: 4px;
+    outline: none;
+}
+
+.range_fields .react-datepicker-wrapper {
+    width: 100%;
+}
+
 @media ( min-width:768px ){
     .input_field_2{
         padding: 2px;
@@ -44,5 +59,11 @@
     }
     .input_field_2 label{
         background: linear-gradient(46deg, #F79220 55.15%, #F94A2B 82%);
+    }
+}
+@media ( max-width: 767px ){
+    .range_fields input{
+        border: 1px solid #F79220;
+        padding: 4px 10px;
     }
 }

@@ -1,16 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import jwtDecode from "jwt-decode";
+import axios from "axios";
+import { Context } from "../../../Context/context";
 const Sidebar = () => {
+  const { userInfo, setUserInfo } = useContext(Context);
+  // const [userInfo, setUserInfo] = useState({});
+  const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    removeCookie("token");
+    navigate("/login");
+  };
+
+  useEffect(() => {
+    const token = cookies["token"];
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      userDetails(decodedToken);
+    } else {
+      navigate("/login");
+    }
+  }, []);
+
+  const userDetails = async (token) => {
+    const { data } = await axios.get(`${BASE_URL}/api/findone/${token.userId}`);
+    setUserInfo(data);
+  };
+  console.log(userInfo);
   return (
     <div className="sidebar xl:w-60">
       <div>
         <img
-          src="images/sidebar_user_img.png"
+          src={userInfo.image}
           className="hidden aspect-square object-cover xl:block"
         />
         <div className="pt-0 pb-8 xl:py-8 border-b border-dark-grey">
-          <h3 className="font-semibold text-22px mb-3">Horny Chantline</h3>
+          <h3 className="font-semibold text-22px mb-3">{userInfo.username}</h3>
           <p className="flex items-center justify-between gap-4 mb-3">
             Russia
             <Link className="cursor-pointer">
@@ -48,7 +76,10 @@ const Sidebar = () => {
               </svg>
             </Link>
           </p>
-          <p className="flex items-center justify-between gap-4">
+          <p
+            className="flex items-center justify-between gap-4"
+            onClick={() => navigate("/user-detail")}
+          >
             Edit Profile
             <Link className="cursor-pointer">
               <svg
@@ -99,7 +130,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li className="mb-3">
-            <Link className="inline-flex items-center gap-3" to="/event-page">
+            <Link to="/event-page" className="inline-flex items-center gap-3">
               <span className="block w-6">
                 <img src="images/event-icon.png" />
               </span>
@@ -107,7 +138,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li className="mb-3">
-            <Link className="inline-flex items-center gap-3" to="/club-page">
+            <Link to="/club-page" className="inline-flex items-center gap-3">
               <span className="block w-6">
                 <img src="images/club-icon.png" />
               </span>
@@ -131,18 +162,15 @@ const Sidebar = () => {
             </Link>
           </li>
           <li className="mb-3">
-            <Link
-              className="inline-flex items-center gap-3"
-              to="/member-models"
-            >
+            <Link className="inline-flex items-center gap-3">
               <span className="block w-6">
                 <img src="images/model-icon.png" />
               </span>
               Models
             </Link>
           </li>
-          <li className="mb-3">
-            <Link className="inline-flex items-center gap-3" to="/login">
+          <li className="mb-3" onClick={handleLogout}>
+            <Link className="inline-flex items-center gap-3">
               <span className="block w-6">
                 <img src="images/logout-icon.png" />
               </span>

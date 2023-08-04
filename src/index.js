@@ -7,19 +7,21 @@ import { BrowserRouter } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ToastContainer } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
+import { ContextProvider } from "./Context/context";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const CLIENT_KEY = process.env.REACT_APP_GOOGLE_CLIENT_KEY;
 root.render(
-  <BrowserRouter>
-    <ToastContainer />
-    <GoogleOAuthProvider clientId={CLIENT_KEY}>
-      <CookiesProvider>
-        <App />
-      </CookiesProvider>
-    </GoogleOAuthProvider>
-  </BrowserRouter>
+  <ContextProvider>
+    <BrowserRouter>
+      <ToastContainer />
+      <GoogleOAuthProvider clientId={CLIENT_KEY}>
+        <CookiesProvider>
+          <App />
+        </CookiesProvider>
+      </GoogleOAuthProvider>
+    </BrowserRouter>
+  </ContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

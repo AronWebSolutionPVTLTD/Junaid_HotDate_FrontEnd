@@ -22,7 +22,7 @@ const SignUp = () => {
       .then(function (myJson) {
         setCountries(myJson);
       });
-  };    
+  };
   useEffect(() => {
     getData();
   }, []);

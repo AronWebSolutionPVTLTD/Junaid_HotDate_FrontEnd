@@ -5,7 +5,7 @@ import "./signup_login.css";
 import Footer from "./Footer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
@@ -77,7 +77,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     setIsSubmit(true);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
+    if (Object.keys(formErrors).length === 0) {
       try {
         if (!captcha) {
           console.log("fill the captcha");
@@ -145,11 +145,40 @@ const Signup = () => {
       if (!data) {
         console.log("failed to create user");
       } else {
-        setCookie("token", response.credential, { maxAge: 60 * 60 * 24 * 30 });
+        setCookie("token", response.credential, { maxAge: 60 * 60 * 24 * 7 });
+        toast.success("🦄 Login Successful!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         navigate("/login");
       }
     } catch (error) {}
   };
+
+  const handleGoogle = useGoogleLogin({
+    onSuccess: (credentialResponse) => {
+      googleSignIn(credentialResponse);
+    },
+    onError: () => {
+      toast.error("🦄 Login Failed!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    },
+    flow: "auth-code",
+  });
   return (
     <div className="min-h-screen bg-black-20 text-white grid content-between">
       <div className="overflow-hidden">
@@ -172,7 +201,7 @@ const Signup = () => {
                 </h2>
 
                 <form
-                  className="flex flex-col justify-center gap-y-4 sm:gap-y-6"
+                  className="flex flex-col justify-center"
                   autoComplete="off"
                 >
                   <div>
@@ -196,11 +225,10 @@ const Signup = () => {
                         required
                       />
                     </div>
-                    {formErrors.email && (
-                      <p className="w-full capitalize text-xs p-1">
-                        {formErrors.email}
-                      </p>
-                    )}
+
+                    <p className="w-full capitalize text-xs p-1 min-h-[24px]">
+                      {formErrors.email}
+                    </p>
                   </div>
                   <div>
                     <div className="flex flex-wrap rounded-md input_field">
@@ -219,15 +247,14 @@ const Signup = () => {
                         onChange={(e) => handleChange(e)}
                         autoComplete="off"
                         className="bg-black border rounded-md sm:rounded-none sm:border-none sm:border-l-2 sm:rounded-r-md border-orange focus:outline-none focus-visible:none w-full md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)] h-[49px] text-gray font-normal xl:text-lg rounded-r-md text-sm px-2 xl:px-4 py-2.5 text-start placeholder:text-lg placeholder:text-gray items-center flex justify-between"
-                        placeholder="name@flowbite.com"
+                        placeholder=""
                         required
                       />
                     </div>
-                    {formErrors.username && (
-                      <p className="w-full capitalize text-xs p-1">
-                        {formErrors.username}
-                      </p>
-                    )}
+
+                    <p className="w-full capitalize text-xs p-1 min-h-[24px]">
+                      {formErrors.username}
+                    </p>
                   </div>
                   <div>
                     <div className="flex flex-wrap rounded-md input_field">
@@ -249,11 +276,10 @@ const Signup = () => {
                         required
                       />
                     </div>
-                    {formErrors.password && (
-                      <p className="w-full capitalize text-xs p-1">
-                        {formErrors.password}
-                      </p>
-                    )}
+
+                    <p className="w-full capitalize text-xs p-1 min-h-[24px]">
+                      {formErrors.password}
+                    </p>
                   </div>
                   <div>
                     <div className="flex flex-wrap rounded-md input_field">
@@ -274,11 +300,10 @@ const Signup = () => {
                         required
                       />
                     </div>
-                    {formErrors.confirmpassword && (
-                      <p className="w-full capitalize text-xs p-1">
-                        {formErrors.confirmpassword}
-                      </p>
-                    )}
+
+                    <p className="w-full capitalize text-xs p-1 min-h-[24px]">
+                      {formErrors.confirmpassword}
+                    </p>
                   </div>
 
                   <div className="flex flex-col gap-30">
@@ -300,13 +325,12 @@ const Signup = () => {
                         required
                       ></textarea>
                     </div>
-                    {formErrors.introduction && (
-                      <p className="w-full capitalize text-xs p-1">
-                        {formErrors.introduction}
-                      </p>
-                    )}
+
+                    <p className="w-full capitalize text-xs p-1 min-h-[24px]">
+                      {formErrors.introduction}
+                    </p>
                   </div>
-                  <div className="flex items-center recaptcha_field">
+                  <div className="flex items-center recaptcha_field mb-6">
                     <ReCAPTCHA
                       sitekey={Captcha_Key}
                       onChange={onChangeCaptcha}
@@ -315,27 +339,43 @@ const Signup = () => {
                                             Human</label> */}
                   </div>
                   <button
-                    className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
+                    className="gradient mb-6 !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
                     onClick={(e) => handleSignup(e)}
                   >
                     Join Now!
                   </button>
-                  <div className="or-block flex justify-center items-center gap-6">
+                  <div className="or-block flex justify-center items-center gap-6 mb-6">
                     <div className="line-1 w-full h-[1px] bg-white"></div>
                     <div className="text-white px-1">OR</div>
                     <div className="line-1 w-full h-[1px] bg-white"></div>
                   </div>
-
-                  <div className="google_login_btn">
-                    <GoogleLogin
-                      onSuccess={(credentialResponse) => {
-                        googleSignIn(credentialResponse);
-                      }}
-                      onError={() => {
-                        console.log("Login Failed");
-                      }}
+                  <button
+                    onClick={() => handleGoogle()}
+                    className="w-full mb-6 bg-gray-900 sign-up-google flex justify-center items-center text-white rounded-md text-base sm:text-lg xl:text-25px font-light py-3"
+                  >
+                    Sign up with Google{" "}
+                    <img
+                      src="images/google-1.png"
+                      alt="google image"
+                      className="ms-3"
                     />
-                  </div>
+                  </button>
+                  {/* <div className="google_login_btn"> */}
+                  {/* <GoogleLogin
+                    onSuccess={(credentialResponse) => {
+                      googleSignIn(credentialResponse);
+                    }}
+                    onError={() => {
+                      console.log("Login Failed");
+                    }}
+                  /> */}
+                  {/* </div> */}
+                  <button
+                    className="gradient cursor-pointer !py-3 w-full !text-lg xl:!text-25px capitalize !font-normal flex justify-center items-center text-white rounded-xl primary_btn"
+                    onClick={() => navigate("/model_form")}
+                  >
+                    Click Here To Register Yourself As a Model
+                  </button>
                 </form>
               </div>
               <div className="sign-up__image relative rounded-b-3xl md:rounded-r-58">

@@ -1,25 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 import { HiChevronDown } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import "./db_header.css";
 import Sidebar from "../db_components/Sidebar";
+import { Context } from "../../../Context/context";
 
 const DbHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [sidebar, setSidebar] = useState(false);
+
+  const { userInfo, searchquery, setSearchQuery, search, setSearch } =
+    useContext(Context);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSearch(!search);
+  };
+
+  const handleChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
   return (
     <header className="py-8 bg-black-20 sticky top-0 z-[99] xl:static xl:bg-transparent xl:pt-10 xl:py-0">
       <div className="flex flex-wrap justify-between xl:justify-center items-center xl:items-start px-5 xl:px-[10%]">
         <div className="w-1/2 xl:w-1/5 pr-5">
-          <Link to="/">
-            <img
-              src="images/Hot-Date.png"
-              alt="Logo"
-              className="cursor-pointer"
-            />
-          </Link>
+          <img
+            src="images/Hot-Date.png"
+            alt="Logo"
+            className="cursor-pointer"
+          />
         </div>
         <span
           className="block xl:hidden w-10 cursor-pointer"
@@ -50,7 +60,7 @@ const DbHeader = () => {
               />
             </Link>
             <div className="xl:w-4/5">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="relative text-white ">
                   <span className="absolute top-1/2 left-5 transform -translate-y-1/2 text-2xl flex items-center">
                     <IoSearchOutline />
@@ -58,13 +68,15 @@ const DbHeader = () => {
                   <input
                     type="search"
                     className="outline-none border-none w-full px-5 pl-16 h-14 bg-light-grey rounded-xl"
+                    onChange={handleChange}
+                    value={searchquery}
                   />
                 </div>
               </form>
               <div className="db_header_nav w-full">
                 <ul className="xl:flex items-center justify-between mt-10 grid gap-y-2">
                   <li>
-                    <Link to="/">Homepage</Link>
+                    <Link to="/home">Homepage</Link>
                   </li>
                   <li>
                     <Link to="/live-chat">Live Chat</Link>
@@ -135,7 +147,7 @@ const DbHeader = () => {
                 onClick={() => setSidebar(!sidebar)}
               >
                 <img
-                  src="images/looged_user.png"
+                  src={userInfo.image}
                   className="block w-full h-full rounded-md object-cover"
                 />
                 <span className="flex xl:hidden text-base">

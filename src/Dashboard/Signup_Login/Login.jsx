@@ -6,8 +6,9 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { GoogleLogin } from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useGoogleLogin } from "@react-oauth/google";
 const Login = () => {
   const [login, setLogin] = useState({ email: "", password: "" });
   const [loginErrors, setLoginErrors] = useState({});
@@ -41,16 +42,17 @@ const Login = () => {
     }
     return errors;
   };
-  // useEffect(() => {
-  //   const token = cookies["token"];
-  //   if()
-  //   const decodedToken = jwtDecode(token);
-  //   if (decodedToken) {
-  //     console.log(decodedToken);
-  //   }
-
-  //   // eslint-disable-next-line
-  // }, []);
+  useEffect(() => {
+    const token = cookies["token"];
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken) {
+        console.log(decodedToken);
+        navigate("/home");
+      }
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -71,6 +73,7 @@ const Login = () => {
             theme: "colored",
           });
         } else {
+          setCookie("token", data.data.token, { maxAge: 60 * 60 * 24 });
           if (rememberMe) {
             setCookie("token", data.data.token, { maxAge: 60 * 60 * 24 * 7 });
           }
@@ -113,6 +116,26 @@ const Login = () => {
       });
     }
   };
+
+  const handleGoogle = useGoogleLogin({
+    onSuccess: (credentialResponse) => {
+      setCookie("token", credentialResponse.credential);
+      navigate("/");
+    },
+    onError: () => {
+      toast.error("🦄 Login Failed!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    },
+    flow: "auth-code",
+  });
 
   return (
     <div className="min-h-screen bg-black-20 text-white grid content-between">
@@ -202,7 +225,7 @@ const Login = () => {
                       </label>
                     </div>
                     <p className="text-sm xl:text-lg font-normal leading-29 forgot-password-text bg-gradient-to-r from-orange to-red-500 bg-clip-text cursor-pointer">
-                      Forgot Password?
+                      <Link to="/forgot">Forgot Password?</Link>
                     </p>
                   </div>
                   <button
@@ -216,11 +239,18 @@ const Login = () => {
                     <div className="text-white px-1">OR</div>
                     <div className="line-1 w-full h-[1px] bg-white"></div>
                   </div>
-                  {/* // <button
-                                    //     className="w-full bg-gray-900 sign-up-google flex justify-center items-center text-white rounded-md text-base sm:text-lg xl:text-25px font-light py-3">
-                                    //     Sign up with Google <img src="images/google-1.png" alt="google image" className="ms-3" />
-                                    // </button> */}
-                  <GoogleLogin
+                  <button
+                    onClick={() => handleGoogle()}
+                    className="w-full bg-gray-900 sign-up-google flex justify-center items-center text-white rounded-md text-base sm:text-lg xl:text-25px font-light py-3"
+                  >
+                    Sign up with Google{" "}
+                    <img
+                      src="images/google-1.png"
+                      alt="google image"
+                      className="ms-3"
+                    />
+                  </button>
+                  {/* <GoogleLogin
                     onSuccess={(credentialResponse) => {
                       setCookie("token", credentialResponse.credential);
                       navigate("/");
@@ -237,7 +267,7 @@ const Login = () => {
                         theme: "colored",
                       });
                     }}
-                  />
+                  /> */}
                 </form>
               </div>
               <div className="sign-up__image relative rounded-b-3xl md:rounded-r-58">
