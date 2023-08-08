@@ -20,7 +20,8 @@ const Sidebar = () => {
     if (token) {
       const decodedToken = jwtDecode(token);
       userDetails(decodedToken);
-    }
+    }else{
+      navigate("/login")}
   }, []);
 
   const userDetails = async (token) => {
