@@ -21,8 +21,12 @@ const Sidebar = () => {
       const decodedToken = jwtDecode(token);
       userDetails(decodedToken);
     }else{
+<<<<<<< HEAD
       navigate("login");
     }
+=======
+      navigate("/login")}
+>>>>>>> 8b3dba8454a4286dbfc5e3ba320d9414d912fb9c
   }, []);
 
   const userDetails = async (token) => {

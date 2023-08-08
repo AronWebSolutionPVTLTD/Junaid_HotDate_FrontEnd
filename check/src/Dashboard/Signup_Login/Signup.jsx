@@ -382,6 +382,7 @@ const googleLogin = useGoogleLogin({
                     <div className="text-white px-1">OR</div>
                     <div className="line-1 w-full h-[1px] bg-white"></div>
                   </div>
+<<<<<<< HEAD
                   <button
                     onClick={() => googleLogin()}
                     className="w-full mb-6 bg-gray-900 sign-up-google flex justify-center items-center text-white rounded-md text-base sm:text-lg xl:text-25px font-light py-3"
@@ -394,6 +395,19 @@ const googleLogin = useGoogleLogin({
                     />
                   </button>
                
+=======
+                   
+                  <div className="google_login_btn"> 
+                  <GoogleLogin
+                    onSuccess={(credentialResponse) => {
+                      googleSignIn(credentialResponse);
+                    }}
+                    onError={() => {
+                      console.log("Login Failed");
+                    }}
+                  />
+                </div> 
+>>>>>>> 8b3dba8454a4286dbfc5e3ba320d9414d912fb9c
                   <button
                     className="gradient cursor-pointer !py-3 w-full !text-lg xl:!text-25px capitalize !font-normal flex justify-center items-center text-white rounded-xl primary_btn"
                     onClick={() => navigate("/model_form")}
