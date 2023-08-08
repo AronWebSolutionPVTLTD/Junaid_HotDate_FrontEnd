@@ -138,15 +138,17 @@ const Signup = () => {
   const googleSignIn = async (response) => {
     try {
       const decodedToken = jwtDecode(response.credential);
+      console.log(decodedToken)
       const { data } = await axios.post(`${BASE_URL}/api/register`, {
         email: decodedToken.email,
         username: decodedToken.name,
         logintype: "google",
-        token: response.credential,
+        token: response.access_token,
       });
       if (!data) {
         console.log("failed to create user");
       } else {
+        navigate("/login");
         setCookie("token", response.credential, { maxAge: 60 * 60 * 24 * 7 });
         toast.success("🦄 Login Successful!", {
           position: "top-right",
@@ -158,13 +160,14 @@ const Signup = () => {
           progress: undefined,
           theme: "colored",
         });
-        navigate("/login");
+       
       }
     } catch (error) {}
   };
 
   const handleGoogle = useGoogleLogin({
     onSuccess: (credentialResponse) => {
+      console.log(credentialResponse,"sdfsdklnkkidsf");
       googleSignIn(credentialResponse);
     },
     onError: () => {
@@ -178,8 +181,7 @@ const Signup = () => {
         progress: undefined,
         theme: "colored",
       });
-    },
-    flow: "auth-code",
+    }
   });
   return (
     <div className="min-h-screen bg-black-20 text-white grid content-between">
@@ -337,8 +339,6 @@ const Signup = () => {
                       sitekey={Captcha_Key}
                       onChange={onChangeCaptcha}
                     />
-                    {/* <label for="remember" className="ml-2 text-sm md:text-lg font-normal text-gray">You are
-                                            Human</label> */}
                   </div>
                   <button
                     className="gradient mb-6 !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
@@ -351,27 +351,17 @@ const Signup = () => {
                     <div className="text-white px-1">OR</div>
                     <div className="line-1 w-full h-[1px] bg-white"></div>
                   </div>
-                  <button
-                    onClick={() => handleGoogle()}
-                    className="w-full mb-6 bg-gray-900 sign-up-google flex justify-center items-center text-white rounded-md text-base sm:text-lg xl:text-25px font-light py-3"
-                  >
-                    Sign up with Google{" "}
-                    <img
-                      src="images/google-1.png"
-                      alt="google image"
-                      className="ms-3"
-                    />
-                  </button>
-                  {/* <div className="google_login_btn"> */}
-                  {/* <GoogleLogin
+              
+                  <div className="google_login_btn"> 
+                  <GoogleLogin
                     onSuccess={(credentialResponse) => {
                       googleSignIn(credentialResponse);
                     }}
                     onError={() => {
                       console.log("Login Failed");
                     }}
-                  /> */}
-                  {/* </div> */}
+                  />
+                </div> 
                   <button
                     className="gradient cursor-pointer !py-3 w-full !text-lg xl:!text-25px capitalize !font-normal flex justify-center items-center text-white rounded-xl primary_btn"
                     onClick={() => navigate("/model_form")}

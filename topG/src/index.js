@@ -15,7 +15,7 @@ root.render(
   <ContextProvider>
     <BrowserRouter>
       <ToastContainer />
-      <GoogleOAuthProvider clientId={CLIENT_KEY}>
+      <GoogleOAuthProvider clientId={'15704053870-ed8r6kikri5p7ep9ukkc3lvlj7guvshj.apps.googleusercontent.com'}>
         <CookiesProvider>
           <App />
         </CookiesProvider>

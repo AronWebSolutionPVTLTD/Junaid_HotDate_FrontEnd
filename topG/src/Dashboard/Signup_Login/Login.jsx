@@ -133,8 +133,7 @@ const Login = () => {
         progress: undefined,
         theme: "colored",
       });
-    },
-    flow: "auth-code",
+    }
   });
 
   return (
@@ -240,7 +239,7 @@ const Login = () => {
                     <div className="text-white px-1">OR</div>
                     <div className="line-1 w-full h-[1px] bg-white"></div>
                   </div>
-                  <button
+                  {/* <button
                     onClick={() => handleGoogle()}
                     className="w-full bg-gray-900 sign-up-google flex justify-center items-center text-white rounded-md text-base sm:text-lg xl:text-25px font-light py-3"
                   >
@@ -250,8 +249,8 @@ const Login = () => {
                       alt="google image"
                       className="ms-3"
                     />
-                  </button>
-                  {/* <GoogleLogin
+                  </button> */}
+                  <GoogleLogin
                     onSuccess={(credentialResponse) => {
                       setCookie("token", credentialResponse.credential);
                       navigate("/");
@@ -268,7 +267,7 @@ const Login = () => {
                         theme: "colored",
                       });
                     }}
-                  /> */}
+                  />
                 </form>
               </div>
               <div className="sign-up__image relative rounded-b-3xl md:rounded-r-58">
