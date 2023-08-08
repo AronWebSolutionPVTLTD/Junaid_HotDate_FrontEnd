@@ -93,7 +93,7 @@ const Login = () => {
             progress: undefined,
             theme: "colored",
           });
-         
+         navigate("/home")
         }
       } catch (error) {
         setLoading(false)
