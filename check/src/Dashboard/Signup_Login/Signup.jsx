@@ -350,17 +350,7 @@ const Signup = () => {
                     <div className="text-white px-1">OR</div>
                     <div className="line-1 w-full h-[1px] bg-white"></div>
                   </div>
-                    <button
-                    onClick={() => handleGoogle()}
-                    className="w-full bg-gray-900 sign-up-google flex justify-center items-center text-white rounded-md text-base sm:text-lg xl:text-25px font-light py-3"
-                  >
-                    Sign up with Google{" "}
-                    <img
-                      src="images/google-1.png"
-                      alt="google image"
-                      className="ms-3"
-                    />
-                  </button>
+                   
                   <div className="google_login_btn"> 
                   <GoogleLogin
                     onSuccess={(credentialResponse) => {
