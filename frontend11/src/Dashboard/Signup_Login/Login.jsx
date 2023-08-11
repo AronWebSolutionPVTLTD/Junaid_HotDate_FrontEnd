@@ -230,7 +230,7 @@ const Login = () => {
                         htmlFor="username"
                         className="rounded-l-md sm:w-[100px] xl:w-[195px] mb-1 sm:mb-0 sm:h-[49px] flex items-center justify-center lg:justify-start ps-0 lg:ps-4 text-sm xl:text-lg text-white  font-normal leading-5 xl:leading-29 text-center lg:text-start"
                       >
-                        Login
+                        Login via email
                       </label>
                       <input
                         name="email"
