@@ -29,7 +29,7 @@ const Sidebar = () => {
 
   const userDetails = async (token) => {
     console.log(token);
-    const id = token._id || token.userId;
+    const id = token._id;
     console.log(id);
     const { data } = await axios.get(`${BASE_URL}/api/findone/${id}`);
     setUserInfo(data);

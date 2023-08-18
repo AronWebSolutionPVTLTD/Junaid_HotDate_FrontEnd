@@ -30,6 +30,7 @@ import WishlishtPage from "./Dashboard/MainDashboard/db_pages/WishlishtPage";
 import EventDetailPage from "./LandingPage/Pages/EventDetailPage";
 import { useEffect } from "react";
 import EditEventPage from "./Dashboard/MainDashboard/db_pages/EditEventPage";
+import Check from "./LandingPage/Check";
 
 function App() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/check" element={<Check />} />
         <Route path="/" element={<LandingLayout />}>
           <Route path="/" element={<LandingPage />} />
           <Route path="/contact" element={<ContactPage />} />
