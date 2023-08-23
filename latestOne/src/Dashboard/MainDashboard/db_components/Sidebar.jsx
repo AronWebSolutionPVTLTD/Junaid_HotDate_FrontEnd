@@ -13,12 +13,17 @@ const Submenu = ({ items, isOpen }) => (
         {item.submenus && <Submenu items={item.submenus} isOpen={isOpen} />}
       </li>
     ))}
-  </ul>
+  </ul> 
 );
 const MenuItem = ({ title, submenus }) => {
   const [showSubmenu, setShowSubmenu] = useState(false);
-
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const navigate = useNavigate();
   const toggleSubmenu = () => {
+   if(title=="Log Out"){
+      removeCookie("token");
+      navigate("/login");
+    };
     if(submenus.length!==0){
       setShowSubmenu(!showSubmenu);
     }
