@@ -15,7 +15,7 @@ const Submenu = ({ items, isOpen }) => (
     ))}
   </ul>
 );
-const MenuItem = ({ title, submenus }) => {
+const MenuItem = ({ title, submenus, path }) => {
   const [showSubmenu, setShowSubmenu] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
@@ -24,11 +24,14 @@ const MenuItem = ({ title, submenus }) => {
       removeCookie("token");
       navigate("/login");
     }
+    if (path) {
+      navigate(path);
+    }
     if (submenus.length !== 0) {
       setShowSubmenu(!showSubmenu);
     }
   };
-
+​
   useEffect(() => {
     const token = cookies["token"];
     console.log(token, "SideBar");
@@ -41,7 +44,7 @@ const MenuItem = ({ title, submenus }) => {
       navigate("/login");
     }
   }, []);
-
+​
   return (
     <li className="menu-item">
       <span className="title_submenu" onClick={toggleSubmenu}>
@@ -61,6 +64,7 @@ const MenuItem = ({ title, submenus }) => {
                 <MenuItem
                   key={index}
                   title={submenu.title}
+                  path={submenu.path}
                   submenus={submenu.submenus}
                 />
               ))}
@@ -75,6 +79,7 @@ const Sidebar = () => {
     {
       title: "Home",
       submenus: [],
+      path: "/home",
     },
     {
       title: "My Feed",
@@ -132,10 +137,10 @@ const Sidebar = () => {
           title: "Speed date ",
           submenus: [],
         },
-        { title: "Events", submenus: [] },
-        { title: "Clubs", submenus: [] },
+        { title: "Events", submenus: [], path: "/event-page" },
+        { title: "Clubs", submenus: [], path: "/club-page" },
         { title: "Hot or Not (tinder)", submenus: [] },
-        { title: "Travel calendar", submenus: [] },
+        { title: "Travel calendar", submenus: [], path: "/travel-page" },
         {
           title: "Live action",
           submenus: [
@@ -147,7 +152,9 @@ const Sidebar = () => {
     },
     {
       title: "FAQ",
-      submenus: [{ title: "Know Your Kinky ABCs!", submenus: [] }],
+      submenus: [
+        { title: "Know Your Kinky ABCs!", submenus: [], path: "/faq" },
+      ],
     },
     {
       title: "Shop",
@@ -160,9 +167,9 @@ const Sidebar = () => {
     {
       title: "Setting",
       submenus: [
-        { title: "My profile", submenus: [] },
+        { title: "My profile", submenus: [], path: "/user-detail" },
         { title: "My posts", submenus: [] },
-        { title: "Edit profile", submenus: [] },
+        { title: "Edit profile", submenus: [], path: "/edit-detail" },
         { title: "Pictures", submenus: [] },
         { title: "Account", submenus: [] },
         { title: "Preferences", submenus: [] },
@@ -186,12 +193,12 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
-
+​
   const handleLogout = () => {
     removeCookie("token");
     navigate("/login");
   };
-
+​
   useEffect(() => {
     const token = cookies["token"];
     if (token) {
@@ -201,7 +208,7 @@ const Sidebar = () => {
       navigate("/login");
     }
   }, []);
-
+​
   // const checkUserExist = async () => {
   //   const { data } = await axios.get(
   //     `${BASE_URL}/api/findone/${userToken._id}`
@@ -225,7 +232,7 @@ const Sidebar = () => {
     }
   };
   console.log(userInfo);
-
+​
   return (
     <div className="sidebar xl:w-60">
       <div>
@@ -405,6 +412,7 @@ const Sidebar = () => {
               <MenuItem
                 key={index}
                 title={menuItem.title}
+                path={menuItem.path}
                 submenus={menuItem.submenus}
               />
             ))}
