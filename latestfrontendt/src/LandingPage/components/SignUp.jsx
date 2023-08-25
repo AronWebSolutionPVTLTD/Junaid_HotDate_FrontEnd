@@ -1,4 +1,7 @@
+import axios from "axios";
+import jwtDecode from "jwt-decode";
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const [countries, setCountries] = useState([]);
@@ -8,6 +11,8 @@ const SignUp = () => {
     age: "",
     country: "",
   });
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const getData = () => {
     fetch("countries.json", {
@@ -23,15 +28,32 @@ const SignUp = () => {
         setCountries(myJson);
       });
   };
+
+  const checkUserLogin = async () => {
+    const token = cookies["token"];
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken) {
+        const id = decodedToken._id;
+        try {
+          const { data } = await axios.get(`${BASE_URL}/api/findOne/${id}`);
+          if (data) {
+            navigate("/home");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  };
   useEffect(() => {
+    checkUserLogin();
     getData();
   }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
   };
-
   const handleJoinNow = (e) => {
     e.preventDefault();
     localStorage.setItem("userinfo", JSON.stringify(userInfo));
@@ -172,7 +194,6 @@ const SignUp = () => {
                               {country.name}
                             </option>
                           ))}
-
                           {/* <option value="saab">Australia</option> */}
                         </select>
                       </div>
@@ -193,5 +214,4 @@ const SignUp = () => {
     </section>
   );
 };
-
 export default SignUp;
