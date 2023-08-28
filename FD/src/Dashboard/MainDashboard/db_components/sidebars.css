@@ -41,6 +41,11 @@ html {
     margin-left: 7px;
     /* border: 2px solid red; */
   }
+
+  .active {
+    font-weight: bold;
+    color: orange; /* You can choose your own highlight styling */
+  }
   .menu-item {
     cursor: pointer;
     padding: 9px;
