@@ -31,7 +31,7 @@ const ClubCard = ({ clubs }) => {
     >
       <div className="w-2/5 sm:w-full">
         <img
-          src={clubs.image[0]}
+          src={clubs.mainImage}
           alt="event-img"
           className="w-full object-cover aspect-11/10 rounded-2xl"
         />
