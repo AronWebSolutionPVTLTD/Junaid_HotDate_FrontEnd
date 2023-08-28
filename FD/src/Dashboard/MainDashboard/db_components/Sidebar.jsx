@@ -15,19 +15,13 @@ const Submenu = ({ items, isOpen }) => (
     ))}
   </ul>
 );
-const MenuItem = ({ title, submenus, path,activeMenuItem,setActiveMenuItem }) => {
+const MenuItem = ({ title, submenus, path }) => {
   const [showSubmenu, setShowSubmenu] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   const [cookies, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
-console.log("Shivam G",currentPath)
-  useEffect(()=>{
-if(currentPath==path){
-  setActiveMenuItem(title)
-  return;
-}
-  },[currentPath])
+
 
   const toggleSubmenu = () => {
     if (submenus.length !== 0) {
@@ -40,7 +34,6 @@ if(currentPath==path){
     }
 
     if (path) {
-      setActiveMenuItem(title)
       navigate(path);
     }
   };
@@ -60,7 +53,7 @@ if(currentPath==path){
 
   return (
     <li className="menu-item">
-      <span  className={`title_submenu ${activeMenuItem === title ? "active" : ""}`}  onClick={toggleSubmenu}>
+      <span  className={`title_submenu ${currentPath===path ? "active" : ""}`}  onClick={toggleSubmenu}>
         {title}{" "}
         {submenus.length > 0 && (
           <i
@@ -76,8 +69,6 @@ if(currentPath==path){
               submenus.map((submenu, index) => (
                 <MenuItem
                   key={index}
-                  setActiveMenuItem={setActiveMenuItem}
-                activeMenuItem={activeMenuItem}
                   title={submenu.title}
                   path={submenu.path}
                   submenus={submenu.submenus}
@@ -90,7 +81,6 @@ if(currentPath==path){
   );
 };
 const Sidebar = () => {
-  const [activeMenuItem, setActiveMenuItem] = useState(null);
   const menuItems = [
     {
       title: "Home",
@@ -388,8 +378,6 @@ const Sidebar = () => {
             {menuItems.map((menuItem, index) => (
               <MenuItem
                 key={index}
-                setActiveMenuItem={setActiveMenuItem}
-                activeMenuItem={activeMenuItem}
                 title={menuItem.title}
                 path={menuItem.path}
                 submenus={menuItem.submenus}
