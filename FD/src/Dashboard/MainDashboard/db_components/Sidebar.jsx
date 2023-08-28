@@ -21,7 +21,7 @@ const MenuItem = ({ title, submenus, path,activeMenuItem,setActiveMenuItem }) =>
   const currentPath = location.pathname;
   const [cookies, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
-
+console.log("Shivam G",currentPath)
   useEffect(()=>{
 if(currentPath==path){
   setActiveMenuItem(title)
