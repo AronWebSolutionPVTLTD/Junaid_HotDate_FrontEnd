@@ -47,6 +47,10 @@ const Login = () => {
     if (token) {
       const decodedToken = jwtDecode(token);
       if (decodedToken) {
+<<<<<<<< HEAD:frontend-06-23/src/Dashboard/Signup_Login/Login.jsx
+========
+        console.log(decodedToken);
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Login.jsx
         navigate("/home");
       }
     }
@@ -76,7 +80,11 @@ const Login = () => {
           });
         } else {
           setLoading(false);
+<<<<<<<< HEAD:frontend-06-23/src/Dashboard/Signup_Login/Login.jsx
           setCookie("token", data.token, { maxAge: 60 * 60 * 24 });
+========
+          setCookie("token", data.data.token, { maxAge: 60 * 60 * 24 });
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Login.jsx
           if (rememberMe) {
             setCookie("token", data.token, { maxAge: 60 * 60 * 24 * 7 });
           }
@@ -123,11 +131,15 @@ const Login = () => {
 
   const handleGoogle = useGoogleLogin({
     onSuccess: (credentialResponse) => {
+<<<<<<<< HEAD:frontend-06-23/src/Dashboard/Signup_Login/Login.jsx
       setCookie("token", credentialResponse.credential, {
         path: "/",
         secure: true, // Make sure to set secure for SameSite=None
         sameSite: "none", // SameSite attribute set to None for cross-site requests
       });
+========
+      setCookie("token", credentialResponse.credential);
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Login.jsx
       navigate("/");
     },
     onError: () => {
@@ -144,8 +156,41 @@ const Login = () => {
     },
   });
 
+<<<<<<<< HEAD:frontend-06-23/src/Dashboard/Signup_Login/Login.jsx
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
+========
+  const googleSignIn = async (response) => {
+    try {
+      const decodedToken = jwtDecode(response.credential);
+      const { data } = await axios.post(`${BASE_URL}/api/register`, {
+        email: decodedToken.email,
+        username: decodedToken.name,
+        logintype: "google",
+      });
+      if (!data) {
+        console.log("failed to create user");
+      } else {
+        navigate("/home");
+        setCookie("token", data?.Message, { maxAge: 60 * 60 * 24 * 7 });
+        toast.success("🦄 Login Successful!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {}
+  };
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      console.log(tokenResponse);
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Login.jsx
       const userInfo = await axios.get(
         "https://www.googleapis.com/oauth2/v3/userinfo",
         { headers: { Authorization: `Bearer ${tokenResponse.access_token} ` } }
@@ -156,6 +201,7 @@ const Login = () => {
         username: userInfo?.data.name,
         logintype: "google",
       });
+<<<<<<<< HEAD:frontend-06-23/src/Dashboard/Signup_Login/Login.jsx
 
       if (!data) {
         toast.error("failed to create user");
@@ -171,6 +217,14 @@ const Login = () => {
             sameSite: "none", // SameSite attribute set to None for cross-site requests
           }
         );
+========
+      console.log(data, "SDfsdf");
+      if (!data) {
+        console.log("failed to create user");
+      } else {
+        navigate("/home");
+        setCookie("token", data?.Message, { maxAge: 60 * 60 * 24 * 7 });
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Login.jsx
         toast.success("🦄 Login Successful!", {
           position: "top-right",
           autoClose: 2000,
@@ -286,10 +340,17 @@ const Login = () => {
                     </button>
                   ) : (
                     <div
+<<<<<<<< HEAD:frontend-06-23/src/Dashboard/Signup_Login/Login.jsx
                       className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                       role="status"
                     >
                       <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+========
+                      class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                      role="status"
+                    >
+                      <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Login.jsx
                         Loading...
                       </span>
                     </div>

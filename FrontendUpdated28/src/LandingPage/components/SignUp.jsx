@@ -50,12 +50,10 @@ const SignUp = () => {
     checkUserLogin();
     getData();
   }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
   };
-
   const handleJoinNow = (e) => {
     e.preventDefault();
     localStorage.setItem("userinfo", JSON.stringify(userInfo));
@@ -196,7 +194,6 @@ const SignUp = () => {
                               {country.name}
                             </option>
                           ))}
-
                           {/* <option value="saab">Australia</option> */}
                         </select>
                       </div>
@@ -217,5 +214,4 @@ const SignUp = () => {
     </section>
   );
 };
-
 export default SignUp;

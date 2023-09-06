@@ -90,7 +90,11 @@ const Signup = () => {
     if (Object.keys(formErrors).length === 0) {
       try {
         if (!captcha) {
+<<<<<<<< HEAD:FrontendUpdated28/src/Dashboard/Signup_Login/Signup.jsx
           toast.warning("Fill the captcha");
+========
+          console.log("fill the captcha");
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Signup.jsx
           return;
         }
         setLoading(true);
@@ -124,6 +128,10 @@ const Signup = () => {
         }
       } catch (error) {
         setLoading(false);
+<<<<<<<< HEAD:FrontendUpdated28/src/Dashboard/Signup_Login/Signup.jsx
+========
+        console.log(error, "SDFSdf");
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Signup.jsx
         toast.error(error?.response?.data, {
           position: "top-right",
           autoClose: 2000,
@@ -150,6 +158,7 @@ const Signup = () => {
     }
   };
 
+<<<<<<<< HEAD:FrontendUpdated28/src/Dashboard/Signup_Login/Signup.jsx
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const userInfo = await axios.get(
@@ -157,6 +166,13 @@ const Signup = () => {
         { headers: { Authorization: `Bearer ${tokenResponse.access_token} ` } }
       );
 
+========
+  const googleSignIn = async (response) => {
+    try {
+      console.log(response);
+      const decodedToken = jwtDecode(response.credential);
+      console.log(decodedToken, "SGDSF");
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Signup.jsx
       const { data } = await axios.post(`${BASE_URL}/api/register`, {
         email: userInfo?.data.email,
         username: userInfo?.data.name,
@@ -167,6 +183,7 @@ const Signup = () => {
         toast.error("Failed to Create User");
       } else {
         navigate("/home");
+<<<<<<<< HEAD:FrontendUpdated28/src/Dashboard/Signup_Login/Signup.jsx
         setCookie(
           "token",
           data?.Message,
@@ -177,6 +194,9 @@ const Signup = () => {
             sameSite: "none", // SameSite attribute set to None for cross-site requests
           }
         );
+========
+        setCookie("token", data?.Message, { maxAge: 60 * 60 * 24 * 7 });
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Signup.jsx
         toast.success("🦄 Login Successful!", {
           position: "top-right",
           autoClose: 2000,
@@ -188,6 +208,42 @@ const Signup = () => {
           theme: "colored",
         });
       }
+<<<<<<<< HEAD:FrontendUpdated28/src/Dashboard/Signup_Login/Signup.jsx
+========
+    } catch (error) {}
+  };
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      console.log(tokenResponse);
+      const userInfo = await axios.get(
+        "https://www.googleapis.com/oauth2/v3/userinfo",
+        { headers: { Authorization: `Bearer ${tokenResponse.access_token} ` } }
+      );
+
+      const { data } = await axios.post(`${BASE_URL}/api/register`, {
+        email: userInfo?.data.email,
+        username: userInfo?.data.name,
+        logintype: "google",
+      });
+      console.log(data, "SDfsdf");
+      if (!data) {
+        console.log("failed to create user");
+      } else {
+        navigate("/home");
+        setCookie("token", data?.Message, { maxAge: 60 * 60 * 24 * 7 });
+        toast.success("🦄 Login Successful!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Signup.jsx
     },
     onError: (errorResponse) => console.log(errorResponse),
   });
@@ -358,10 +414,17 @@ const Signup = () => {
                     </button>
                   ) : (
                     <div
+<<<<<<<< HEAD:FrontendUpdated28/src/Dashboard/Signup_Login/Signup.jsx
                       className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                       role="status"
                     >
                       <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+========
+                      class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                      role="status"
+                    >
+                      <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+>>>>>>>> 6fe296168eafed111506ec537b6dec189bbfd0dd:FD/src/Dashboard/Signup_Login/Signup.jsx
                         Loading...
                       </span>
                     </div>
