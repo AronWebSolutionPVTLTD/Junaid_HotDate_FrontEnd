@@ -345,7 +345,7 @@ const SignUpCouple = () => {
       toast.error("failed to Upload Image");
     }
   };
-
+console.log(userId)
   const handleInterest = (event) => {
     const { name, value, checked } = event.target;
 
