@@ -32,6 +32,7 @@ const ForgotPage = () => {
   useEffect(() => {
     if (confirmPassword.password || confirmPassword.cpassword) {
       setformErrors(validate(confirmPassword));
+      console.log(formErrors)
     }
   }, [confirmPassword]);
 
@@ -42,9 +43,9 @@ const ForgotPage = () => {
     } else if (value.password.length < 8) {
       errors.password = "Minimum 8 characters password is required";
     }
-    if (!value.cmpassword) {
+    if (!value.cpassword) {
       errors.cpassword = "confirm password is required";
-    } else if (value.password !== value.confirmpassword) {
+    } else if (value.password !== value.cpassword) {
       errors.confirmpassword = "password and confirmpassword must be same";
     }
 
@@ -107,7 +108,9 @@ const ForgotPage = () => {
   };
 
   const SubmitPassword = async (e) => {
+    console.log(e.target,"NOW CONFIRMED")
     e.preventDefault();
+    console.log(formErrors)
     if (Object.keys(formErrors).length === 0) {
       if (confirmPassword.password === confirmPassword.cpassword) {
         const { data } = await axios.post(`${BASE_URL}/api/reset_pass`, {
