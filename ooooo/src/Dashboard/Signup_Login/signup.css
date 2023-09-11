@@ -98,7 +98,7 @@
     position: relative;
     padding-right: 20px;
 }
-.select_label  span{
+.select_label  .select_label_icon{
     display: flex;
     align-items: center;
     font-size: 21px;

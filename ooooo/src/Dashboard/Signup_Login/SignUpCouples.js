@@ -887,7 +887,7 @@ const SignUpCouple = () => {
                           {bodyhair.length === 0
                             ? "Please select"
                             : bodyhair.map((el) => <span>{el},</span>)}
-                             <span><BiChevronDown /></span>
+                             <span class="select_label_icon"><BiChevronDown /></span>
                         </div>
 
                           <div className="select_options">
@@ -1261,7 +1261,7 @@ const SignUpCouple = () => {
                               : bodyhair2.map((el, i) => (
                                   <span key={i}>{el},</span>
                                 ))}
-                                 <span><BiChevronDown /></span>
+                                 <span className="select_label_icon"><BiChevronDown /></span>
                           </div>
 
                           <div className="select_options">

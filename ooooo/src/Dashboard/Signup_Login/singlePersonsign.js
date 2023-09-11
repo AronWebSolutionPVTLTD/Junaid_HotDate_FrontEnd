@@ -718,7 +718,7 @@ const SinglePersonSignUp = () => {
                           {bodyhair.length === 0
                             ? "Please select"
                             : bodyhair.map((el) => <span>{el},</span>)}
-                             <span><BiChevronDown /></span>
+                             <span className="select_label_icon"><BiChevronDown /></span>
                         </div>
 
                         <div className="select_options">
