@@ -191,7 +191,7 @@ const Sidebar = () => {
       submenus: [
         { title: "My profile", submenus: [], path: "/user-detail" },
         { title: "My posts", submenus: [] },
-        { title: "Edit profile", submenus: [], path: "/edit-detail" },
+        { title: "Edit profile", submenus: [], path: "" },
         { title: "Pictures", submenus: [] },
         { title: "Account", submenus: [] },
         { title: "Preferences", submenus: [] },
