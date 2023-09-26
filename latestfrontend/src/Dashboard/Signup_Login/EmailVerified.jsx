@@ -44,7 +44,7 @@ const EmailVerified = () => {
             className="max-w-200px md:max-w-full"
           /> */}
           <h2 className="text-white text-2xl sm:text-3xl xl:text-40px">
-            #1 Adult Dating Site
+            #Best Adult Dating Site
           </h2>
         </div>
       </div>
