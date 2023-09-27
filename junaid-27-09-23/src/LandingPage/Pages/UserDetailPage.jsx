@@ -206,7 +206,7 @@ const UserDetailPage = () => {
              <p className="text-base sm:text-2xl">Details</p>
              <p className={`text-right flex items-center justify-end text-xl ${userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
                
-               {userInfo.gender==="male"?(<img src="images/male.png" alt="Male" className="h-[26px] mr-1" />)
+               {userInfo.gender==="male"?(<img src="images/Male.png" alt="Male" className="h-[26px] mr-1" />)
                :(<img src="images/female.png" alt="Male" className="h-[26px] mr-1" />)}
                 {userInfo.personName}</p>
            </div>
