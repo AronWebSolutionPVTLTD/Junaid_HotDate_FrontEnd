@@ -266,7 +266,7 @@ console.log(eventInfo , userInfo)
                   {eventInfo?.accepted_type?.map((el, i) => (
                     
                   <>
-                      {el === "m" &&  <img src="images/male.png" alt="male-user" className="h-[26px]"/>}
+                      {el === "m" &&  <img src="images/Male.png" alt="male-user" className="h-[26px]"/>}
                       {el === "f" && <img src="images/Female.png" alt="woman" className="h-[26px]"/>}
                       {el === "mm" && (
                      <img src="images/malemale.png" alt="couple"  className="h-[22px]"/>
