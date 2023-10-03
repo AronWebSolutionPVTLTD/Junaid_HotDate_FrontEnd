@@ -210,8 +210,13 @@ const RenderedStyle={
              <p className="text-base sm:text-2xl">Details</p>
              <p className={`text-right flex items-center justify-end text-xl`} style={RenderedStyle}>
                
+<<<<<<< HEAD
                {userInfo.gender==="male"?(<img src="images/male.png" alt="Male" className="h-[26px] mr-1" />):userInfo.gender==="female"? (<img src="images/female.png" alt="Male" className="h-[26px] mr-1" />)
                :(<img src="images/trans.png" alt="trans" className="h-[26px] mr-1" />)}
+=======
+               {userInfo.gender==="male"?(<img src="images/Male.png" alt="Male" className="h-[26px] mr-1" />)
+               :(<img src="images/female.png" alt="Male" className="h-[26px] mr-1" />)}
+>>>>>>> 2b88261f1a0675beeebc291f237e16362a8f92be
                 {userInfo.personName}</p>
            </div>
            <div className="grid">
