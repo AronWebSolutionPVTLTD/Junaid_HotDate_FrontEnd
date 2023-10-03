@@ -53,6 +53,7 @@ const SinglePersonSignUp = () => {
   const { userId } = useContext(Context);
   const navigate = useNavigate();
   const ref = useRef(null);
+  const ref2 = useRef(null);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const weights = [];
 
@@ -212,15 +213,23 @@ const SinglePersonSignUp = () => {
   useEffect(() => {
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        setIsActive(false);
-        setIsEditing(false)
+        handleDeactivate(event);
       }
     }
+  
+    function handleDeactivate(event) {
+      setIsActive(false);
+      if (ref2.current && !ref2.current.contains(event.target)) {
+        setIsEditing(false);
+      }
+    }
+  
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [ref, ref2]);
+  
 
   const handleOpenOptions = (e) => {
     setIsActive(true);
@@ -232,6 +241,7 @@ const SinglePersonSignUp = () => {
   };
 
   const handleInput = (e) => {
+    e.preventDefault();
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
 
@@ -255,6 +265,8 @@ const SinglePersonSignUp = () => {
       SetBodyHair(data);
     }
   };
+console.log(ref,ref2)
+
   const handleimage = async (e) => {
     const file = e.target.files[0];
     if (!file) {
@@ -371,6 +383,8 @@ const SinglePersonSignUp = () => {
       console.log(error);
     }
   };
+
+ 
   return (
     <>
       <div className="min-h-screen bg-black-20 text-white grid content-between">
@@ -665,15 +679,33 @@ const SinglePersonSignUp = () => {
                     </h1>
                   </div>
 
-                  <form className="my-10">
                   <div className="text-end flex items-center justify-end pb-0">
-                        {isEditing?<input ref={ref}  type="text"
-                        className="w-80 border-2 border-orange rounded-[5px] h-[27px] text-black px-5 font-light"
-                            placeholder="Person1 Name"
-                            onChange={handleInput}
-                            value={form.personName}
-                            name="personName"
-                            />:<p className="text-end flex items-center justify-end">{form.personName ? form.personName : "Person 1"}{" "} <span className="text-lg ml-2 inline-flex items-center"><CiEdit onClick={handleEditClick} /></span></p>}
+                  {isEditing ? (
+                    <div ref={ref2}>
+    <input
+      type="text"
+      className="w-80 border-2 border-orange rounded-[5px] h-[27px] text-black px-5 font-light"
+      placeholder="Person1 Name"
+      onKeyUp={(e) => {
+        if (e.key === 'Enter') {
+          setIsEditing(false);
+        }
+      }}
+      onChange={handleInput}
+      value={form.personName}
+      name="personName"
+    />
+</div>
+
+) : (
+  <p className="text-end flex items-center justify-end">
+    {form.personName ? form.personName : 'Person 1'}{' '}
+    <span className="text-lg ml-2 inline-flex items-center">
+      <CiEdit onClick={handleEditClick} />
+    </span>
+  </p>
+)}
+
                       </div>
                     <div className="bg-[#202020] grid grid-cols-2   px-10 pt-5">
                       <p className="">Birthday *</p>
@@ -739,10 +771,11 @@ const SinglePersonSignUp = () => {
                     <div className="bg-[#202020] flex justify-between px-10 pt-5">
                       <span>Body Hair</span>
                       <div
-                        ref={ref}
+                           ref={ref}
                         className={`select_ctmBox ${isActive ? "active" : ""}`}
                       >
                         <div
+                     
                           className="select_label"
                           name="bodyhair"
                           onClick={handleOpenOptions}
@@ -1028,7 +1061,7 @@ const SinglePersonSignUp = () => {
                         </div>
                       </div>
                     </div>
-                  </form>
+             
 
                   <div className="it_checkbox flex gap-4 justify-start">
                     <input

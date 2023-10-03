@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import { FaFemale, FaMale } from "react-icons/fa";
 import { BiMaleFemale } from "react-icons/bi";
-import { RiCloseCircleLine, RiCheckboxCircleLine } from "react-icons/ri";
+import { RiCloseCircleLine, RiCheckboxCircleLine,RiDeleteBin6Line } from "react-icons/ri";
 
 const EventDetailPage = () => {
   const [eventInfo, setEventInfo] = useState({});
@@ -62,8 +62,11 @@ const EventDetailPage = () => {
   }, [updateList]);
 
   let formattedTime;
-  const inputDateString = eventInfo.date;
+  let formattedEndTime;
+  const EndDateString = eventInfo.EndDate
+  const inputDateString = eventInfo.Startdate;
   const parsedDate = new Date(inputDateString);
+  const parseEndDate = new Date(EndDateString) 
   const monthNames = [
     "Jan",
     "Feb",
@@ -91,6 +94,21 @@ const EventDetailPage = () => {
       minute: "2-digit",
     });
   }
+
+  const endday = parseEndDate.getDate();
+  const endmonthIndex = parseEndDate.getMonth();
+  const endyear = parseEndDate.getFullYear();
+  const endformattedDate = `${monthNames[endmonthIndex]} ${endday} ${endyear}`;
+  if (EndDateString) {
+    const time = EndDateString.split("T")[1];
+    const [hours, minutes] = time.split(":");
+    const date = new Date(0, 0, 0, hours, minutes);
+    formattedEndTime = date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+console.log(endformattedDate)
   const handleJoin = async () => {
     try {
       const { data } = await axios.post(
@@ -153,6 +171,15 @@ const EventDetailPage = () => {
       console.log(error);
     }
   };
+
+  const deleteEvent =(e)=>{
+    axios.delete(`${BASE_URL}/api/delete_event/${e}`).then((res)=>{
+      console.log(res)
+      if(res.data ==="Event is deleted successfully"){
+      
+      }
+    })
+  }
 console.log(eventInfo , userInfo)
   return (
     <div className="bg-black pt-0 sm:pt-8 py-8 px-6 rounded-2xl xl:rounded-r-none min-h-full">
@@ -174,12 +201,15 @@ console.log(eventInfo , userInfo)
                 {eventInfo.eventName}
               </h3>
               {eventInfo.userId?._id === userInfo._id ? (
+                <div className="">
                 <Link
                   className="inline-flex items-center text-2xl"
                   to={"/event_edit"}
                 >
                   <MdOutlineModeEditOutline />
                 </Link>
+                <div onClick={()=>deleteEvent(eventInfo._id)}><RiDeleteBin6Line/></div>
+                </div>
               ) : eventInfo.type === "Private Event" ? (
                 hasUserPending || isJoined ? (
                   <button
@@ -222,6 +252,7 @@ console.log(eventInfo , userInfo)
               ) : (
                 ""
               )}
+              
             </div>
             <div className="rounded-2xl bg-light-grey p-5">
               <div className="grid sm:flex flex-wrap items-start gap-1 sm:gap-5 justify-between">
@@ -233,15 +264,15 @@ console.log(eventInfo , userInfo)
                 </div>
                 <div className="text-sm">
                   <span className="inline-block mr-1 font-body_font">
-                    EVENT DATE :
+                    Start Date :
                   </span>{" "}
-                  {formattedDate}
+                  {formattedDate} {formattedTime}
                 </div>
                 <div className="text-sm">
                   <span className="inline-block mr-1 font-body_font">
-                    EVENT TIME :
-                  </span>{" "}
-                  {formattedTime}
+                    End Date :
+                  </span>{endformattedDate} {formattedEndTime}
+                  
                 </div>
               </div>
               <div className="my-5">
@@ -255,9 +286,14 @@ console.log(eventInfo , userInfo)
                   INFORMATION
                 </p>
                 <p className="text-base my-2">
-                  <span className="font-semibold">{eventInfo.type} BY : </span>
+                  {/* <span className="font-semibold">{eventInfo.type} BY : </span> */}
+                  {eventInfo?.type === 'Public Event' ? (
+                 <span className="text-red-500">{eventInfo?.type} </span>
+                   ) : (
+                   <span className="text-green-500">{eventInfo?.type} </span>
+                    )}
                   <span className="font-body_font">
-                    {eventInfo.userId?.username}
+                   BY : {eventInfo.userId?.username}
                   </span>
                 </p>
                 <p className="text-base my-2 flex items-center gap-2">

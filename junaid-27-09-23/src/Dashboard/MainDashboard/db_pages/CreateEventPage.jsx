@@ -11,7 +11,8 @@ import {FaRegCalendarAlt} from 'react-icons/fa'
 const CreateEventPage = () => {
   const [event, setEvent] = useState({
     event_name: "",
-    Date: "",
+    StartDate: "",
+    EndDate:"",
     Location: "",
     Description: "",
     event_type: "",
@@ -70,9 +71,10 @@ const CreateEventPage = () => {
     if (selectedVideo) {
       selectedVideo.forEach((video) => formData.append("videos", video));
     }
-
+console.log(formData)
     formData.append("eventName", event.event_name);
-    formData.append("date", event.Date);
+    formData.append("Startdate", event.StartDate);
+    formData.append("EndDate",event.EndDate);
     formData.append("location", event.Location);
     formData.append("description", event.Description);
     formData.append("mainImage", coverImage);
@@ -167,18 +169,39 @@ const CreateEventPage = () => {
               {/* <p>{formErrors.email}</p> */}
               <div className="flex flex-wrap rounded-md input_field_2">
                 <label
-                  htmlFor="Date"
+                  htmlFor="StartDate"
                   className="rounded-l-md w-full md:w-[120px] xl:w-[195px] sm:h-[49px] flex items-center justify-start sm:px-2 lg:px-4 text-sm mb-1 sm:mb-0 md:text-text-xs xl:text-lg text-white  font-normal leading-5 xl:leading-29 text-center 
                                             lg:text-start"
                 >
-                  Date
+                 Start Date
                 </label>
                 <input
                   type="datetime-local"
-                  id="Date"
-                  name="Date"
+                  id="StartDate"
+                  name="StartDate"
                   onChange={(e) => handleChange(e)}
-                  value={event.Date}
+                  value={event.StartDate}
+                  autocomplete="off"
+                  className="bg-black border md:rounded-l-none rounded-md md:border-none md:border-l-2 md:rounded-r-md border-orange focus:outline-none focus-visible:none w-full md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)] h-[49px] text-gray font-normal xl:text-lg rounded-r-md text-sm px-2 xl:px-4 py-2.5 text-start placeholder:text-lg placeholder:text-gray items-center flex justify-between"
+                  placeholder="name@flowbite.com"
+                  required
+                />
+                {/* <span className="calendar_icon"><FaRegCalendarAlt /></span> */}
+              </div>
+              <div className="flex flex-wrap rounded-md input_field_2">
+                <label
+                  htmlFor="EndDate"
+                  className="rounded-l-md w-full md:w-[120px] xl:w-[195px] sm:h-[49px] flex items-center justify-start sm:px-2 lg:px-4 text-sm mb-1 sm:mb-0 md:text-text-xs xl:text-lg text-white  font-normal leading-5 xl:leading-29 text-center 
+                                            lg:text-start"
+                >
+                 End Date
+                </label>
+                <input
+                  type="datetime-local"
+                  id="EndDate"
+                  name="EndDate"
+                  onChange={(e) => handleChange(e)}
+                  value={event.EndDate}
                   autocomplete="off"
                   className="bg-black border md:rounded-l-none rounded-md md:border-none md:border-l-2 md:rounded-r-md border-orange focus:outline-none focus-visible:none w-full md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)] h-[49px] text-gray font-normal xl:text-lg rounded-r-md text-sm px-2 xl:px-4 py-2.5 text-start placeholder:text-lg placeholder:text-gray items-center flex justify-between"
                   placeholder="name@flowbite.com"

@@ -36,6 +36,7 @@ import EmailVerified from "./Dashboard/Signup_Login/EmailVerified";
 import SinglePersonSignUp from "./Dashboard/Signup_Login/singlePersonsign";
 import SignUpCouple from "./Dashboard/Signup_Login/SignUpCouples";
 import CoupleDetailPage from "./LandingPage/Pages/CoupleDetailPage";
+import Myevents from "./Dashboard/MainDashboard/db_components/Myevent";
 
 function App() {
   const location = useLocation();
@@ -75,6 +76,7 @@ function App() {
           <Route path="/create_club" element={<CreateClubPage />} />
           <Route path="/create_travel" element={<CreateTravelPage />} />
           <Route path="/event-page" element={<EventPage />} />
+          <Route path="/my-event" element={<Myevents/>} />
           <Route path="/event-detail" element={<EventDetailPage />} />
           <Route path="/club-page" element={<ClubPage />} />
 

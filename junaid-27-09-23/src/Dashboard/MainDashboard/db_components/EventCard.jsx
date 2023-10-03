@@ -9,6 +9,7 @@ import { LiaCalendarWeekSolid } from "react-icons/lia";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
+import {FiUsers} from 'react-icons/fi'
 const EventCard = ({ event }) => {
   const [username, setUserName] = useState("");
   const [isJoined, setIsJoined] = useState(false);
@@ -32,6 +33,7 @@ const EventCard = ({ event }) => {
         Token:usertoken
       }
     });
+    console.log(data,"ashdg")
     setUserName(data.username);
   };
   const handleEvent = (id) => {
@@ -66,7 +68,7 @@ const EventCard = ({ event }) => {
       console.log(error);
     }
   };
-
+console.log(event.participants.length)
   const hasUserJoined = event.participants?.some(
     (participant) =>
       participant.user === userInfo._id && participant.status === "Approved"
@@ -96,14 +98,19 @@ const EventCard = ({ event }) => {
             />
             <DatePicker
               dateFormat="yyyy/MM/dd"
-              selected={new Date(event?.date)}
+              selected={new Date(event?.Startdate)}
               className="font-body_font"
             />
           </div>
         </div>
         <p className="text-md my-3">
-          <span className="font-body_font">{event?.type} by </span>
-          <span className="text-yellow-2 font-body_font">{username}</span>
+          {/* <span className="font-body_font">{event?.type} by </span> */}
+          {event?.type === 'Public Event' ? (
+          <span className="text-red-500">{event?.type}</span>
+        ) : (
+        <span className="text-green-500">{event?.type}</span>
+         )}
+          <span className="text-white-2 font-body_font"> by {username}</span>
         </p>
         <div className="flex items-center justify-between">
           <p className="flex items-center gap-1 font-light text-md font-body_font">
@@ -175,7 +182,7 @@ const EventCard = ({ event }) => {
             )}
           </div>
         </div>
-        <div className="flex flex-wrap gap-2 mt-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
           {/* {userInfo._id !== event.userId ? (
             hasUserJoined || isJoined ? (
               <button
@@ -249,6 +256,9 @@ const EventCard = ({ event }) => {
           >
             View Details
           </button>
+          <div className="flex items-center gap-3 text-lg">
+            <FiUsers/><span>{event.participants.length}</span>
+          </div>
         </div>
       </div>
     </div>

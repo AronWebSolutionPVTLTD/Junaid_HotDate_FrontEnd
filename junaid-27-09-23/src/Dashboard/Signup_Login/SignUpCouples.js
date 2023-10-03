@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import {FaChevronDown} from 'react-icons/fa'
 import { BiChevronDown } from "react-icons/bi";
 import {CiEdit} from 'react-icons/ci'
+import { RiRefund2Fill } from "react-icons/ri";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const SignUpCouple = () => {
   const navigate = useNavigate();
@@ -24,13 +25,13 @@ const SignUpCouple = () => {
     Day: "",
     Year: "",
   });
-  console.log(person1, "p1dob");
+  // console.log(person1, "p1dob");
   const [person2, setPerson2] = useState({
     Month_p2: "",
     Day_p2: "",
     Year_p2: "",
   });
-  console.log(person2, "p2dob");
+  // console.log(person2, "p2dob");
   const [bodyhair, SetBodyHair] = useState([]);
   const [isGenderSelected, setIsGenderSelected] = useState(false);
   const [isGenderSelected_2, setIsGenderSelected_2] = useState(false);
@@ -82,6 +83,8 @@ const SignUpCouple = () => {
     person2_Name:""
   });
   const ref = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
   const weights = [];
 
   for (let kg = 36; kg <= 182; kg++) {
@@ -239,10 +242,12 @@ const SignUpCouple = () => {
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (ref.current && !ref.current.contains(event.target) && ref3.current && !ref3.current.contains(event.target)) {
         setIsActive(false);
         setIsActive2(false);
+        if(ref2.current && !ref2.current.contains(event.target)){
         setIsEditing('')
+        }
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -255,27 +260,21 @@ const SignUpCouple = () => {
     setIsActive(true);
   };
 
- 
+
 
   //   _____DOB handler____________
   const handlechange = (e) => {
-    console.log(e.target,"adsjhkhdsakj")
+    // console.log(e.target,"adsjhkhdsakj")
     const { name, value } = e.target;
     setPerson1({ ...person1, [name]: value });
   };
 
   const handleInput = (e) => {
     const { name, value } = e.target;
-    console.log(e.target);
+    // console.log(e.target);
     setForm({ ...form, [name]: value });
-
-    if (name === 'gender' && value !== '') {
-      setIsGenderSelected(true);
-    } else {
-      setIsGenderSelected(false);
-    }
   };
-  console.log(form);
+  // console.log(form);
 
   const handleBodyhair = (e) => {
     const data = bodyhair;
@@ -287,6 +286,23 @@ const SignUpCouple = () => {
       SetBodyHair(data);
     }
   };
+
+
+console.log(isGenderSelected,isGenderSelected_2)
+useEffect(()=>{
+if(form['gender']){
+  setIsGenderSelected(true)
+}else{
+  setIsGenderSelected(false)
+}
+if(form2['gender_2']){
+  setIsGenderSelected_2(true)
+}else{
+  setIsGenderSelected_2(false)
+}
+},[form['gender'],form2['gender_2']])
+
+
   const handleimage = async (e) => {
     const file = e.target.files[0];
 
@@ -332,7 +348,7 @@ const SignUpCouple = () => {
   };
 
   //   console.log(interest);
-  console.log(form, "preson111111111111111111111111");
+  // console.log(form, "preson111111111111111111111111");
 
   //   ___________________PERSON 2_______________________________________
 
@@ -359,19 +375,12 @@ const SignUpCouple = () => {
 
   const handleInput_person2 = (e) => {
     const { name, value } = e.target;
-    console.log(e.target, "second");
+    // console.log(e.target, "second");
     setForm2({ ...form2, [name]: value });
-
-    if (name === 'gender_2' && value !== '') {
-      setIsGenderSelected_2(true);
-    } else {
-      setIsGenderSelected_2(false);
-    }
-
   };
-  console.log(form2, "person2222222222222222");
+  // console.log(form2, "person2222222222222222");
 
-  console.log(bodyhair2);
+  // console.log(bodyhair2);
 
   //  ________________________________Api fetching_________________________
 
@@ -466,7 +475,7 @@ const SignUpCouple = () => {
         formData,
         config
       );
-      console.log(isGenderSelected,isGenderSelected_2)
+      // console.log(isGenderSelected,isGenderSelected_2)
       if (isGenderSelected && isGenderSelected_2) {
       if (data) {
         navigate("/verify_email");
@@ -845,12 +854,17 @@ const SignUpCouple = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     {/* ____________________________FORM 1_________________________ */}
-                    <form className="my-10">
+                    <div className="my-10">
                       <div className="text-end flex items-center justify-end pb-0">
-                        {isEditing==="person1"?<input ref={ref}  type="text"
+                        {isEditing==="person1"?<input ref={ref2}  type="text"
                         className="w-80 border-2 border-orange rounded-[5px] h-[27px] text-black px-5 font-light"
                             placeholder="Person1 Name"
                             onChange={handleInput}
+                            onKeyUp={(e) => {
+                              if (e.key === 'Enter') {
+                                setIsEditing(false);
+                              }
+                            }}
                             value={form.person1_Name}
                             name="person1_Name"
                             />:<p className="text-end flex items-center justify-end">{form.person1_Name ? form.person1_Name : "Person 1"}{" "} <span className="text-lg ml-2 inline-flex items-center"><CiEdit onClick={()=>handleEditClick("person1")} /></span></p>}
@@ -910,7 +924,7 @@ const SignUpCouple = () => {
                           value={form.gender}
                           onChange={handleInput}
                         >
-                          <option>Please Select </option>
+                          <option value="">Please Select </option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
                           <option value="transgender">Transgender</option>
@@ -919,7 +933,7 @@ const SignUpCouple = () => {
                       <div className="bg-[#202020] flex justify-between px-10 pt-5">
                         <span>Body Hair</span>
                         <div
-                          ref={ref}
+                          ref={ref3}
                           className={`select_ctmBox ${
                             isActive ? "active" : ""
                           }`}
@@ -963,7 +977,7 @@ const SignUpCouple = () => {
                           value={form.body_type}
                           onChange={handleInput}
                         >
-                          <option>Please select</option>
+                          <option value="">Please select</option>
                           {bodytype.map((body, i) => (
                             <option key={i} value={body}>
                               {body}
@@ -980,7 +994,7 @@ const SignUpCouple = () => {
                           value={form.ethnic}
                           onChange={handleInput}
                         >
-                          <option>Please select</option>
+                          <option value="">Please select</option>
                           {ethnic.map((ethnic, i) => (
                             <option key={i} value={ethnic}>
                               {ethnic}
@@ -997,7 +1011,7 @@ const SignUpCouple = () => {
                           value={form.height}
                           onChange={handleInput}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           {heights.map((height, i) => (
                             <option key={i} value={height}>
                               {height}
@@ -1013,7 +1027,7 @@ const SignUpCouple = () => {
                           value={form.weight}
                           onChange={handleInput}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           {weights.map((weight, i) => (
                             <option key={i} value={weight}>
                               {weight}
@@ -1043,7 +1057,7 @@ const SignUpCouple = () => {
                           value={form.piercing}
                           onChange={handleInput}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="no"> No</option>
                           <option value="yes"> Yes</option>
                         </select>
@@ -1056,7 +1070,7 @@ const SignUpCouple = () => {
                           value={form.tattoo}
                           onChange={handleInput}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="no">No</option>
                           <option value="yes"> Yes</option>
                           <option value="a few">A Few</option>
@@ -1070,7 +1084,7 @@ const SignUpCouple = () => {
                           value={form.circumcised}
                           onChange={handleInput}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -1083,7 +1097,7 @@ const SignUpCouple = () => {
                           value={form.looks}
                           onChange={handleInput}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="low importance">Low Importance</option>
                           <option value="medium importance">
                             Medium Importance
@@ -1102,7 +1116,7 @@ const SignUpCouple = () => {
                           value={form.intelligence}
                           onChange={handleInput}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="low importance">Low Importance</option>
                           <option value="medium importance">
                             Medium Importance
@@ -1121,7 +1135,7 @@ const SignUpCouple = () => {
                           value={form.sexuality}
                           onChange={handleInput}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="straight">Straight </option>
                           <option value="bi-sexual">Bi-Sexual</option>
                           <option value="bi-curious">Bi-Curious</option>
@@ -1137,7 +1151,7 @@ const SignUpCouple = () => {
                           value={form.relationship}
                           onChange={handleInput}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="monogamous">Monogamous</option>
                           <option value="open-minded"> Open-Minded</option>
                           <option value="swinger">Swinger</option>
@@ -1223,15 +1237,20 @@ const SignUpCouple = () => {
                           </div>
                         </div>
                       </div>
-                    </form>
+                    </div>
                     {/* ____________________________FORM 2_________________________ */}
 
-                    <form className="my-10">
+                    <div className="my-10">
                     <div className="text-end flex items-center justify-end pb-0">
-                        {isEditing==="person2"?<input  type="text" ref={ref}
+                        {isEditing==="person2"?<input  type="text" ref={ref2}
                             placeholder="Perosn2 Name"
                             value={form2.person2_Name}
                             name="person2_Name"
+                            onKeyUp={(e) => {
+                              if (e.key === 'Enter') {
+                                setIsEditing(false);
+                              }
+                            }}
                             onChange={handleInput_person2}
                             className="w-80 border-2 border-orange rounded-[5px] h-[27px] text-black px-5 font-light"
                             />: <p className="text-end flex items-center justify-end">{form2.person2_Name ? form2.person2_Name : "Person 2"}{" "} <span className="text-lg ml-2 inline-flex items-center"><CiEdit onClick={()=>handleEditClick("person2")} /></span></p>}
@@ -1290,7 +1309,7 @@ const SignUpCouple = () => {
                           value={form2.gender_2}
                           onChange={handleInput_person2}
                         >
-                          <option>Please Select </option>
+                          <option value={""}>Please Select </option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
                           <option value="transgender">Transgender</option>
@@ -1344,7 +1363,7 @@ const SignUpCouple = () => {
                           value={form2.body_type_2}
                           onChange={handleInput_person2}
                         >
-                          <option>Please select</option>
+                          <option value="">Please Select</option>
                           {bodytype.map((body, i) => (
                             <option key={i} value={body}>
                               {body}
@@ -1361,7 +1380,7 @@ const SignUpCouple = () => {
                           value={form2.ethnic_2}
                           onChange={handleInput_person2}
                         >
-                          <option>Please select</option>
+                          <option value="">Please Select</option>
                           {ethnic.map((ethnic, i) => (
                             <option key={i} value={ethnic}>
                               {ethnic}
@@ -1423,7 +1442,7 @@ const SignUpCouple = () => {
                           value={form2.piercing_2}
                           onChange={handleInput_person2}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="no"> No</option>
                           <option value="yes"> Yes</option>
                         </select>
@@ -1436,7 +1455,7 @@ const SignUpCouple = () => {
                           value={form2.tattoo_2}
                           onChange={handleInput_person2}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="no">No</option>
                           <option value="yes"> Yes</option>
                           <option value="a few">A Few</option>
@@ -1450,7 +1469,7 @@ const SignUpCouple = () => {
                           value={form2.circumcised_2}
                           onChange={handleInput_person2}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -1463,7 +1482,7 @@ const SignUpCouple = () => {
                           value={form2.looks_2}
                           onChange={handleInput_person2}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="low importance">Low Importance</option>
                           <option value="medium importance">
                             Medium Importance
@@ -1482,7 +1501,7 @@ const SignUpCouple = () => {
                           value={form2.intelligence_2}
                           onChange={handleInput_person2}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="low importance">Low Importance</option>
                           <option value="medium importance">
                             Medium Importance
@@ -1517,7 +1536,7 @@ const SignUpCouple = () => {
                           value={form2.relationship_2}
                           onChange={handleInput_person2}
                         >
-                          <option>Please Select</option>
+                          <option value="">Please Select</option>
                           <option value="monogamous">Monogamous</option>
                           <option value="open-minded"> Open-Minded</option>
                           <option value="swinger">Swinger</option>
@@ -1614,7 +1633,7 @@ const SignUpCouple = () => {
                           </div>
                         </div>
                       </div>
-                    </form>
+                    </div>
                   </div>
 
                   <div className="it_checkbox flex gap-4 justify-center">

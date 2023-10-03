@@ -15,6 +15,7 @@ const EventPage = () => {
   const getEvent = async () => {
     const { data } = await axios.get(`${BASE_URL}/api/events?q=${searchquery}`);
     const allEvents = data.data;
+    console.log(allEvents)
     const verifiedEvents = allEvents.filter((event) => event.isverify === true);
     const newestPostFirst = verifiedEvents.reverse();
     setEvent(newestPostFirst);

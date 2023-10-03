@@ -43,6 +43,10 @@ const UserDetailPage = () => {
   //   }
   // };
 
+const RenderedStyle={
+"color":`${userInfo.gender=== 'male'?'#3A97FE':userInfo.gender=== 'female'?'#FF2A90':'#cf00cf'}`
+}
+
 
   const userDetails = async (token) => {
     const { data } = await axios.get(`${BASE_URL}/api/findone/${token._id}`);
@@ -138,7 +142,7 @@ const UserDetailPage = () => {
            {/* <p className="text-sm sm:text-lg font-body_font">Nothing</p> */}
            <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 mb-2">
                <span className="block font-body_font text-lg">Interest :</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {/* {userInfo.interests} */}
                </span>
              </div>
@@ -204,16 +208,16 @@ const UserDetailPage = () => {
          <div className="p-5 bg-black-20 rounded-2xl">
            <div className="grid grid-cols-2 gap-3 font-normal pb-3 mb-3 border-b border-orange">
              <p className="text-base sm:text-2xl">Details</p>
-             <p className={`text-right flex items-center justify-end text-xl ${userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+             <p className={`text-right flex items-center justify-end text-xl`} style={RenderedStyle}>
                
-               {userInfo.gender==="male"?(<img src="images/male.png" alt="Male" className="h-[26px] mr-1" />)
-               :(<img src="images/female.png" alt="Male" className="h-[26px] mr-1" />)}
+               {userInfo.gender==="male"?(<img src="images/male.png" alt="Male" className="h-[26px] mr-1" />):userInfo.gender==="female"? (<img src="images/female.png" alt="Male" className="h-[26px] mr-1" />)
+               :(<img src="images/trans.png" alt="trans" className="h-[26px] mr-1" />)}
                 {userInfo.personName}</p>
            </div>
            <div className="grid">
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px]">
                <span className="block font-body_font">Member Since:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {formattedDate}
                </span>
              </div>
@@ -221,19 +225,19 @@ const UserDetailPage = () => {
                <span className="block font-body_font">
                  Ethnic Background:
                </span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.ethnic_background}
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px]">
                <span className="block font-body_font">Experience:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.experience}
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 py-[5px] border-b border-[#666]">
                <span className="block font-body_font">Gender:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.gender}
                </span>
              </div>
@@ -241,7 +245,7 @@ const UserDetailPage = () => {
            <div className="grid">
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px] ">
                <span className="block font-body_font">Birthdate:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.DOB}
                </span>
              </div>
@@ -255,32 +259,32 @@ const UserDetailPage = () => {
                <span className="block font-body_font">
              Sexuality
                </span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.sexuality}
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px] ">
                <span className="block font-body_font">Height:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.height}
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px] ">
                <span className="block font-body_font">Weight:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.weight}
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px] ">
                <span className="block font-body_font">Body Type:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.body_type}
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px] ">
                <span className="block font-body_font">Body Hair:</span>
                {userInfo.body_hair?.map((el, i) => (
-                 <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`} key={i}>
+                 <span className={`block text-right font-body_font`} style={RenderedStyle} key={i}>
            {i !== 0 && <span>, </span>}
                    {el}
                  </span>
@@ -288,37 +292,37 @@ const UserDetailPage = () => {
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px] ">
                <span className="block font-body_font">Piercings:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.piercings}
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px] ">
                <span className="block font-body_font">Looks:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.looks_important}
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px] ">
                <span className="block font-body_font">Smoking:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.smoking}
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px] ">
                <span className="block font-body_font">Tattoos:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.tattoos}
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 py-[5px]">
                <span className="block font-body_font">Relationship_status:</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.relationship_status}
                </span>
              </div>
              {/* <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 border-b border-[#666] py-[5px] ">
                <span className="block font-body_font text-3xl">Interest :</span>
-               <span className={`block text-right font-body_font ${ userInfo.gender=== 'female' ? 'female_login_data' : 'male_login_data'}`}>
+               <span className={`block text-right font-body_font`} style={RenderedStyle}>
              
                </span>
              </div>
