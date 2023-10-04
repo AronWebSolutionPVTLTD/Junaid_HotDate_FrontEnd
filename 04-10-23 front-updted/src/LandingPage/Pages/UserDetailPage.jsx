@@ -320,7 +320,7 @@ const RenderedStyle={
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 py-[5px] border-b border-[#666]">
-               <span className="block font-body_font">Relationship_status:</span>
+               <span className="block font-body_font">Relation</span>
                <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.relationship_status}
                </span>
