@@ -30,7 +30,7 @@ const EditUserDetailsPage = () => {
     looks: "",
     intelligence: "",
     sexuality: "",
-    relationship: "",
+    : "",
     experience: "",
     introduction: "",
     image: "",
@@ -173,7 +173,7 @@ console.log(userInfo);
         Drinking: userInfo.Drinking || "",
         Language: userInfo?.Language || "" ,
         Drugs: userInfo.Drugs || "",
-        Relationship: userInfo.Relationship || "",
+        : userInfo. || "",
         ethnic_background: userInfo.ethnic_background || "",
         smoking: userInfo.smoking || "",
         piercings: userInfo.piercings || "",
@@ -182,7 +182,7 @@ console.log(userInfo);
         looks: userInfo.looks_important || "",
         intelligence: userInfo.intelligence || "",
         sexuality: userInfo.sexuality || "",
-        relationship: userInfo.relationship_status || "",
+        : userInfo._status || "",
         experience: userInfo.experience || "",
         introduction: userInfo.introduction
       });
@@ -800,7 +800,7 @@ console.log(userDetails,"onchange")
                   htmlFor="relationship"
                   className="rounded-l-md w-full md:w-[120px] xl:w-[195px] md:h-[49px] flex items-center justify-start md:px-2 lg:px-4 text-sm mb-1 md:mb-0 md:text-text-xs xl:text-base text-orange md:text-white  font-normal leading-5 xl:leading-29 text-center lg:text-start"
                 >
-                  Realationship
+                  Realation
                 </label>
                 <select
                   name="relationship"
