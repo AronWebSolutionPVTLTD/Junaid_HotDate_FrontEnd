@@ -240,6 +240,7 @@ console.log(event,"asfbbbA")
           </div>
         </div>
       </div>
+      <div className="my-5 " ><img src="./images/dummyevent.jpg" className="w-full h-[300px] rounded-md"/></div>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {currentPost.map((el, i) => (
           <EventCard key={i} event={el} />

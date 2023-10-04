@@ -59,6 +59,9 @@ const CoupleDetailPage = () => {
   );
 
 
+console.log(userInfo,"user")
+
+
   return (
     <div className="bg-black-20">
       <div className="min-h-[350px] md:min-h-[400px] flex justify-center items-end bg-black rounded-b-50px">
@@ -218,7 +221,7 @@ const CoupleDetailPage = () => {
  :userInfo.couple?.person2?.gender==="male"?
                   <img src="images/Male.png" alt="male" className="h-[26px] mr-1" />: 
                    <img src="images/Trans.png" alt="trans" className="h-[26px] mr-1" />}
-                    {userInfo.couple?.person1?.person2_Name}</p>
+                    {userInfo.couple?.person2?.person2_Name}</p>
                 </div>
                 <div className="grid">
                   {/* <div className="text-sm sm:text-lg grid grid-cols-3 gap-3 border-b border-[#666] py-[5px]">
@@ -373,7 +376,7 @@ const CoupleDetailPage = () => {
                     </span>
                   </div>
                   <div className="text-sm sm:text-lg grid grid-cols-3 gap-3 py-[5px] border-b border-[#666] ">
-                    <span className="block font-body_font">Relationship_status:</span>
+                    <span className="block font-body_font">Relation:</span>
                     <span className={`block text-center font-body_font`} style={RenderedStyle}>
                     {userInfo.couple?.person1?.relationship_status}
                     </span>
@@ -381,7 +384,7 @@ const CoupleDetailPage = () => {
                     {userInfo.couple?.person2?.relationship_status}
                     </span>
                   </div>
-                  <div className="text-sm sm:text-lg grid grid-cols-3 gap-3  py-[5px]">
+                  <div className="text-sm sm:text-lg grid grid-cols-3 gap-3  py-[5px] border-b border-[#666]" >
                     <span className="block font-body_font">Experience:</span>
                     <span className={`block text-center font-body_font`} style={RenderedStyle}>
                     {userInfo.couple?.person1?.experience}
@@ -390,7 +393,42 @@ const CoupleDetailPage = () => {
                     {userInfo.couple?.person2?.experience}
                     </span>
                   </div>
-             
+                  <div className="text-sm sm:text-lg grid grid-cols-3 gap-3  py-[5px] border-b border-[#666]">
+                    <span className="block font-body_font">Drinking:</span>
+                    <span className={`block text-center font-body_font`} style={RenderedStyle}>
+                    {userInfo.couple?.person1?.Drinking}
+                    </span>
+                    <span className={`block text-right font-body_font`} style={RenderStyle2}>
+                    {userInfo.couple?.person2?.Drinking}
+                    </span>
+                  </div>
+                  <div className="text-sm sm:text-lg grid grid-cols-3 gap-3  py-[5px] border-b border-[#666]">
+                    <span className="block font-body_font">Drugs:</span>
+                    <span className={`block text-center font-body_font`} style={RenderedStyle}>
+                    {userInfo.couple?.person1?.Drugs}
+                    </span>
+                    <span className={`block text-right font-body_font`} style={RenderStyle2}>
+                    {userInfo.couple?.person2?.Drugs}
+                    </span>
+                  </div>
+                  <div className="text-sm sm:text-lg grid grid-cols-3 gap-3  py-[5px] border-b border-[#666]">
+                    <span className="block font-body_font">Language:</span>
+                    <span className={`block text-center font-body_font`} style={RenderedStyle}>
+                    {userInfo.couple?.person1?.Language}
+                    </span>
+                    <span className={`block text-right font-body_font`} style={RenderStyle2}>
+                    {userInfo.couple?.person2?.Language}
+                    </span>
+                  </div>
+                  <div className="text-sm sm:text-lg grid grid-cols-3 gap-3  py-[5px] border-b border-[#666]">
+                    <span className="block font-body_font">Relationship:</span>
+                    <span className={`block text-center font-body_font`} style={RenderedStyle}>
+                    {userInfo.couple?.person1?.Relationship}
+                    </span>
+                    <span className={`block text-right font-body_font`} style={RenderStyle2}>
+                    {userInfo.couple?.person2?.Relationship}
+                    </span>
+                  </div>
                 </div>
             
               </div>

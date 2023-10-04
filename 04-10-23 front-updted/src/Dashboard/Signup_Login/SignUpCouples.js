@@ -458,8 +458,8 @@ if(form2['gender_2']){
         tattoos: form2.tattoo_2,
         Drinking: form2.Drinking_2,
         Drugs: form2.Drugs_2,
-        Relationship:form2.Relationship_2,
-        Language_2:form2.Language_2,
+        Relationship:form2.Relationship_2,  
+        Language:form2.Language_2,
         piercings: form2.piercing_2,
         circumcised: form2.circumcised_2,
         looks_important: form2.looks_2,
@@ -468,7 +468,7 @@ if(form2['gender_2']){
         relationship_status: form2.relationship_2,
         experience: form2.experience_2,
         gender: form2.gender_2,
-        person2_Name:form.person2_Name
+        person2_Name:form2.person2_Name
       },
     };
 
@@ -1536,8 +1536,8 @@ if(form2['gender_2']){
                       <select
                         className="bg-[#202020] text-white text-end"
                         name="Drinking_2"
-                         value={form.Drinking_2}
-                         onChange={handleInput}
+                         value={form2.Drinking_2}
+                         onChange={handleInput_person2}
                       >
                         <option value="">Please Select</option>
                         <option value="Not your business">Not your business </option>
@@ -1551,8 +1551,8 @@ if(form2['gender_2']){
                       <select
                         className="bg-[#202020] text-white text-end"
                         name="Drugs_2"
-                        value={form.Drugs_2}
-                        onChange={handleInput}
+                        value={form2.Drugs_2}
+                        onChange={handleInput_person2}
                       >
                         <option value="">Please Select</option>
                         <option value="Not your business">Not your business</option>
@@ -1566,8 +1566,8 @@ if(form2['gender_2']){
                       <select
                         className="bg-[#202020] text-white text-end"
                         name="Relationship_2"
-                        value={form.Relationship_2}
-                        onChange={handleInput}
+                        value={form2.Relationship_2}
+                        onChange={handleInput_person2}
                       >
                         <option value="">Please Select</option>
                         <option value="Single">Single</option>
@@ -1659,7 +1659,8 @@ if(form2['gender_2']){
                       </div>
                       <div className="bg-[#202020] grid grid-cols-2 px-10 pt-5">
                       <span>Language</span>
-                      <input className="max-w-[450px] border-2 border-orange rounded-[5px] h-[40px] text-black px-5 font-light ml-auto" type="text" placeholder="Languages"  onChange={handleInput} name="Language_2" value={form.Language_2}></input>
+                      <input className="max-w-[450px] border-2 border-orange rounded-[5px] h-[40px] text-black px-5 font-light ml-auto" type="text" placeholder="Languages" 
+                       onChange={handleInput_person2} name="Language_2" value={form2.Language_2}></input>
                     </div>
                       <div className="bg-[#202020]  px-10 py-5 ">
                         <div>
