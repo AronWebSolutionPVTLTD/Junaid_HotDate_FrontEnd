@@ -411,6 +411,7 @@ if(form2['gender_2']){
     .toString()
     .padStart(2, "0");
   const formattedDate2 = `${year1}/${month1}/${day1}`;
+ 
   const handleEditClick = (person) => {
     setIsEditing(person);
   };
@@ -889,7 +890,10 @@ if(form2['gender_2']){
                             }}
                             value={form.person1_Name}
                             name="person1_Name"
-                            />:<p className="text-end flex items-center justify-end">{form.person1_Name ? form.person1_Name : "Person 1"}{" "} <span className="text-lg ml-2 inline-flex items-center"><CiEdit onClick={()=>handleEditClick("person1")} /></span></p>}
+                            />:<p className="text-end flex items-center justify-end">
+                              {form.person1_Name ? form.person1_Name : "Person 1"}{" "} 
+                              <span className="text-lg ml-2 inline-flex items-center">
+                                <CiEdit onClick={()=>handleEditClick("person1")} /></span></p>}
                       </div>
                      
                       <div className="bg-[#202020] grid grid-cols-2   px-10 pt-5">
@@ -1312,7 +1316,8 @@ if(form2['gender_2']){
 
                     <div className="my-10">
                     <div className="text-end flex items-center justify-end pb-0">
-                        {isEditing==="person2"?<input  type="text" ref={ref2}
+                        {isEditing==="person2"?
+                        <input  type="text" ref={ref2}
                             placeholder="Perosn2 Name"
                             value={form2.person2_Name}
                             name="person2_Name"
@@ -1322,8 +1327,14 @@ if(form2['gender_2']){
                               }
                             }}
                             onChange={handleInput_person2}
-                            className="w-80 border-2 border-orange rounded-[5px] h-[27px] text-black px-5 font-light"
-                            />: <p className="text-end flex items-center justify-end">{form2.person2_Name ? form2.person2_Name : "Person 2"}{" "} <span className="text-lg ml-2 inline-flex items-center"><CiEdit onClick={()=>handleEditClick("person2")} /></span></p>}
+                            className="w-80 border-2 border-orange
+                             rounded-[5px] h-[27px]
+                             text-black px-5 font-light"
+                            />:
+                             <p className="text-end flex items-center justify-end">
+                              {form2.person2_Name ? form2.person2_Name : "Person 2"}
+                               <span className="text-lg ml-2 inline-flex items-center">
+                                <CiEdit onClick={()=>handleEditClick("person2")} /></span></p>}
                       </div>
                       <div className="bg-[#202020] grid grid-cols-2   px-10 pt-5">
                         <p className="">Birthday *</p>

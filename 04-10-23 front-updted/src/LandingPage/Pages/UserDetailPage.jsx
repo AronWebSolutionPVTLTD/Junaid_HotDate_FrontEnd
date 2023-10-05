@@ -17,7 +17,6 @@ const UserDetailPage = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
-  console.log(userInfo)
   useEffect(() => {
     if (Object.keys(userInfo).length === 0) {
       const token = cookies["token"];
@@ -55,7 +54,7 @@ const RenderedStyle={
   const formattedDate = new Date(userInfo.createdAt).toLocaleDateString(
     "en-GB"
   );
-  console.log(userInfo,"fuysfy gy");
+  
   return (<>
 
 {userInfo.profile_type==="single"?

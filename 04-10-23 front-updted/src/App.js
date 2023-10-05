@@ -37,6 +37,7 @@ import SinglePersonSignUp from "./Dashboard/Signup_Login/singlePersonsign";
 import SignUpCouple from "./Dashboard/Signup_Login/SignUpCouples";
 import CoupleDetailPage from "./LandingPage/Pages/CoupleDetailPage";
 import Myevents from "./Dashboard/MainDashboard/db_components/Myevent";
+import CoupleEditDetailPage from "./LandingPage/Pages/CoupleEditDetailPage";
 
 function App() {
   const location = useLocation();
@@ -60,6 +61,7 @@ function App() {
           <Route path="/withdraw" element={<WithdrawlPage />} />
           <Route path="/user-detail" element={<UserDetailPage />} />
           <Route path="/edit-detail" element={<EditUserDetailsPage />} />
+          <Route path="/coupleEdit-detail" element={<CoupleEditDetailPage />} />
         </Route>
         <Route path="/signup" element={<Signup />} />
         <Route path="/single" element={<SinglePersonSignUp />} />

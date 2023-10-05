@@ -59,7 +59,7 @@ const CoupleDetailPage = () => {
   );
 
 
-console.log(userInfo,"user")
+
 
 
   return (
@@ -134,7 +134,7 @@ console.log(userInfo,"user")
                 <div className="flex justify-between gap-3 font-normal pb-3 mb-3 border-b border-orange">
                   <p className="text-base sm:text-2xl">Profile</p>
                   <Link
-                    to="/edit-detail"
+                    to="/coupleEdit-detail"
                     className="cursor-pointer text-xs sm:text-lg"
                   >
                     Edit

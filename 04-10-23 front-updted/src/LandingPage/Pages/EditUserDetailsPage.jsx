@@ -53,7 +53,7 @@ const EditUserDetailsPage = () => {
   const navigate = useNavigate();
   const Id = userInfo._id;
   const weights = [];
-console.log(userInfo);
+
   for (let kg = 36; kg <= 182; kg++) {
     const lbs = (kg * 2.20462).toFixed(2);
     weights.push(`${kg} kg (${lbs} lbs)`);
@@ -151,14 +151,14 @@ console.log(userInfo);
   ];
   const Birthday = userInfo.DOB?.replace(/\//g, '-');
 
-  console.log(Id);
+
   useEffect(() => {
     getData();
     const token = cookies["token"];
     setUsertoken(token);
     
     if (userInfo) {
-   console.log(userInfo,"NOw")
+
       
       setUserDetails({
         userId: userInfo._id,
@@ -189,7 +189,7 @@ console.log(userInfo);
     
     }
   }, []);
-  console.log(userDetails,"dfsgfsdgf")
+
   
   const getData = () => {
     fetch("countries.json", {
@@ -212,7 +212,7 @@ console.log(userInfo);
 
 
 
-console.log(userDetails,"onchange")
+
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -288,7 +288,7 @@ console.log(userDetails,"onchange")
      setUserDetails({...userDetails,['body_hair']:data});
     }
   };
-  console.log(userDetails,"hair")
+
   return (
     <div className="bg-black-20">
       <div className="min-h-[350px] md:min-h-[400px] flex justify-center items-end bg-black rounded-b-50px">
