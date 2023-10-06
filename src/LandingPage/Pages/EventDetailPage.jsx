@@ -321,7 +321,7 @@ navigate("/event-page")
 
 <div className="my-4"> 
 <p className="text-lg text-orange font-semibold">DESCRIPTION</p>
-{ calculatePreciseDistance(eventInfo?.location?.lon,savedCred.long,eventInfo?.location?.lat,savedCred.lat)}miles
+{ calculatePreciseDistance(eventInfo?.location?.lon,savedCred.long,eventInfo?.location?.lat,savedCred.lat).slice(0,3)}miles
 </div>
 
               <div>
@@ -336,7 +336,7 @@ navigate("/event-page")
                    <span className="text-green-500">{eventInfo?.type} </span>
                     )}
                   <span className="font-body_font">
-                   BY : {eventInfo.userId?.username}
+                   by : {eventInfo.userId?.username}
                   </span>
                 </p>
                 <p className="text-base my-2 flex items-center gap-2">

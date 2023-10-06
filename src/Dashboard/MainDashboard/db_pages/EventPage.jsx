@@ -206,10 +206,11 @@ console.log(event,"asfbbbA")
                   </div>
                   <div className="distance_filter">
                     <label htmlFor="distance" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DISTANCE</label>
+                    {filter?.distance}miles
                     <input type="range" className="w-full mb-6 h-[3px]" id="distance" name="distance"
                       value={filter.distance}
                       onChange={handleChange}
-                      min={0} max={50} />
+                      min={200} max={1050} />
                   </div>
                   <div>
                     <label htmlFor="date">DATE</label>
@@ -240,7 +241,7 @@ console.log(event,"asfbbbA")
           </div>
         </div>
       </div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
         {currentPost.map((el, i) => (
           // <EventCard key={i} event={el} />
           <>

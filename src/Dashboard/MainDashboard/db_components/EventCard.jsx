@@ -96,10 +96,18 @@ const EventCard = ({ event,loc }) => {
         className="w-full object-cover aspect-11/10 rounded-t-2xl"
          onClick={() => handleEvent(event._id)}
       />
-      <div className="bg-light-grey p-4 rounded-b-2xl">
-        <div className="flex flex-wrap justify-between gap-x-3 gap-y-2">
-          <h3 className="text-2xl font-semibold">{event?.eventName}</h3>
-          <div className="date_picker relative ">
+      <div className="bg-light-grey p-4 rounded-b-2xl grid gap-1">
+      <h3 className="text-2xl font-semibold">{event?.eventName}</h3>
+        <div className="flex justify-between gap-2">
+        <p className="text-md">
+        {event?.type === 'Public Event' ? (
+          <span className="text-red-500">{event?.type} </span>
+        ) : (
+        <span className="text-green-500">{event?.type} </span>
+         )}
+          <span className="text-white-2 font-body_font">by {username}</span>
+        </p>
+        <div className="date_picker relative ">
             <img
               src="images/calendar-icon.png"
               alt="calendar-icon"
@@ -112,18 +120,9 @@ const EventCard = ({ event,loc }) => {
               className="font-body_font"
             />
           </div>
-          { calculatePreciseDistance(event?.location?.lon,savedCred.long,event?.location?.lat,savedCred.lat)}miles
         </div>
-        <p className="text-md my-3">
-        {event?.type === 'Public Event' ? (
-          <span className="text-red-500">{event?.type} </span>
-        ) : (
-        <span className="text-green-500">{event?.type} </span>
-         )}
-          <span className="text-white-2 font-body_font">by {username}</span>
-        </p>
-        <div className="flex items-center justify-between">
-          <p className="flex items-center gap-1 font-light text-md font-body_font">
+        <div className="flex flex-wrap justify-between gap-x-3 gap-y-2">
+        <p className="flex items-center gap-1 font-light text-md font-body_font">
             {/* {event.accepted_type(includes) } */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -160,8 +159,13 @@ const EventCard = ({ event,loc }) => {
                 />
               </g>
             </svg>
-            {event?.location?.display_name?.length > 16 ?event?.location?.display_name?.slice(0,16)+ "..":event?.location?.display_name}
+            {event?.location?.display_name?.length > 10 ?event?.location?.display_name?.slice(0,10)+ "..":event?.location?.display_name}
           </p>
+          { calculatePreciseDistance(event?.location?.lon,savedCred.long,event?.location?.lat,savedCred.lat).slice(0,3)}miles
+        </div>
+        
+        <div className="flex items-center justify-between">
+          
           <div className="flex items-center gap-1">
             {event?.accepted_type.includes("M") ? (
               <img src="images/Male.png" alt="male-user" className="h-[26px]"/>
@@ -194,6 +198,9 @@ const EventCard = ({ event,loc }) => {
               ""
             )}
           </div>
+          <div className="flex items-center gap-3 text-lg">
+            <FiUsers/><span>{event.participants.length}</span>
+          </div>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
           {/* {userInfo._id !== event.userId ? (
@@ -219,7 +226,7 @@ const EventCard = ({ event,loc }) => {
             event.type == "Public Event" ? (
               hasUserJoined || isJoined ? (
                 <button
-                  className="primary_btn !py-1 !text-sm !leading-[28px]"
+                  className="primary_btn !py-1 !text-sm !leading-[28px] !px-1 w-[140px] !text-[12px]"
                   // onClick={() => handleJoinEvent(event._id)}
                   disabled
                 >
@@ -227,7 +234,7 @@ const EventCard = ({ event,loc }) => {
                 </button>
               ) : (
                 <button
-                  className="primary_btn !py-1 !text-sm !leading-[28px]"
+                  className="primary_btn !py-1 !text-sm !leading-[28px] !px-1 w-[140px] !text-[12px]"
                   onClick={() => handleJoinEvent(event._id)}
                 >
                   Join Now
@@ -236,14 +243,14 @@ const EventCard = ({ event,loc }) => {
             ) : event.type == "Private Event" ? (
               hasUserPending || isJoined ? (
                 <button
-                  className="primary_btn !py-1 !text-sm !leading-[28px]"
+                  className="primary_btn !py-1 !text-sm !leading-[28px] !px-1 w-[140px] !text-[12px]"
                   onClick={() => handleJoinEvent(event._id)}
                 >
                   Request Sent
                 </button>
               ) : hasUserJoined ? (
                 <button
-                  className="primary_btn !py-1 !text-sm !leading-[28px]"
+                  className="primary_btn !py-1 !text-sm !leading-[28px] !px-1 w-[140px] !text-[12px]"
                   // onClick={() => handleJoinEvent(event._id)}
                   disabled
                 >
@@ -251,7 +258,7 @@ const EventCard = ({ event,loc }) => {
                 </button>
               ) : (
                 <button
-                  className="primary_btn !py-1 !text-sm !leading-[28px]"
+                  className="primary_btn !py-1 !text-sm !leading-[28px] !px-1 w-[140px] !text-[12px]"
                   onClick={() => handleJoinEvent(event._id)}
                 >
                   Send Join Request
@@ -269,9 +276,7 @@ const EventCard = ({ event,loc }) => {
           >
             View Details
           </button>
-          <div className="flex items-center gap-3 text-lg">
-            <FiUsers/><span>{event.participants.length}</span>
-          </div>
+          
         </div>
       </div>
     </div>

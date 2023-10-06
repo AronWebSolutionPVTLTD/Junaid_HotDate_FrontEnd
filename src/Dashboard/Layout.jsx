@@ -43,7 +43,7 @@ const Layout = () => {
           <div
             className={`${
               layout === "layout-1"
-                ? "w-full xl:w-3/5 sm:px-5"
+                ? "w-full xl:w-4/5 sm:px-5"
                 : "w-full xl:w-4/5 sm:px-5 xl:pr-0"
             }`}
           >
@@ -52,7 +52,7 @@ const Layout = () => {
             </div>
           </div>
           {layout === "layout-1" && (
-            <div className="w-full xl:w-1/5">
+            <div className="w-full xl:w-1/5 hidden">
               <div className="sticky top-0 bg-dark-black rounded-l-2xl p-6 py-8 w-full flex justify-start">
                 <ModelSidebarList />
               </div>

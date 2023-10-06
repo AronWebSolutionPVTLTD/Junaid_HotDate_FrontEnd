@@ -409,7 +409,7 @@ const CoupleDetailPage = () => {
                     </span>
                   </div>
                   <div className="text-sm sm:text-lg grid grid-cols-3 gap-3 py-[5px] border-b border-[#666] ">
-                    <span className="block font-body_font">Relationship:</span>
+                    <span className="block font-body_font">Relationship Status:</span>
                     <span className={`block text-center font-body_font`} style={RenderedStyle}>
                     {userInfo.couple?.person1?.Relationship}
                     </span>

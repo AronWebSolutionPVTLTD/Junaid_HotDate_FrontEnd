@@ -398,7 +398,10 @@ console.log(formData)
           <div className="relative w-full">
                   <div className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
                     <img className="w-full object-contain max-h-[100px]" src={image} />
-                    {image && (<span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange text-black" onClick={(e)=>setImage('')}><IoCloseCircleSharp /></span>)}
+                    {image && (<span className="preview_close absolute top-0 transform
+                     translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5
+                      h-5 rounded-full bg-orange text-black" 
+                      onClick={(e)=>setImage('')}><IoCloseCircleSharp /></span>)}
                   </div>
                 </div>
 

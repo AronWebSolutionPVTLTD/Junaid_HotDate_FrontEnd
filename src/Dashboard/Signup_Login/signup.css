@@ -115,11 +115,10 @@
   .ctm_select_drop label > span{
     display: flex;
     align-items: center;
-    width: 120px;
-    @apply p-3 px-4 rounded-md rounded-r-none text-sm
+    height: auto;
+    @apply p-3 px-4 rounded-md rounded-r-none
   }
   .ctm_select_drop .select_label{
-    width: calc(100% - 120px);
     @apply bg-black-20 items-center rounded-md rounded-l-none
   }
   .ctm_select_drop .select_label .select_label_icon{

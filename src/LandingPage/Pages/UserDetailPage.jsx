@@ -17,7 +17,7 @@ const UserDetailPage = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
-  console.log(userInfo)
+
   useEffect(() => {
     if (Object.keys(userInfo).length === 0) {
       const token = cookies["token"];
@@ -55,7 +55,7 @@ const RenderedStyle={
   const formattedDate = new Date(userInfo.createdAt).toLocaleDateString(
     "en-GB"
   );
-  console.log(userInfo,"fuysfy gy");
+
   return (<>
 
 {userInfo.profile_type==="single"?
@@ -289,7 +289,7 @@ const RenderedStyle={
                <span className="block text-right">
                {userInfo.body_hair?.map((el, i) => (
                  <span className={` font-body_font`} style={RenderedStyle} key={i}>
-           {i !== 0 && <span>, </span>}
+           {i !== 0  && <span>, </span>}
                    {el}
                  </span>
                ))}
@@ -338,7 +338,7 @@ const RenderedStyle={
                </span>
              </div>
              <div className="text-sm sm:text-lg grid grid-cols-2 gap-3 py-[5px] border-b border-[#666] ">
-               <span className="block font-body_font">Relationship:</span>
+               <span className="block font-body_font">Relationship Status:</span>
                <span className={`block text-right font-body_font`} style={RenderedStyle}>
                  {userInfo.Relationship}
                </span>

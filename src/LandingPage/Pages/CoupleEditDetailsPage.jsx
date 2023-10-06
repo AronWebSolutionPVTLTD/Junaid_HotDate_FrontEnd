@@ -6,8 +6,10 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import {BiChevronDown} from 'react-icons/bi'
 import {MdOutlineModeEditOutline} from 'react-icons/md'
+import { IoCloseCircleSharp } from "react-icons/io5";
 
 const CoupleEditDetailPage = () => {
+  const [image, setImage] = useState();
   const [isEditing, setIsEditing] = useState(null);
   const ref= useRef(null);
   const { userInfo, setUserInfo } = useContext(Context);
@@ -181,6 +183,13 @@ const [person2,setPerson2]=useState({
   };
 
 
+  useEffect(()=>{
+    if(userInfo.image){
+      setImage(userInfo.image)
+     
+    }
+    },[image])
+    
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -283,6 +292,12 @@ console.log(userInfo,"userinfo")
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
+    if (!file) {
+      return;
+    } else {
+      setImage(URL.createObjectURL(e.target.files[0]));
+    }
+
     const formData = new FormData();
 
     formData.append("image", file);
@@ -428,7 +443,7 @@ console.log(userInfo,"userinfo")
         <form className=" max-w-7xl mx-auto mt-10" autoComplete="off">
           <div className="grid md:grid-cols-2 gap-x-10 justify-stretch items-start md:justify-center gap-y-4 sm:gap-y-6">
             <div className="grid gap-y-4 md:gap-y-6">
-            <div className="flex justify-between">
+            <div className="">
                 {isEditing==="person1"?
                   <input type="text"  ref={ref} placeholder="person1 Name"
                   value={userDetails.person1_Name}
@@ -444,7 +459,7 @@ console.log(userInfo,"userinfo")
                   rounded-[5px] h-[27px]
                   text-black px-5 font-light"
                   />:
-                    <p className="text-2xl font-medium">
+                    <p className="text-2xl font-medium flex justify-between">
                     {userDetails.person1_Name ? userDetails.person1_Name : userInfo?.couple?.person1?.person1_Name? userInfo?.couple?.person1?.person1_Name :"Person 1"}
                     <span className="flex items-center text-xl cursor-pointer">
                       <MdOutlineModeEditOutline  onClick={()=>handleEditClick("person1")} /></span>
@@ -535,14 +550,14 @@ console.log(userInfo,"userinfo")
                 <div className="p-2 rounded-lg input_field">
                   <label
                     htmlFor="body_hair"
-                    className="flex justify-between items-center w-full bg-black-20"
+                    className="flex justify-between items-center w-full bg-black-20 items-stretch"
          
-                  ><span className="gradient gradient rounded-l-md w-full md:w-[120px] xl:w-[195px] md:min-h-[49px] flex items-center justify-start md:px-2 lg:px-4 text-sm mb-1 md:mb-0 md:text-text-xs xl:text-base text-orange md:text-white  font-normal leading-5 xl:leading-29 text-center lg:text-start">
+                  ><span className="gradient gradient rounded-l-md w-full md:w-[120px] xl:w-[195px] flex items-center justify-start md:px-2 lg:px-4 text-sm mb-1 md:mb-0 md:text-text-xs xl:text-base text-orange md:text-white  font-normal leading-5 xl:leading-29 text-center lg:text-start">
                     Body Hair</span>
 
                   <div
                      
-                     className="select_label bg-black-20 border rounded-md md:rounded-none md:border-none md:border-l-2 md:rounded-r-md border-orange focus:outline-none focus-visible:none w-full md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)] h-[49px] text-white font-normal xl:text-lg rounded-r-md text-sm px-2 xl:px-4 py-2.5 text-start placeholder:text-lg placeholder:text-gray items-center flex justify-between"
+                     className="select_label bg-black-20 border rounded-md md:rounded-none md:border-none md:border-l-2 md:rounded-r-md border-orange focus:outline-none focus-visible:none w-full md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)] text-white font-normal xl:text-lg rounded-r-md text-sm px-2 xl:px-4 py-2.5 text-start placeholder:text-lg placeholder:text-gray items-center flex justify-between"
                      name="body_hair"
                      value={userDetails.body_hair}
                      onChange={handleChange}
@@ -550,7 +565,11 @@ console.log(userInfo,"userinfo")
                    >
                      {userDetails.body_hair.length === 0
                        ? userDetails.body_hair|| "Please select"
-                       : userDetails?.body_hair.map((el) => <span>{el},</span>)}
+                       : userDetails?.body_hair.map((el,i) => <span>
+                        {i !== 0  && <span>, </span>}
+                        {el}
+
+                        </span>)}
                         <span className="select_label_icon"><BiChevronDown /></span>
                    </div>
                      
@@ -877,7 +896,7 @@ console.log(userInfo,"userinfo")
                   htmlFor="relationship_status"
                   className="rounded-l-md w-full md:w-[120px] xl:w-[195px] md:min-h-[49px] flex items-center justify-start md:px-2 lg:px-4 text-sm mb-1 md:mb-0 md:text-text-xs xl:text-base text-orange md:text-white  font-normal leading-5 xl:leading-29 text-center lg:text-start"
                 >
-                 Realtion
+                 Relation
                 </label>
                 <select
                   name="relationship_status"
@@ -978,7 +997,7 @@ console.log(userInfo,"userinfo")
                   htmlFor="Drugs"
                   className="rounded-l-md w-full md:w-[120px] xl:w-[195px] md:min-h-[49px] flex items-center justify-start md:px-2 lg:px-4 text-sm mb-1 md:mb-0 md:text-text-xs xl:text-base text-orange md:text-white  font-normal leading-5 xl:leading-29 text-center lg:text-start"
                 >
-                  Relationship
+                  Relationship Status
                 </label>
                 <select
                   name="Relationship"
@@ -1010,7 +1029,7 @@ console.log(userInfo,"userinfo")
 
             {/* _______________________________PERSON 2_____________________ */}
             <div className="grid gap-y-4 md:gap-y-6">
-                <div className="flex justify-between">
+                <div className="">
                 {isEditing==="person2"?
                   <input type="text"  ref={ref} placeholder="person2 Name"
                   value={person2.person2_Name}
@@ -1026,7 +1045,7 @@ console.log(userInfo,"userinfo")
                   rounded-[5px] h-[27px]
                   text-black px-5 font-light"
                   />:
-                    <p className="text-2xl font-medium">
+                    <p className="text-2xl font-medium flex justify-between">
                     {person2.person2_Name ? person2.person2_Name :userInfo?.couple?.person2?.person2_Name? userInfo?.couple?.person2?.person2_Name : "Person 2"}
                     <span className="flex items-center text-xl cursor-pointer">
                       <MdOutlineModeEditOutline  onClick={()=>handleEditClick("person2")} /></span>
@@ -1131,7 +1150,8 @@ console.log(userInfo,"userinfo")
                    >
                      {person2.body_hair.length === 0
                        ? person2.body_hair|| "Please select"
-                       : person2?.body_hair.map((el) => <span>{el},</span>)}
+                       : person2?.body_hair.map((el,i) => <span>
+                        {i !== 0  && <span>, </span>}{el}</span>)}
                         <span className="select_label_icon"><BiChevronDown /></span>
                    </div>
                      
@@ -1622,6 +1642,18 @@ console.log(userInfo,"userinfo")
                     onChange={handleImageChange}
                   />
                 </label>
+
+                <div className="block mt-5">
+                  
+                  <div className="relative inline-block"> <img src={image} className="w-[64px]" />
+                  {image && (<span
+                  className="preview_close absolute top-0 transform
+                   translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5
+                    h-5 rounded-full bg-orange text-black cursor-pointer" 
+                    onClick={(e)=>setImage('')}><IoCloseCircleSharp /></span>)}
+                  </div>
+                  </div>
+
               </div>
           </div>
           <div className="flex justify-center">

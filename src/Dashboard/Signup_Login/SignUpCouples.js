@@ -10,6 +10,7 @@ import {FaChevronDown} from 'react-icons/fa'
 import { BiChevronDown } from "react-icons/bi";
 import {CiEdit} from 'react-icons/ci'
 import { RiRefund2Fill } from "react-icons/ri";
+import { IoCloseCircleSharp } from "react-icons/io5";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const SignUpCouple = () => {
   const navigate = useNavigate();
@@ -616,7 +617,15 @@ if(form2['gender_2']){
                       )}
                     </label>
                     <span className="px-5">jpg/png, max 25MB/Photo</span>
-                    <img src={image} className="W-64 h-24 py-4" />
+                    <div className="block mt-5">
+                    <div className="relative inline-block"> <img src={image} className="w-[64px]" />
+                    {image && (<span
+                    className="preview_close absolute top-0 transform
+                     translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5
+                      h-5 rounded-full bg-orange text-black cursor-pointer" 
+                      onClick={(e)=>setImage('')}><IoCloseCircleSharp/></span>)}
+                    </div>
+                    </div>
                   </div>
                 </form>
 
@@ -953,7 +962,7 @@ if(form2['gender_2']){
                           <option value="transgender">Transgender</option>
                         </select>
                       </div>
-                      <div className="bg-[#202020] flex justify-between px-10 pt-5">
+                      <div className="bg-[#202020] grid grid-cols-2 px-10 pt-5">
                         <span>Body Hair</span>
                         <div
                           ref={ref3}
@@ -1130,7 +1139,7 @@ if(form2['gender_2']){
                       </select>
                     </div>
                     <div className="bg-[#202020] grid grid-cols-2 px-10 pt-5">
-                      <span>Relationship</span>
+                      <span>Relationship Status</span>
                       <select
                         className="bg-[#202020] text-white text-end"
                         name="Relationship"
@@ -1387,7 +1396,7 @@ if(form2['gender_2']){
                           <option value="transgender">Transgender</option>
                         </select>
                       </div>
-                      <div className="bg-[#202020] flex justify-between px-10 pt-5">
+                      <div className="bg-[#202020] grid grid-cols-2 px-10 pt-5">
                         <span>Body Hair</span>
                         <div
                           ref={ref}
