@@ -50,10 +50,10 @@ const DbHeader = () => {
   };
 
   return (
-    <header className="py-8 bg-black-20 sticky top-0 z-[99] xl:static xl:bg-transparent xl:pt-10 xl:py-0 container mx-auto">
+    <header className="py-8 bg-black-20 sticky top-0 z-[99] xl:static xl:bg-transparent xl:pt-10 xl:py-0">
       <div className="flex flex-wrap justify-between xl:justify-center items-center xl:items-start px-5">
-        <div className="w-1/5 pr-5">
-          <Link to="/home">
+        <div className="w-1/5 pr-5 flex justify-end">
+          <Link to="/home" className="flex justify-center w-full max-w-[15rem]">
             <img
               src="landingPage/images/landing-logo.png"
               alt="Logo"
@@ -153,8 +153,8 @@ const DbHeader = () => {
                 </ul>
               </div>
             </div>
-            <div className="xl:w-1/5 flex gap-5 xl:gap-x-2 2xl:gap-x-8 justify-end items-center xl:pl-5 flex-wrap order-first xl:order-2 mt-8 xl:mt-0 xl:mb-0 mb-5">
-              <div className="cursor-pointer">
+            <div className="xl:w-1/5 flex justify-end items-center xl:pl-5 flex-wrap order-first xl:order-2 mt-8 xl:mt-0 xl:mb-0 mb-5">
+              <div className="cursor-pointer w-10 flex justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="23"
@@ -180,7 +180,7 @@ const DbHeader = () => {
                   />
                 </svg>
               </div>
-              <div class="notificationDrp relative">
+              <div class="notificationDrp relative ml-2 w-10 flex justify-center">
                 <div className="cursor-pointer">
                   <svg
                   onClick={toggleDropdown}
@@ -222,7 +222,7 @@ const DbHeader = () => {
                 </div>
               </div>
               <div
-                className="w-8 h-8 xl:w-10 xl:h-14 cursor-pointer flex items-center"
+                className="ml-4 h-10 w-10 cursor-pointer flex items-center"
                 onClick={() => setSidebar(!sidebar)}
               >
                 <img
