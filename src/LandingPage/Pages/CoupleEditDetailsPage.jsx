@@ -185,10 +185,10 @@ const [person2,setPerson2]=useState({
 
   useEffect(()=>{
     if(userInfo.image){
-      setImage(userInfo.image)
+      setImage(userInfo?.image)
      
     }
-    },[image])
+    },[])
     
 
   useEffect(() => {
@@ -1645,12 +1645,12 @@ console.log(userInfo,"userinfo")
 
                 <div className="block mt-5">
                   
-                  <div className="relative inline-block"> <img src={image} className="w-[64px]" />
-                  {image && (<span
+                  <div className="relative inline-block">   {image &&<><img src={image} className="w-[64px]" />
+                <span
                   className="preview_close absolute top-0 transform
                    translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5
                     h-5 rounded-full bg-orange text-black cursor-pointer" 
-                    onClick={(e)=>setImage('')}><IoCloseCircleSharp /></span>)}
+                    onClick={(e)=>setImage('')}><IoCloseCircleSharp /></span></> }
                   </div>
                   </div>
 
