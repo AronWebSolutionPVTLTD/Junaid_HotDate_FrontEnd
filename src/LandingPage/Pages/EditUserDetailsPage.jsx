@@ -311,7 +311,31 @@ if(userInfo.image){
     }
   };
 
+  const handleRemove = async() => {
+    setImage("")
+    try {
+      const formData = new FormData();
+      formData.append("image",image)
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.put(
+        `${BASE_URL}/api/upload_image/${Id}`,formData,
+        config
+      )
+      if(data){
+        setUserInfo(data)
+      }
+      
+    }
+      catch (error) {
+      console.log(error)
+    }
+  }
   console.log(image,"image")
+  
   return (
     <div className="bg-black-20">
       <div className="min-h-[350px] md:min-h-[400px] flex justify-center items-end bg-black rounded-b-50px">
@@ -706,7 +730,7 @@ if(userInfo.image){
                     className="preview_close absolute top-0 transform
                      translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5
                       h-5 rounded-full bg-orange text-black cursor-pointer" 
-                      onClick={(e)=>setImage('')}><IoCloseCircleSharp /></span></>}
+                      onClick={handleRemove }><IoCloseCircleSharp /></span></>}
                     </div>
                     </div>
 
