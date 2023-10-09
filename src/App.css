@@ -223,7 +223,7 @@ span.chip{
 .event_promo_ban {
   grid-column: 1 / span 4;
 }
-@media ( max-width: 1535px ){
+/* @media ( max-width: 1535px ){
   .event_promo_ban {
     grid-column: 1 / span 3;
   }
@@ -237,12 +237,12 @@ span.chip{
   .event_promo_ban {
     grid-column: 1 / span 1;
   }
-}
+} */
 .dashboard_body_wrap {
   position: relative;
 }
 
-.dashboard_body_wrap::before {
+/* .dashboard_body_wrap::before {
   content: '';
   position: absolute;
   width: calc( 40% - 400px );
@@ -260,8 +260,8 @@ span.chip{
   right: 0;
   top: 0;
   background: #000000;
-}
-@media ( min-width: 2560px ){
+} */
+/* @media ( min-width: 2560px ){
   .dashboard_body_wrap::before {
     content: '';
     position: absolute;
@@ -271,11 +271,17 @@ span.chip{
     top: 0;
     background: #131313;
   }
-}
+} */
 
-@media ( max-width: 1800px ) and (min-width: 1536px){
+  /* .container {
+    max-width: 1900px;
+  } */
+  .event_card_button_wrap{
+    grid-template-columns: 1fr 1fr;
+  }
+@media ( max-width: 1800px ) and (min-width: 1280px){
   .event_card_button_wrap .primary_btn {
     font-size: 11px !important;
-    width: 113px;
-}
+    padding: 0;
+  }
 }
