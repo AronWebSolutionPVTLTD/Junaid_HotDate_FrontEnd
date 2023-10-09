@@ -6,6 +6,7 @@ import { Context } from "../../../Context/context";
 import { useNavigate } from "react-router-dom";
 import ClubPage from "./ClubPage";
 import filled from "@material-tailwind/react/theme/components/timeline/timelineIconColors/filled";
+import { getPreciseDistance } from "geolib";
 
 const EventPage = () => {
   const [event, setEvent] = useState([]);
@@ -14,7 +15,7 @@ const EventPage = () => {
   const [filterDropdown, setFilterDropdown] = useState(false);
   const [recordsPerPage] = useState(8);
   const Wrapref = useRef(null);
-  const { searchquery } = useContext(Context);
+  const { searchquery, savedCred, setSavedCred } = useContext(Context);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const [filter, setFilter] = useState({
@@ -36,7 +37,17 @@ const EventPage = () => {
     setNew(newestPostFirst)
   };
 
+  // ____________CALculate the distance_______
 
+  const calculateDistance = (fLong, sLong, fLat, sLat) => {
+
+    var pdis = getPreciseDistance(
+      { latitude: Number(fLat), longitude: Number(fLong) },
+      { latitude: Number(sLat), longitude: Number(sLong) }
+    );
+    const factor = 0.621371
+    return ((pdis / 100) * factor).toFixed(2);
+  };
 
 
 
@@ -46,7 +57,12 @@ const EventPage = () => {
 
 
 
-console.log(event,"asfbbbA")
+  console.log(event, "asfbbbA")
+
+console.log(savedCred,"hhjj")
+
+
+
   const handleChange = (e) => {
     const { value, name } = e.target;
     // setFilter({...filter,[name]:value})
@@ -54,7 +70,7 @@ console.log(event,"asfbbbA")
       ...prevFilter,
       [name]: value,
     }));
-   
+
   }
 
   const Handlepublicprivate = (e) => {
@@ -64,53 +80,78 @@ console.log(event,"asfbbbA")
       ...prevFilter,
       [name]: checked,
     }));
-   
+
   }
 
   const handleCheck = (e) => {
- 
+
     e.preventDefault()
     let filtered = events;
-  
-    if(filter.public && filter.private){
+
+    if (filter.public && filter.private) {
       setEvent(filtered)
     }
-    else{
+    else {
 
-    if (filter.public) {
-      filtered = filtered.filter((event) => event.type === "Public Event");
-      console.log(filtered)
-    }
-    if (filter.private) {
-      filtered = filtered.filter((event) => event.type === "Private Event");
- 
-    }
-    if (filter.open_for) {
-    let data=[];
-    filtered.forEach((event) => event.accepted_type.map((el)=> {
-    if(el === filter.open_for){
-      data.push(event);
-    }}
-    ));
-    filtered = data;
-    }
-    if (filter.location) {
-      filtered = filtered.filter((event) =>
-        event.location.toLowerCase().includes(filter.location.toLowerCase())
-      );
-    }
-    if (filter.date) {
-    
-      filtered = filtered.filter((event) => {
-        const formattedDate = `${event.Startdate.split('T')[0]}`;
-        return formattedDate === filter.date;
+      if (filter.public) {
+        filtered = filtered.filter((event) => event.type === "Public Event");
+        console.log(filtered)
+      }
+      if (filter.private) {
+        filtered = filtered.filter((event) => event.type === "Private Event");
 
       }
-      )
+      if (filter.open_for) {
+        let data = [];
+        filtered.forEach((event) => event.accepted_type.map((el) => {
+          if (el === filter.open_for) {
+            data.push(event);
+          }
+        }
+        ));
+        filtered = data;
+      }
+      if (filter.location) {
+        filtered = filtered.filter((event) =>
+          event.location.toLowerCase().includes(filter.location.toLowerCase())
+        );
+      }
+      if (filter.date) {
+
+        filtered = filtered.filter((event) => {
+          const formattedDate = `${event.Startdate.split('T')[0]}`;
+          return formattedDate === filter.date;
+
+        }
+        )
+      }
+
+      if (filter.distance) {
+        const userLatitude = savedCred?.lat
+        const userLongitude = savedCred?.long;
+        const location = filtered.map((event) => event?.location)
+
+       
+        const filteredByDistance = filtered.filter((event) => {
+          const eventDistance = calculateDistance(
+            userLongitude,
+            event.location.lon,
+            userLatitude,
+            event.location.lat
+          );
+          
+const Distance=eventDistance.slice(0,3)
+          return Distance <= filter.distance;
+        });
+  
+        // Update the filtered events
+        filtered = filteredByDistance;
+      }
+      
+
+
+      setEvent(filtered);
     }
-   
-    setEvent(filtered);
-  }
     setFilterDropdown(false)
   }
 
@@ -245,16 +286,16 @@ console.log(event,"asfbbbA")
         {currentPost.map((el, i) => (
           // <EventCard key={i} event={el} />
           <>
-          <div key={i}>
-          <EventCard key={i} event={el} />
-        </div>
-        {(i!==7 && ((i + 1) % 4 === 0)) && (
-          <div className="event_promo_ban">
-            {/* Banner image */}
-            <img className="w-full" src="images/banner.jpg" alt="Banner" />
-          </div>
-        )}
-        </>
+            <div key={i}>
+              <EventCard key={i} event={el} />
+            </div>
+            {(i !== 7 && ((i + 1) % 4 === 0)) && (
+              <div className="event_promo_ban">
+                {/* Banner image */}
+                <img className="w-full" src="images/banner.jpg" alt="Banner" />
+              </div>
+            )}
+          </>
         ))}
       </div>
       <Pagination
