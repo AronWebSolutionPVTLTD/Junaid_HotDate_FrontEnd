@@ -99,7 +99,7 @@ const EventCard = ({ event,loc }) => {
       <div className="bg-light-grey p-4 rounded-b-2xl grid gap-1">
       <h3 className="text-2xl font-semibold">{event?.eventName}</h3>
         <div className="flex justify-between gap-2">
-        <p className="text-md">
+        <p className="text-sm">
         {event?.type === 'Public Event' ? (
           <span className="text-red-500">{event?.type} </span>
         ) : (
@@ -121,8 +121,8 @@ const EventCard = ({ event,loc }) => {
             />
           </div>
         </div>
-        <div className="flex flex-wrap justify-between gap-x-3 gap-y-2">
-        <p className="flex items-center gap-1 font-light text-md font-body_font">
+        <div className="flex flex-wrap justify-between gap-x-3 gap-y-2 text-sm">
+        <p className="flex items-center gap-1 font-light text-sm font-body_font">
             {/* {event.accepted_type(includes) } */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -202,7 +202,7 @@ const EventCard = ({ event,loc }) => {
             <FiUsers/><span>{event.participants.length}</span>
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 mt-3 event_card_button_wrap">
           {/* {userInfo._id !== event.userId ? (
             hasUserJoined || isJoined ? (
               <button
@@ -271,7 +271,7 @@ const EventCard = ({ event,loc }) => {
             ""
           )}
           <button
-            className="primary_btn !py-1 !text-sm !leading-[28px]"
+            className="primary_btn !py-1 !text-[12px] !leading-[28px] w-[140px]"
             onClick={() => handleEvent(event._id)}
           >
             View Details
