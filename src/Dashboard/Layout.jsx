@@ -34,9 +34,10 @@ const Layout = () => {
     <div className="main_dashboard_wrapper bg-black-20 text-white grid content-between min-h-screen">
       <div>
         <DbHeader />
-        <div className="dashboard_body flex flex-wrap items-stretch min-h-screen mt-5">
+        <div className="dashboard_body_wrap">
+        <div className="dashboard_body flex flex-wrap items-stretch min-h-screen mt-5 container mx-auto">
           <div className="sidebar_wrapper w-1/5 hidden xl:block">
-            <div className="bg-dark-black rounded-r-2xl p-6 py-8 w-full flex justify-end sticky top-0">
+            <div className="bg-dark-black rounded-r-2xl p-6 py-8 w-full flex justify-end sticky top-0 h-full">
               <Sidebar />
             </div>
           </div>
@@ -58,6 +59,7 @@ const Layout = () => {
               </div>
             </div>
           )}
+        </div>
         </div>
       </div>
       <div>
