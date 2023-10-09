@@ -249,7 +249,7 @@ const Sidebar = () => {
     navigate("/login");
   };
   return (
-    <div className="sidebar xl:w-80">
+    <div className="sidebar xl:w-60">
       <div>
         <img
           src={userInfo.image}
