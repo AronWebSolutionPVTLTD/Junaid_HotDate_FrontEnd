@@ -273,9 +273,6 @@ span.chip{
   }
 }
 
-  .container {
-    max-width: 1900px;
-  }
 @media ( max-width: 1800px ) and (min-width: 1536px){
   .event_card_button_wrap .primary_btn {
     font-size: 11px !important;
