@@ -50,9 +50,9 @@ const DbHeader = () => {
   };
 
   return (
-    <header className="py-8 bg-black-20 sticky top-0 z-[99] xl:static xl:bg-transparent xl:pt-10 xl:py-0">
-      <div className="flex flex-wrap justify-between xl:justify-center items-center xl:items-start px-5 xl:px-[7%]">
-        <div className="w-1/2 xl:w-[14%] pr-5">
+    <header className="py-8 bg-black-20 sticky top-0 z-[99] xl:static xl:bg-transparent xl:pt-10 xl:py-0 container mx-auto">
+      <div className="flex flex-wrap justify-between xl:justify-center items-center xl:items-start px-5">
+        <div className="w-1/5 pr-5">
           <Link to="/home">
             <img
               src="landingPage/images/landing-logo.png"
@@ -222,12 +222,12 @@ const DbHeader = () => {
                 </div>
               </div>
               <div
-                className="w-8 h-8 xl:w-[60px] xl:h-14 cursor-pointer flex items-center"
+                className="w-8 h-8 xl:w-10 xl:h-14 cursor-pointer flex items-center"
                 onClick={() => setSidebar(!sidebar)}
               >
                 <img
                   src={userInfo.image}
-                  className="block w-full h-full rounded-md object-cover"
+                  className="block w-full h-full rounded-md object-contain"
                 />
                 <span className="flex xl:hidden text-base">
                   <HiChevronDown />
