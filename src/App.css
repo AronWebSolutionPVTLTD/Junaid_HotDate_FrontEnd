@@ -119,9 +119,9 @@ body{
 .clipped_text{
   -webkit-text-fill-color: transparent;
 }
-.date_picker input {
+/* .date_picker input {
   font-weight: 600 !important;
-}
+} */
 .forgot_page *{
   @apply font-body_font
 }
@@ -237,4 +237,48 @@ span.chip{
   .event_promo_ban {
     grid-column: 1 / span 1;
   }
+}
+.dashboard_body_wrap {
+  position: relative;
+}
+
+.dashboard_body_wrap::before {
+  content: '';
+  position: absolute;
+  width: calc( 40% - 400px );
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: #131313;
+}
+
+.dashboard_body_wrap::after {
+  content: '';
+  position: absolute;
+  width: calc( 50%  );
+  height: 100%;
+  right: 0;
+  top: 0;
+  background: #000000;
+}
+@media ( min-width: 2560px ){
+  .dashboard_body_wrap::before {
+    content: '';
+    position: absolute;
+    width: calc(45% - 440px);
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #131313;
+  }
+}
+
+  .container {
+    max-width: 1900px;
+  }
+@media ( max-width: 1800px ) and (min-width: 1536px){
+  .event_card_button_wrap .primary_btn {
+    font-size: 11px !important;
+    width: 113px;
+}
 }
