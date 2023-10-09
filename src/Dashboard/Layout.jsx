@@ -35,7 +35,7 @@ const Layout = () => {
       <div>
         <DbHeader />
         <div className="dashboard_body_wrap">
-        <div className="dashboard_body flex flex-wrap items-stretch min-h-screen mt-5 container mx-auto">
+        <div className="dashboard_body flex flex-wrap items-stretch min-h-screen mt-5">
           <div className="sidebar_wrapper w-1/5 hidden xl:block">
             <div className="bg-dark-black rounded-r-2xl p-6 py-8 w-full flex justify-end sticky top-0 h-full">
               <Sidebar />
