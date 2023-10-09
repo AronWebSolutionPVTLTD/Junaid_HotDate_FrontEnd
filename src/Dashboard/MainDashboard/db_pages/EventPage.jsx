@@ -28,6 +28,16 @@ const EventPage = () => {
 
   })
 
+
+  const calculateDistance = (fLong, sLong, fLat, sLat) => {
+    var pdis = getPreciseDistance(
+      { latitude: Number(fLat), longitude: Number(fLong) },
+      { latitude: Number(sLat), longitude: Number(sLong) }
+    );
+    const factor = 0.621371
+    return ((pdis / 100) * factor).toFixed(2);
+  };
+
   const getEvent = async () => {
     const { data } = await axios.get(`${BASE_URL}/api/events?q=${searchquery}`);
     const allEvents = data.data;
@@ -117,23 +127,27 @@ const EventPage = () => {
       }
       )
     }
-
     if (filter.distance) {
       const userLatitude = savedCred?.lat
-      const userLongitude =savedCred?.long;
-      console.log(userLatitude,userLongitude)
-      
-      // filtered = filtered.filter((event) => {
-      //   const eventDistance = calculateDistance(
-      //     userLatitude,
-      //     userLongitude,
-      //     event.latitude,
-      //     event.longitude
-      //   );
-      //   return eventDistance <= filter.distance;
-      // });
-    }
+      const userLongitude = savedCred?.long;
+      const location = filtered.map((event) => event?.location)
 
+     
+      const filteredByDistance = filtered.filter((event) => {
+        const eventDistance = calculateDistance(
+          userLongitude,
+          event.location.lon,
+          userLatitude,
+          event.location.lat
+        );
+        
+const Distance=eventDistance.slice(0,3)
+        return Distance <= filter.distance;
+      });
+
+      // Update the filtered events
+      filtered = filteredByDistance;
+    }
    
     setEvent(filtered);
   }
@@ -267,11 +281,11 @@ const EventPage = () => {
           </div>
         </div>
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 gap-5">
         {currentPost.map((el, i) => (
           // <EventCard key={i} event={el} />
           <>
-          <div key={i}>
+          <div className="h-full bg-light-grey rounded-2xl" key={i}>
           <EventCard key={i} event={el} />
         </div>
         {(i!==7 && ((i + 1) % 4 === 0)) && (
