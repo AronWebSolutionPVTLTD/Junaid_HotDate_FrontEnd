@@ -241,7 +241,7 @@ navigate("/event-page")
                 </div>
               ) : eventInfo.type === "Private Event" ? (
                 hasUserPending || isJoined ? (
-                  <div>
+                  <div className="flex gap-2">
                   <button
                     className="primary_btn !py-1 !text-sm !leading-[28px]" disabled
                   >
