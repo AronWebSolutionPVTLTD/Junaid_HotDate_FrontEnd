@@ -118,6 +118,7 @@ const EventCard = ({ event,loc }) => {
               dateFormat="yyyy/MM/dd"
               selected={new Date(event?.Startdate)}
               className="font-body_font"
+              disabled
             />
           </div>
         </div>
