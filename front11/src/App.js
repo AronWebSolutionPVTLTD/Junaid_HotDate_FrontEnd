@@ -38,6 +38,9 @@ import SignUpCouple from "./Dashboard/Signup_Login/SignUpCouples";
 import CoupleDetailPage from "./LandingPage/Pages/CoupleDetailPage";
 import Myevents from "./Dashboard/MainDashboard/db_components/Myevent";
 import CoupleEditDetailPage from "./LandingPage/Pages/CoupleEditDetailsPage";
+import EventDetailMedia from "./LandingPage/Pages/EventDetailMedia";
+import EventParticipants from "./Dashboard/MainDashboard/db_pages/EventParticipants";
+import ClubDetail from "./LandingPage/Pages/ClubDetail";
 
 function App() {
   const location = useLocation();
@@ -78,7 +81,10 @@ function App() {
           <Route path="/create_travel" element={<CreateTravelPage />} />
           <Route path="/event-page" element={<EventPage />} />
           <Route path="/event-detail" element={<EventDetailPage />} />
+          <Route path="/club-detail" element={<ClubDetail />} />
+          <Route path="/event-detail-media" element={<EventDetailMedia />} />
           <Route path="/club-page" element={<ClubPage />} />
+          <Route path="/event-participants" element={<EventParticipants />} />
           <Route path="/my-event" element={<Myevents/>} />
           <Route path="/travel-page" element={<TravelPage />} />
           <Route path="/model-page" element={<ModelPage />} />

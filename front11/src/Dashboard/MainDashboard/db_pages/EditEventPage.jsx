@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { Context } from "../../../Context/context";
 import Multiselect from "multiselect-react-dropdown";
 import {IoCloseCircleSharp} from 'react-icons/io5'
+import ClubPage from "./ClubPage";
 const EditEventPage = () => {
   const [event, setEvent] = useState({
     event_name: "",
@@ -22,7 +23,7 @@ const EditEventPage = () => {
   const [image, setImage] = useState();
   const [video, setVideo] = useState([]);
   const [eventimages,setEventmages]=useState([]);
-  const [selectedImage, setselectedImage] = useState(null);
+  const [selectedImage, setselectedImage] = useState([]);
   const [selectedVideo, setselectedVideo] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -33,10 +34,11 @@ const EditEventPage = () => {
   const [cookies] = useCookies(["cookie-name"]);
   const options = ["M", "F", "MF", "MM", "FF","T"];
   const currentDate = new Date().toISOString().slice(0, 16)
+
   const getEventInfo = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/api/get_event/${eventId}`);
-      console.log(data,"d")
+      console.log(data,"data")
       setEvent({
         event_name: data.eventName,
         Startdate: data.Startdate,
@@ -44,12 +46,23 @@ const EditEventPage = () => {
         Location: data.location?.display_name,
         Description: data.description,
         event_type: data.type,
+        
       });
+      setselectedImage(data.images)
+      setCoverImage(data.mainImage)
       setSelectedOption(data.accepted_type);
+      setImage(data.mainImage)
+      setEventmages(data.images)
+      setselectedVideo(data.videos)
+      setVideo(data.videos)
+      
     } catch (error) {
       console.log(error);
     }
   };
+
+  console.log(selectedImage, "SELECt")
+
   useEffect(() => {
     const token = cookies["token"];
     if (token) {
@@ -69,7 +82,7 @@ const EditEventPage = () => {
 
   useEffect(()=>{
     axios.get(`https://us1.locationiq.com/v1/search?key=pk.9f0f98671dda49d28f0fdd64e6aa2634&q=${event['Location']}&format=json`).then((res)=>{ setAreaName(res.data)
-     console.log(res.data);
+    //  console.log(res.data);
      }).catch((err)=>console.log(err))
  },[event['Location']])
 
@@ -105,14 +118,14 @@ const EditEventPage = () => {
 
   const handleImageChange = (e) => {
 const file = Array.from(e.target.files);
-    setselectedImage(file)
+    setselectedImage([...selectedImage,e.target.files[0]])
     if (!file) {
       return;
     } else {
       setEventmages([...eventimages,URL.createObjectURL(e.target.files[0])]);
     }
   };
-  console.log(eventimages)
+
 
 
   const handleCoverImage = (e) => {
@@ -133,7 +146,7 @@ const file = Array.from(e.target.files);
     if (!file) {
       return;
     } else {
-      setVideo(URL.createObjectURL(e.target.files[0]));
+      setVideo([...video,URL.createObjectURL(e.target.files[0])]);
     }
   };
 
@@ -141,18 +154,22 @@ const file = Array.from(e.target.files);
   
  const handleEventimages=(index)=>{
   const update=eventimages.filter((el,i)=>i!==index  )
+  const fil_data = selectedImage.filter((el,i)=>i!==index)
     setEventmages(update)
-
+    setselectedImage(fil_data)
  }
 
  const handlevideo=(index)=>{
   const update=video.filter((el,i)=>i!==index  )
+  const fil_video = selectedVideo.filter((el,i)=>i!==index)
+  setselectedVideo(fil_video)
   setVideo(update)
 }
 
   const handleUpdateEvent = async (e) => {
     e.preventDefault();
     let formData = new FormData();
+    console.log(selectedImage,selectedVideo);
     if (selectedImage) {
       selectedImage.forEach((image) => formData.append("images", image));
     }
@@ -167,7 +184,6 @@ const file = Array.from(e.target.files);
     formData.append("description", event.Description);
     formData.append("mainImage", coverImage);
     formData.append("type", event.event_type);
-    // formData.append("userId", userInfo._id);
     formData.append("accepted_type", JSON.stringify(selectedOption));
 
     const headers = {
@@ -378,8 +394,14 @@ const file = Array.from(e.target.files);
                 </label>
                 <div className="relative w-full">
                   <div className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
-                    <img className="w-full object-contain max-h-[100px]" src={image} />
-                    {image && (<span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange text-black" onClick={(e)=>setImage('')}><IoCloseCircleSharp /></span>)}
+                 
+                    {image && 
+                    <>
+                       <img className="w-full object-contain max-h-[100px]" src={image} />
+                    <span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange 
+                    text-black" onClick={(e)=>setImage('')}><IoCloseCircleSharp /></span>
+                    </>
+                    }
                   </div>
                 </div>
             
@@ -399,10 +421,15 @@ const file = Array.from(e.target.files);
                 {eventimages.map((el,i)=>(
                   <>
                     <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
-                    <img className="w-full object-contain max-h-[100px]" src={el} />
-                    {eventimages && (<span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange text-black"
+                  
+                    {eventimages && 
+                    <>
+                      <img className="w-full object-contain max-h-[100px]" src={el} />
+                    <span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange text-black"
                      onClick={()=>handleEventimages(i)}>
-                      <IoCloseCircleSharp /></span>)}
+                      <IoCloseCircleSharp /></span>
+                      </>
+                      }
                   </div>
                   </>
                 ))}
@@ -428,10 +455,15 @@ const file = Array.from(e.target.files);
   <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
 
  
- <video  src={el} width="750" height="500" controls ></video>
- {video && (<span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange text-black"
+
+ {video &&
+ <>
+  <video  src={el} width="750" height="500" controls ></video>
+ <span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange text-black"
                      onClick={()=>handlevideo(i)}>
-                      <IoCloseCircleSharp /></span>)}
+                      <IoCloseCircleSharp /></span>
+                      </>
+                      }
  </div>
  )}
 

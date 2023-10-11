@@ -16,6 +16,7 @@ const Layout = () => {
       pathname === "/create_event" ||
       pathname === "/event_edit" ||
       pathname === "/home"
+      
     ) {
       setLayout("layout-1");
     } else if (
@@ -25,7 +26,8 @@ const Layout = () => {
       pathname === "/travel-page" ||
       pathname === "/model-page" ||
       pathname === "/agency-travel-page" ||
-      pathname === "/member-models"
+      pathname === "/member-models"||
+      pathname === "/event-participants"
     ) {
       setLayout("layout-2");
     }

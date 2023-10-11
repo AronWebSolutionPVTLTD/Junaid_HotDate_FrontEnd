@@ -6,15 +6,22 @@ import { useNavigate } from "react-router";
 import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
 import { Context } from "../../../Context/context";
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from "react-places-autocomplete";
 import Multiselect from "multiselect-react-dropdown";
-import {FaRegCalendarAlt} from 'react-icons/fa'
-import { IoCloseCircle, IoCloseCircleSharp, IoCloudyNight } from "react-icons/io5";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import {
+  IoCloseCircle,
+  IoCloseCircleSharp,
+  IoCloudyNight,
+} from "react-icons/io5";
 const CreateEventPage = () => {
   const [event, setEvent] = useState({
     event_name: "",
     StartDate: "",
-    EndDate:"",
+    EndDate: "",
     Location: "",
     Description: "",
     event_type: "",
@@ -22,20 +29,20 @@ const CreateEventPage = () => {
   const [selectedOptions, setSelectedOptions] = useState();
   const [image, setImage] = useState();
   const [video, setVideo] = useState([]);
-  const [eventimages,setEventmages]=useState([]);
-const[areaname,setAreaName]=useState([]);
-  const options = ["M", "F", "MF", "MM", "FF","T"];
-  const [selectedImage, setselectedImage] = useState(null);
+  const [eventimages, setEventmages] = useState([]);
+  const [areaname, setAreaName] = useState([]);
+  const options = ["M", "F", "MF", "MM", "FF", "T"];
+  const [selectedImage, setselectedImage] = useState([]);
   const [coverImage, setCoverImage] = useState(null);
   const [selectedVideo, setselectedVideo] = useState(null);
-  const [selectlocation,setSelectedLocation]=useState([])
+  const [selectlocation, setSelectedLocation] = useState([]);
   const navigate = useNavigate();
   const { userInfo } = useContext(Context);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [cookies] = useCookies(["cookie-name"]);
-  const currentDate = new Date().toISOString().slice(0, 16)
+  const currentDate = new Date().toISOString().slice(0, 16);
   useEffect(() => {
-    console.log(userInfo)
+    console.log(userInfo);
     const token = cookies["token"];
     if (token) {
       const decodedToken = jwtDecode(token);
@@ -51,85 +58,94 @@ const[areaname,setAreaName]=useState([]);
     setSelectedOptions(data);
   }
 
-  console.log(video,"video")
+  console.log(video, "video");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEvent({ ...event, [name]: value });
   };
 
-const handleLocation =async(e)=>{;
-  let value= e.target.value;
-  const url= value?`https://us1.locationiq.com/v1/search?key=pk.9f0f98671dda49d28f0fdd64e6aa2634&q=${value}&format=json`:'';
-  try{
-    if(url){
-      await axios.get(url).then((res)=>{ setAreaName(res.data)
-      console.log(res.data);
-      }).catch((err)=>console.log(err))
-      setEvent({...event,['Location']:value})
-     
-    }else{
-      setEvent({...event,['Location']:value})
+  const handleLocation = async (e) => {
+    let value = e.target.value;
+    const url = value
+      ? `https://us1.locationiq.com/v1/search?key=pk.9f0f98671dda49d28f0fdd64e6aa2634&q=${value}&format=json`
+      : "";
+    try {
+      if (url) {
+        await axios
+          .get(url)
+          .then((res) => {
+            setAreaName(res.data);
+            console.log(res.data);
+          })
+          .catch((err) => console.log(err));
+        setEvent({ ...event, ["Location"]: value });
+      } else {
+        setEvent({ ...event, ["Location"]: value });
+      }
+    } catch (err) {
+      console.log(err);
     }
-  }catch(err){
-    console.log(err)
-  }
- 
-}
+  };
 
-useEffect(()=>{
-   axios.get(`https://us1.locationiq.com/v1/search?key=pk.9f0f98671dda49d28f0fdd64e6aa2634&q=${event['Location']}&format=json`).then((res)=>{ setAreaName(res.data)
-    console.log(res.data);
-    }).catch((err)=>console.log(err))
-},[event['Location']])
+  useEffect(() => {
+    axios
+      .get(
+        `https://us1.locationiq.com/v1/search?key=pk.9f0f98671dda49d28f0fdd64e6aa2634&q=${event["Location"]}&format=json`
+      )
+      .then((res) => {
+        setAreaName(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [event["Location"]]);
 
   const handleImageChange = (e) => {
     // setselectedImage(Array.from(e.target.files));
     const file = Array.from(e.target.files);
-    setselectedImage(file)
+    setselectedImage([...selectedImage, e.target.files[0]]);
     if (!file) {
       return;
     } else {
-      setEventmages([...eventimages,URL.createObjectURL(e.target.files[0])]);
+      setEventmages([...eventimages, URL.createObjectURL(e.target.files[0])]);
     }
   };
-  
+  console.log(selectedImage);
   const handleCoverImage = (e) => {
     // setCoverImage(e.target.files[0]);
 
     const file = e.target.files[0];
-    setCoverImage(file)
+    setCoverImage(file);
     if (!file) {
       return;
     } else {
       setImage(URL.createObjectURL(e.target.files[0]));
     }
-  
   };
 
   const handleVideoChange = (e) => {
-const file = Array.from(e.target.files)
-    console.log(file,"file",URL.createObjectURL(e.target.files[0]))
-    setselectedVideo(file)
+    const file = Array.from(e.target.files);
+    console.log(file, "file", URL.createObjectURL(e.target.files[0]));
+    setselectedVideo(file);
     if (!file) {
       return;
     } else {
-      setVideo([...video,URL.createObjectURL(e.target.files[0])]);
+      setVideo([...video, URL.createObjectURL(e.target.files[0])]);
     }
   };
-console.log(video,"video")
+  console.log(video, "video");
 
-  const handleEventimages=(index)=>{
-    const update=eventimages.filter((el,i)=>i!==index  )
-      setEventmages(update)
-  
-   }
+  const handleEventimages = (index) => {
+    const update = eventimages.filter((el, i) => i !== index);
+    setEventmages(update);
+  };
+  console.log(selectedImage, eventimages, coverImage);
 
-const handlevideo=(index)=>{
-  const update=video.filter((el,i)=>i!==index  )
-  setVideo(update)
-}
+  const handlevideo = (index) => {
+    const update = video.filter((el, i) => i !== index);
+    setVideo(update);
+  };
   const handleCreateEvent = async (e) => {
-    console.log(userInfo)
+    console.log(userInfo);
     e.preventDefault();
     let formData = new FormData();
     if (selectedImage) {
@@ -138,10 +154,10 @@ const handlevideo=(index)=>{
     if (selectedVideo) {
       selectedVideo.forEach((video) => formData.append("videos", video));
     }
-console.log(formData)
+    console.log(formData);
     formData.append("eventName", event.event_name);
     formData.append("Startdate", event.StartDate);
-    formData.append("EndDate",event.EndDate);
+    formData.append("EndDate", event.EndDate);
     formData.append("location", JSON.stringify(selectlocation));
     formData.append("description", event.Description);
     formData.append("mainImage", coverImage);
@@ -189,13 +205,13 @@ console.log(formData)
         setselectedVideo(null);
         setCoverImage(null);
         setSelectedOptions();
-        navigate("/event-page")
+        navigate("/event-page");
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState("");
 
   const handleChange2 = (newAddress) => {
     setAddress(newAddress);
@@ -207,14 +223,14 @@ console.log(formData)
     try {
       const results = await geocodeByAddress(selectedAddress);
       const latLng = await getLatLng(results[0]);
-      console.log('Latitude and Longitude:', latLng);
+      console.log("Latitude and Longitude:", latLng);
       // You can use latLng or selectedAddress as needed
     } catch (error) {
-      console.error('Error getting geolocation:', error);
+      console.error("Error getting geolocation:", error);
     }
   };
-  
-  console.log(selectlocation,"lofation");
+
+  console.log(selectlocation, "lofation");
   return (
     <div className="bg-white rounded-40px">
       <div className="text-center p-5 py-10 text-black">
@@ -260,7 +276,7 @@ console.log(formData)
                   className="rounded-l-md w-full md:w-[120px] xl:w-[195px] sm:h-[49px] flex items-center justify-start sm:px-2 lg:px-4 text-sm mb-1 sm:mb-0 md:text-text-xs xl:text-lg text-white  font-normal leading-5 xl:leading-29 text-center 
                                             lg:text-start"
                 >
-                 Start Date
+                  Start Date
                 </label>
                 <input
                   type="datetime-local"
@@ -282,10 +298,10 @@ console.log(formData)
                   className="rounded-l-md w-full md:w-[120px] xl:w-[195px] sm:h-[49px] flex items-center justify-start sm:px-2 lg:px-4 text-sm mb-1 sm:mb-0 md:text-text-xs xl:text-lg text-white  font-normal leading-5 xl:leading-29 text-center 
                                             lg:text-start"
                 >
-                 End Date
+                  End Date
                 </label>
                 <input
-                min={event?.StartDate || currentDate}
+                  min={event?.StartDate || currentDate}
                   type="datetime-local"
                   id="EndDate"
                   name="EndDate"
@@ -316,25 +332,40 @@ console.log(formData)
                   className="bg-black border md:rounded-l-none rounded-md md:border-none md:border-l-2 md:rounded-r-md border-orange focus:outline-none focus-visible:none w-full md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)] h-[49px] text-gray font-normal xl:text-lg rounded-r-md text-sm px-2 xl:px-4 py-2.5 text-start placeholder:text-lg placeholder:text-gray items-center flex justify-between"
                   required
                 />
-               <div>
-            
- {areaname.length!==0 && areaname.map((el,i)=>(
-   <div style={{display:"flex",direction:"column", gap:"20px"}}>
-    <div onClick={()=>{
-      setEvent({...event,['Location']:el.display_name})
-      setSelectedLocation(el)
-  setAreaName([])
-  }} style={{width:"100%",border:0,borderBottom:"3px solid black",padding:"3px"}}>
-{el.display_name}</div>
-   </div>
- ))} 
-             
-               </div>
-               
-  
+                <div>
+                  {areaname.length !== 0 &&
+                    areaname.map((el, i) => (
+                      <div
+                        style={{
+                          display: "flex",
+                          direction: "column",
+                          gap: "20px",
+                        }}
+                      >
+                        <div
+                          onClick={() => {
+                            setEvent({
+                              ...event,
+                              ["Location"]: el.display_name,
+                            });
+                            setSelectedLocation(el);
+                            setAreaName([]);
+                          }}
+                          style={{
+                            width: "100%",
+                            border: 0,
+                            borderBottom: "3px solid black",
+                            padding: "3px",
+                          }}
+                        >
+                          {el.display_name}
+                        </div>
+                      </div>
+                    ))}
+                </div>
               </div>
               <div>
-      {/* <PlacesAutocomplete
+                {/* <PlacesAutocomplete
         value={address}
         onChange={handleChange2}
         onSelect={handleSelect2}
@@ -360,7 +391,7 @@ console.log(formData)
           </div>
         )}
       </PlacesAutocomplete> */}
-    </div>
+              </div>
               <div className="flex flex-col gap-30">
                 <label
                   htmlFor="Description"
@@ -386,22 +417,30 @@ console.log(formData)
                   <span className="w-6 block mr-2">
                     <img src="images/gallery-icon.png" alt="gallery-icon" />
                   </span>
-                  
                   Upload Cover Image
                   <input
                     type="file"
                     className="hidden"
                     onChange={(e) => handleCoverImage(e)}
                   />
-          </label>
-      
-          <div className="relative w-full">
+                </label>
+
+                <div className="relative w-full">
                   <div className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
-                    <img className="w-full object-contain max-h-[100px]" src={image} />
-                    {image && (<span className="preview_close absolute top-0 transform
+                    <img
+                      className="w-full object-contain max-h-[100px]"
+                      src={image}
+                    />
+                    {image && (
+                      <span
+                        className="preview_close absolute top-0 transform
                      translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5
-                      h-5 rounded-full bg-orange text-black" 
-                      onClick={(e)=>setImage('')}><IoCloseCircleSharp /></span>)}
+                      h-5 rounded-full bg-orange text-black"
+                        onClick={(e) => setImage("")}
+                      >
+                        <IoCloseCircleSharp />
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -417,19 +456,29 @@ console.log(formData)
                     onChange={(e) => handleImageChange(e)}
                   />
                 </label>
-               
-                <div className="grid grid-cols-2 gap-2"> 
-                {eventimages.map((el,i)=>(
-                  <>
-                    <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
-                    <img className="w-full object-contain max-h-[100px]" src={el} />
-                    {eventimages && (<span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange text-black"
-                     onClick={()=>handleEventimages(i)}>
-                      <IoCloseCircleSharp /></span>)}
-                  </div>
-                  </>
-                ))}
-                  
+
+                <div className="grid grid-cols-2 gap-2">
+                  {eventimages.map((el, i) => (
+                    <>
+                      <div
+                        key={i}
+                        className="preview_img w-full relative z-[1] bg-white/50 rounded-md"
+                      >
+                        <img
+                          className="w-full object-contain max-h-[100px]"
+                          src={el}
+                        />
+                        {eventimages && (
+                          <span
+                            className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange text-black"
+                            onClick={() => handleEventimages(i)}
+                          >
+                            <IoCloseCircleSharp />
+                          </span>
+                        )}
+                      </div>
+                    </>
+                  ))}
                 </div>
 
                 <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
@@ -442,28 +491,31 @@ console.log(formData)
                   Upload Event Videos
                   <input
                     type="file"
-                    id='videoUpload'
+                    id="videoUpload"
                     multiple
                     className="hidden"
                     onChange={(e) => handleVideoChange(e)}
                   />
                 </label>
 
-<div>
-{video.map((el,i)=>
-  <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
-
- 
- <video  src={el} width="750" height="500" controls ></video>
- {video && (<span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange text-black"
-                     onClick={()=>handlevideo(i)}>
-                      <IoCloseCircleSharp /></span>)}
- </div>
- )}
-
-
-  
-</div>
+                <div>
+                  {video.map((el, i) => (
+                    <div
+                      key={i}
+                      className="preview_img w-full relative z-[1] bg-white/50 rounded-md"
+                    >
+                      <video src={el} width="750" height="500" controls></video>
+                      {video && (
+                        <span
+                          className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange text-black"
+                          onClick={() => handlevideo(i)}
+                        >
+                          <IoCloseCircleSharp />
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
               <p className="text-lg">TYPE *</p>
               <div className="radio_btn_wrapper">
