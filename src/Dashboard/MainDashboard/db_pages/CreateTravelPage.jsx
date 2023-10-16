@@ -85,7 +85,6 @@ console.log(userInfo.couple.person1.DOB,"info")
   const calculateAge = () => {
     const currentDate = new Date();
     if(userInfo.profile_type==="single"){
-      alert("1st")
       const  birthDate = new Date(userInfo.DOB)
       const timeDifference = currentDate - birthDate;
       console.log(timeDifference)
