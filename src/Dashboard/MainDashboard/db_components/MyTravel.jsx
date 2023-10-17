@@ -17,7 +17,7 @@ export default function MyTravel(){
     const navigate=useNavigate();
     
     useEffect(()=>{
-        axios.get("http://localhost:5000/api/search_travel?q=").then((res)=>{
+        axios.get(`${BASE_URL}/api/search_travel?q=`).then((res)=>{
             const data = res.data
             const filterData = data.filter((data)=>data.userId._id===userInfo._id)
             setTravel(filterData)
