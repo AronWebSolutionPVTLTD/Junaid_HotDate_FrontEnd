@@ -109,7 +109,7 @@ const handleTravel = (id) => {
         {travel?.map((travel)=>(
         <div
         className="w-full cursor-pointer p-3 bg-light-grey rounded-2xl flex flex-wrap sm:grid grid-cols-2"
-    
+        
       >
         <div className="w-2/5 sm:w-full">
           {/* <img
@@ -120,8 +120,7 @@ const handleTravel = (id) => {
           <img
             className="w-full object-cover h-full aspect-11/10 rounded-2xl"
             src={travel.image}
-                onClick={()=>handleTravel(travel?.userId?._id)}
-            
+            onClick={()=>handleTravel(travel?.userId?._id)}
           />
         </div>
         <div className="w-3/5 sm:w-full px-4 pr-0 grid content-between relative gap-2">
@@ -193,7 +192,7 @@ const handleTravel = (id) => {
                   className="max-w-full"
                 />
               </span>
-              <span className="w-4 h-4 flex items-center justify-center rounded-full bg-white p-1">
+              {/* <span className="w-4 h-4 flex items-center justify-center rounded-full bg-white p-1">
                 <img
                   src="images/mob_icon.png"
                   alt="mob_icon"
@@ -206,7 +205,7 @@ const handleTravel = (id) => {
                   alt="cal_icon"
                   className="max-w-full"
                 />
-              </span>
+              </span> */}
             </div>
           </div>
           <div className="flex w-[75%] flex-wrap items-center gap-1">

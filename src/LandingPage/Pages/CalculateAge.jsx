@@ -5,7 +5,7 @@
 export const calculateAge = (dateOfBirth) => {
     const dob = new Date(dateOfBirth);
     const today = new Date();
-    const age = today.getFullYear() - dob.getFullYear();
+    let age = today.getFullYear() - dob.getFullYear();
   
     if (
       today.getMonth() < dob.getMonth() ||

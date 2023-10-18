@@ -46,6 +46,7 @@ import MyTravel from "./Dashboard/MainDashboard/db_components/MyTravel";
 import UserDetailId from "./LandingPage/Pages/UserDetailId";
 import CoupleDetailId from "./LandingPage/Pages/CoupleDetailid";
 import EditTravelPage from "./Dashboard/MainDashboard/db_pages/EditTravelPage";
+import RecentUser from "./Dashboard/MainDashboard/db_components/RecentUser";
 
 function App() {
   const location = useLocation();
@@ -81,6 +82,7 @@ function App() {
         <Route path="/model_form" element={<ModelDetailForm />} />
         <Route path="/" element={<Layout />}>
           <Route path="/home" element={<HomePage />} />
+          <Route path="/recentuser" element={<RecentUser />} />
           <Route path="/edit_travel" element={<EditTravelPage />} />
           <Route path="/create_event" element={<CreateEventPage />} />
           <Route path="/event_edit" element={<EditEventPage />} />

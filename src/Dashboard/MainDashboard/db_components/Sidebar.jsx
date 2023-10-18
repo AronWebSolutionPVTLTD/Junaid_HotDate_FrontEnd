@@ -146,7 +146,7 @@ const Sidebar = () => {
           title: "Who viewed me",
           submenus: [],
         },
-        { title: "Newest matches", submenus: [] },
+        { title: "Newest member", submenus: [],path:"/recentuser" },
         { title: "Near matches", submenus: [] },
         { title: "Who is on", submenus: [] },
       ],

@@ -5,6 +5,7 @@ import { Context } from "../../../Context/context";
 // import { getPreciseDistance } from 'geolib';
 import { useContext,useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { calculateAge } from "../../../LandingPage/Pages/CalculateAge";
 const TravelCard2 = ({ travel }) => {
   const { userInfo,savedCred,travelid,setTravelid} = useContext(Context);
     const [age, setAge] = useState("");
@@ -36,30 +37,30 @@ const [age2,setage2]=useState("")
 
     // _____________CALCULATE AGE______________________
 
-  const calculateAge = (dateOfBirth) => {
-    const dob = new Date(dateOfBirth);
-    const today = new Date();
-    const age = today.getFullYear() - dob.getFullYear();
+  // const calculateAge = (dateOfBirth) => {
+  //   const dob = new Date(dateOfBirth);
+  //   const today = new Date();
+  //   const age = today.getFullYear() - dob.getFullYear();
 
-    if (
-      today.getMonth() < dob.getMonth() ||
-      (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())
-    ) {
-      age--;
-    }
+  //   if (
+  //     today.getMonth() < dob.getMonth() ||
+  //     (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())
+  //   ) {
+  //     age--;
+  //   }
 
-    return age;
-  };
+  //   return age;
+  // };
 
   // Use the calculateAge function to get the age for single users or couple members
   
   useEffect(() => {
-    if (travel.userId.profile_type === "single") {
-      setAge(calculateAge(travel.userId.DOB));
+    if (travel?.userId?.profile_type === "single") {
+      setAge(calculateAge(travel?.userId?.DOB));
     } else {
   
-      setAge(calculateAge(travel.userId.couple.person1.DOB));
-      setage2(calculateAge(travel.userId.couple.person2.DOB));
+      setAge(calculateAge(travel?.userId?.couple?.person1.DOB));
+      setage2(calculateAge(travel?.userId?.couple?.person2.DOB));
     }
   }, [travel]);
 
@@ -94,19 +95,19 @@ const [age2,setage2]=useState("")
           <div className="text-[12px] gap-1 flex items-center">
             {/* {userInfo.gender === "male" ?<span className="text-navy-blue">{travel.age}</span>:<span className="text-pink-400">{travel.age}</span>} */}
             
-            {travel.userId.profile_type === "single" ? (
+            {travel?.userId?.profile_type === "single" ? (
     <div className="text-[12px] gap-1 flex items-center">
-      <span className={travel.userId.gender === "male" ? "text-[#3A97FE]" : travel.userId.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
+      <span className={travel?.userId?.gender === "male" ? "text-[#3A97FE]" : travel?.userId?.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
         {age}
       </span>
     </div>
   ) : (
     <div className="text-[12px] gap-1 flex items-center">
-      <span className={travel.userId.couple.person1.gender === "male" ? "text-[#3A97FE]" :travel.userId.couple.person1.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
+      <span className={travel?.userId?.couple?.person1?.gender === "male" ? "text-[#3A97FE]" :travel?.userId?.couple?.person1?.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
         {age} 
       </span>
    |
-      <span className={travel.userId.couple.person2.gender === "male" ? "text-[#3A97FE]" :travel.userId.couple.person2.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
+      <span className={travel?.userId?.couple?.person2?.gender === "male" ? "text-[#3A97FE]" :travel?.userId?.couple?.person2?.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
         {age2} 
       </span>
     </div>
@@ -121,7 +122,7 @@ const [age2,setage2]=useState("")
                 className="max-w-full"
               />
             </span>
-            <span className="w-4 h-4 flex items-center justify-center rounded-full bg-white p-1">
+            {/* <span className="w-4 h-4 flex items-center justify-center rounded-full bg-white p-1">
               <img
                 src="images/mob_icon.png"
                 alt="mob_icon"
@@ -134,36 +135,36 @@ const [age2,setage2]=useState("")
                 alt="cal_icon"
                 className="max-w-full"
               />
-            </span>
+            </span> */}
           </div>
         </div>
         <div className="flex w-[75%] flex-wrap items-center gap-1">
-            {travel?.interested.includes("M") ? (
+            {travel?.interested?.includes("M") ? (
               <img src="images/Male.png" alt="male-user" className="h-[18px]"/>
             ) : (
               ""
             )}
-            {travel?.interested.includes("F") ? (
+            {travel?.interested?.includes("F") ? (
               <img src="images/Female.png" alt="woman" className="h-[18px]" />
             ) : (
               ""
             )}
-            {travel?.interested.includes("MF") ? (
+            {travel?.interested?.includes("MF") ? (
               <img src="images/malefemale.png" alt="couple" className="h-[15px]"  />
             ) : (
               ""
             )}
-                {travel?.interested.includes("MM") ? (
+                {travel?.interested?.includes("MM") ? (
               <img src="images/malemale.png" alt="couple"  className="h-[15px]" />
             ) : (
               ""
             )}
-                 {travel?.interested.includes("FF") ? (
+                 {travel?.interested?.includes("FF") ? (
               <img src="images/femaleFemale.png" alt="couple"  className="h-[15px]"  />
             ) : (
               ""
             )}
-                     {travel?.interested.includes("T") ? (
+                     {travel?.interested?.includes("T") ? (
               <img src="images/Trans.png" alt="couple"  className="h-[15px]"  />
             ) : (
               ""
@@ -184,8 +185,8 @@ const [age2,setage2]=useState("")
         <div className="flex text-[#FF0000] text-[12px] flex-wrap gap-1 leading">
         <img src="images/loc-icon.png" alt="Location-icon" />
         {travel?.locationto?.display_name?.length<=20 ?
-         <span className="font-body_font">{travel.locationto.display_name}</span> :
-         <span className="font-body_font">{travel.locationto.display_name?.slice(0,17)}...</span>
+         <span className="font-body_font">{travel?.locationto?.display_name}</span> :
+         <span className="font-body_font">{travel?.locationto?.display_name.slice(0,17)}...</span>
         }
          {/* <span className="font-body_font">{travel.locationto.display_name}</span> */}
           {/* { calculatePreciseDistance(travel?.location?.lon,savedCred.long,travel?.location?.lat,savedCred.lat).slice(0,3)}miles */}
