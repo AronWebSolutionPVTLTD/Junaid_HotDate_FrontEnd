@@ -131,6 +131,11 @@ const TravelPage = () => {
             </span>{" "}
             Map
           </span>
+           {isUserTravelPlan && (
+            <Link to="/my-travel" className="gradient inline-flex rounded-md items-center gap-1 p-2 px-6 bg-orange text-sm sm:text-xl font-semibold cursor-pointer">
+              My Travel Plans
+            </Link>
+          )}
           <div className="inline-flex relative rounded-md items-center gap-1 p-2 px-6 bg-orange text-sm sm:text-xl font-semibold cursor-pointer">
             <span className="inline-flex gap-1" onClick={() => setFilterDropdown(!filterDropdown)}>
             <span className="flex items-center">
@@ -196,11 +201,7 @@ const TravelPage = () => {
                 </form>
               </div>
           </div>
-          {isUserTravelPlan && (
-            <Link to="/my-travel" className="gradient inline-flex rounded-md items-center gap-1 p-2 px-6 bg-orange text-sm sm:text-xl font-semibold cursor-pointer">
-              My Travel Plans
-            </Link>
-          )}
+         
           
         </div>
       </div>
