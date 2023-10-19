@@ -147,7 +147,18 @@ const Distance=eventDistance.slice(0,3)
     setFilterDropdown(false)
   }
 
-
+const handleReset=()=>{
+  setFilter({
+    public: false,
+    private: false,
+    open_for: "",
+    location: "",
+    date: "",
+    distance: "",
+  })
+  setEvent(events)
+  setFilterDropdown(false)
+}
 
 
   const lastPostIndex = currentPage * recordsPerPage;
@@ -194,6 +205,10 @@ const Distance=eventDistance.slice(0,3)
               <span>Filter</span>
               </span>
               <div className={`filter_dropdown absolute w-[250px] right-0 bg-[#2A2D37] top-full ${filterDropdown ? 'Active' : ''}`}>
+                <div  className="flex justify-end text-red">
+                <button onClick={handleReset}>Reset</button>
+                </div>
+              
                 <form>
                   <div className="filter_dropbox">
                     <div className="filter_item">
@@ -229,6 +244,7 @@ const Distance=eventDistance.slice(0,3)
                       value={filter.open_for}
                       onChange={handleChange}
                       className="w-full mt-2 py-2 px-3 border border-black bg-[#2A2D37] rounded-[5px]">
+                        <option value=''>Please Select</option>
                       <optgroup label="Single">
                         <option value="M">Male</option>
                         <option value="F">Female</option>

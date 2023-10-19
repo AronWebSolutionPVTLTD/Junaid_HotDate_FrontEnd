@@ -64,8 +64,6 @@ const [desc,setdesc]= useState("")
   const handleRating = (rate) => {
     console.log(rate)
     setRating(rate)
-
-    // other logic
   }
 
   const handleChange = (e)=>{
@@ -80,8 +78,7 @@ const [desc,setdesc]= useState("")
       desc:desc
     }
      axios.put(`${BASE_URL}/api/reviewPost/${clubData._id}`,data).then((res)=>{
-      console.log(res)
-      setPopup(true);
+      setPopup(false);
      })
   }
 
@@ -111,14 +108,20 @@ const [desc,setdesc]= useState("")
       />
 </div>
 
-<textarea id="message" rows="4" class="mt-4 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..." onChange={handleChange} value={desc} ></textarea>
-
+<textarea id="message" rows="4" class="mt-4 block p-2.5 w-full text-sm  bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..." onChange={handleChange} value={desc} ></textarea>
+<div className="flex gap-4 justify-between w-full">
           <span
             className="primary_btn gradient mt-5 px-8 bg-gradient-to-r from-[#F79220] to-[#F94A2B] rounded-lg py-2 cursor-pointer"
             onClick={submitReview}
           >
-            Ok
+            Post
+          </span> <span
+            className="primary_btn gradient mt-5 px-8 rounded-lg py-2 cursor-pointer align-end"
+            onClick={()=>setPopup(false)}
+          >
+           Cancel
           </span>
+        </div> 
         </div>
       </div>
       <div className="flex justify-between items-center max-w-7xl">
@@ -209,8 +212,8 @@ const [desc,setdesc]= useState("")
                   </span>
                 </p>
                 <div className="text-base my-2">
-                  <span >Introduction</span> : <span className="font-body_font">
-                    {clubData?.introduction}
+                  <span >Introduction</span> : <span className="font-body_font" dangerouslySetInnerHTML={{ __html: clubData?.introduction?.replace(/\n/g, '<br />') }}>
+             
                   </span>
                 </div>
 
@@ -258,9 +261,8 @@ const [desc,setdesc]= useState("")
         </div>
         <div className="my-5 w-full p-5 bg-light-grey rounded-lg">
           <p className="text-lg text-orange font-semibold mb-3">DESCRIPTION</p>
-          <p className="text-base font-body_font">
-            {clubData?.description}
-          </p>
+          <p className="text-base font-body_font" dangerouslySetInnerHTML={{ __html: clubData?.description?.replace(/\n/g, '<br />') }}></p>
+           
         </div>
         <div className="p-1">
         <p className="text-lg text-orange font-semibold mb-3">COMMENTS</p>

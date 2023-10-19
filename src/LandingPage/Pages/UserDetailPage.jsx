@@ -108,11 +108,19 @@ const RenderedStyle={
  <div className="pt-10 container px-5 mx-auto">
    <div className="flex flex-wrap items-stretch bg-black rounded-2xl max-w-5xl mx-auto">
      <div className="w-full sm:w-2/5 md:w-1/5">
+
+      {userInfo?.image   ?
+
        <img
-         src={userInfo.image}
+         src={userInfo?.image}
          alt="book-model"
          className="w-full h-full object-center object-cover aspect-[5/4] rounded-2xl"
-       />
+         alt="userimage"
+       />:
+        // {userInfo?.gender==="male"?<img src="images/boy avatar.png"/>:userInfo?.gender==="female"?<image src="images/girl avatar.png"/>:<image src="images/trans avatar.png"/>} 
+     (  userInfo?.gender==="male"?(<img src="images/boy avatar.png" alt="boy" />):userInfo.gender==="female"? (<img src="images/girl avatar.png" alt="girl"  />)
+               :(<img src="images/trans avatar.png" alt="trans"  />))
+      }
      </div>
      <div className="w-full sm:w-3/5 md:w-4/5 border-b-2 sm:border-b-0 sm:border-r-2 border-orange rounded-2xl">
        <div className="h-full p-5 grid content-between rounded-2xl max-w-3xl gap-y-10">
@@ -167,10 +175,16 @@ const RenderedStyle={
             
            </div>
          </div>
-         <p className="text-lg font-body_font">{userInfo.slogan}</p>
-         <p className="text-lg font-body_font">{userInfo.introduction}</p>
+         {/* <p className="text-lg font-body_font">{userInfo.slogan}</p>
+         <p className="text-lg font-body_font" dangerouslySetInnerHTML={{ __html: userInfo?.introduction?.replace(/\n/g, '<br />') }}></p> */}
        </div>
      </div>
+   </div>
+   <div className="p-5 bg-light-grey rounded-xl mt-6  max-w-5xl mx-auto">
+    <h3 className="text-2xl text-orange">Slogan</h3>
+   <p className="text-lg font-body_font my-2">{userInfo.slogan}</p>
+   <h3 className="text-2xl text-orange mt-5">Introduction</h3>
+  <p className="text-lg font-body_font" dangerouslySetInnerHTML={{ __html: userInfo?.introduction?.replace(/\n/g, '<br />') }}></p>
    </div>
 
    <div className="max-w-5xl mx-auto pt-20">

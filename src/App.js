@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import LandingPage from "./LandingPage/Pages/LandingPage";
 import Signup from "./Dashboard/Signup_Login/Signup";
@@ -29,7 +29,7 @@ import ModelPage from "./Dashboard/MainDashboard/db_pages/ModelPage";
 import WishlishtPage from "./Dashboard/MainDashboard/db_pages/WishlishtPage";
 import EventDetailPage from "./LandingPage/Pages/EventDetailPage";
 import EditClubPage from "./Dashboard/MainDashboard/db_pages/EditClubPage";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import EditEventPage from "./Dashboard/MainDashboard/db_pages/EditEventPage";
 import VerifyEmail from "./Dashboard/Signup_Login/VerifyEmail";
 import EmailVerified from "./Dashboard/Signup_Login/EmailVerified";
@@ -47,13 +47,48 @@ import UserDetailId from "./LandingPage/Pages/UserDetailId";
 import CoupleDetailId from "./LandingPage/Pages/CoupleDetailid";
 import EditTravelPage from "./Dashboard/MainDashboard/db_pages/EditTravelPage";
 import RecentUser from "./Dashboard/MainDashboard/db_components/RecentUser";
+import { Context } from "./Context/context";
+import axios from "axios";
+
+import { useCookies } from "react-cookie";
+import CurrentlyOnUser from "./Dashboard/MainDashboard/db_components/CurrentlyOnUser";
 
 function App() {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const location = useLocation();
+  const{userInfo,UserToken  }=useContext(Context)
   const { pathname } = location;
+  const navigate=useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+
+// useEffect(()=>{
+// if(userInfo._id){
+//     getAPi()}
+//   },[userInfo,UserToken])
+
+
+//   const getAPi=async()=>{
+//     const config = {
+//       'headers':{
+//         'token':UserToken
+//       }
+//     };
+
+//     try{
+//     const {data}=await axios.get(`${BASE_URL}/api/active/${userInfo?._id}`,config
+//       )
+
+
+//     }catch(err){
+//       console.log(err)
+//       removeCookie("token");
+//  }  
+// }
+  
   return (
     <>
       <Routes>
@@ -83,6 +118,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/recentuser" element={<RecentUser />} />
+          <Route path="/currentuser" element={<CurrentlyOnUser />} />
           <Route path="/edit_travel" element={<EditTravelPage />} />
           <Route path="/create_event" element={<CreateEventPage />} />
           <Route path="/event_edit" element={<EditEventPage />} />

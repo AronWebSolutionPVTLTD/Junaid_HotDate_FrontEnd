@@ -297,6 +297,7 @@ try{
                                         name="description"
                                         value={travel.description}
                                         onChange={(e)=>handleChange(e)}
+                                        style={{ whiteSpace: 'pre-line' }}
                                         className="bg-black focus:outline-none focus-visible:none w-full border-gradient3 text-gray font-normal xl:text-lg rounded-md text-sm px-2 xl:px-4 py-2.5 text-center md:text-start items-center flex justify-between"
                                         required
                                     ></textarea>

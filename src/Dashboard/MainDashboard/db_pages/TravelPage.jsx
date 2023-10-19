@@ -131,7 +131,7 @@ const TravelPage = () => {
             </span>{" "}
             Map
           </span>
-           {isUserTravelPlan && (
+          {isUserTravelPlan && (
             <Link to="/my-travel" className="gradient inline-flex rounded-md items-center gap-1 p-2 px-6 bg-orange text-sm sm:text-xl font-semibold cursor-pointer">
               My Travel Plans
             </Link>
@@ -144,7 +144,10 @@ const TravelPage = () => {
             <span>Filter</span>
             </span>
             <div className={`filter_dropdown absolute w-[250px] right-0 bg-[#2A2D37] top-full ${filterDropdown ? 'Active' : ''}`}>
-              <button onClick={handleReset}>Reset</button>
+          
+                <div className="flex justify-end text-red">
+                  <button onClick={handleReset}>Reset</button>
+                </div>
                 <form>
                 
                   <div className="my-4 mb-6">
@@ -201,7 +204,7 @@ const TravelPage = () => {
                 </form>
               </div>
           </div>
-         
+      
           
         </div>
       </div>

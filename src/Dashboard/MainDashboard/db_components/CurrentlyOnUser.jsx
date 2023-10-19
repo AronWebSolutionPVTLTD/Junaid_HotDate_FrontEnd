@@ -1,12 +1,10 @@
-
-
+import { useContext, useEffect,useState } from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
-
 import { calculateAge } from "../../../LandingPage/Pages/CalculateAge";
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
-function RecentUser() {
+import { Context } from "../../../Context/context";
+const BASE_URL=process.env.REACT_APP_BASE_URL
+function CurrentlyOnUser(){
+    const {userInfo}=useContext(Context)
     const [user, setuser] = useState([])
 
     useEffect(() => {
@@ -14,18 +12,24 @@ function RecentUser() {
     }, [])
     
 
+
+
     const getapi = async () => {
-        const { data } = await axios.get(`${BASE_URL}/api/recent_users`)
+try{ const { data } = await axios.get(`${BASE_URL}/api/active_users`)
 
-        setuser(data?.users)
-      
+const fiterdData=data?.users?.filter((el)=>el?._id!==userInfo?._id)
 
+setuser(fiterdData)
+
+}catch(err){
+console.log(err)
+}
+
+       
     }
 
 
 
-
-    console.log(user, "data")
     return (
         <div className="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-5">
             {user?.map((user) => (
@@ -45,12 +49,17 @@ function RecentUser() {
                         />
                     </div>
                     <div className="w-3/5 sm:w-full px-4 pr-0 grid content-between relative gap-2">
-                        <div className="flex items-center gap-1 text-xs">
-                       
-                            <p className="text-[12px] font-medium text-bright-orange">
-                                {user?.username}
-                            </p>
-                        </div>
+                
+                             <div className="flex flex-wrap sm:flex-nowrap justify-between sm:gap-5">
+             <h3 className="flex items-center text-lg sm:text-[22px] font-bold gap-2 font-body_font">
+               {user?.username}
+               <p className="flex items-center text-sm font-light gap-1">
+                 <span className="block w-3 h-3 rounded-full bg-green-500 font-body_font"></span>
+                 Online
+               </p>
+             </h3>
+           
+           </div>
                         <div className="flex justify-between items-center">
 
 
@@ -113,4 +122,4 @@ function RecentUser() {
             ))}
         </div>
     )
-} export default RecentUser;
+}export default CurrentlyOnUser;

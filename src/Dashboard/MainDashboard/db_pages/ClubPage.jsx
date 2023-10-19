@@ -25,6 +25,19 @@ const ClubPage = () => {
 
   })
 
+  const handlereset=()=>{
+    setFilter({
+      public: false,
+    private: false,
+
+    location: "",
+
+    distance: "",
+
+    })
+    setFilterDropdown(false)
+    setClubs(club)
+  }
 
   const getClubs = async () => {
     const { data } = await axios.get(
@@ -108,7 +121,7 @@ if (filter.location) {
     if (filter.distance) {
       const userLatitude = savedCred?.lat
       const userLongitude = savedCred?.long;
-      const location = filtered.map((el) => el?.location)
+  
 
      
       const filteredByDistance = filtered.filter((event) => {
@@ -171,6 +184,9 @@ const Distance=eventDistance.slice(0,3)
               <span>Filter</span>
               </span>
               <div className={`filter_dropdown absolute w-[250px] right-0 bg-[#2A2D37] top-full ${filterDropdown ? 'Active' : ''}`}>
+                <div className="flex justify-end text-red">
+                  <button onClick={handlereset}>Reset</button>
+                </div>
                 <form>
                   <div className="filter_dropbox">
                     <div className="filter_item">

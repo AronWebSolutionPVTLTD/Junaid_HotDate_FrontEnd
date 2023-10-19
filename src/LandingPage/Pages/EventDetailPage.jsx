@@ -454,10 +454,9 @@ const EventDetailPage = () => {
         </div>
         <div className="my-5 w-full p-5 bg-light-grey rounded-lg">
           <p className="text-lg text-orange font-semibold mb-3">DESCRIPTION</p>
-          <p className="text-base font-body_font">
-            {eventInfo.description}
-            {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis molestie felis eu vehicula. Aliquam sapien lectus, aliquam ut lorem a, hendrerit lacinia libero. Nam dictum placerat consequat. Pellentesque egestas volutpat elit sed tempor. Nam sit amet sapien felis. Quisque ornare feugiat neque, non egestas lorem luctus a. Praesent id imperdiet magna. Proin a arcu ac nulla interdum faucibus. Etiam vel leo rhoncus, sodales sem id, varius est. Morbi aliquam pellentesque tortor sed ullamcorper. */}
-          </p>
+          <p className="text-base font-body_font" dangerouslySetInnerHTML={{ __html: eventInfo?.description?.replace(/\n/g, '<br />') }}></p>
+
+
         </div>
         {/* Photos and Videos */}
 

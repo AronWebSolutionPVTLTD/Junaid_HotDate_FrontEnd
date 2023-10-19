@@ -694,6 +694,7 @@ console.log(ref,ref2)
                       name="introduction"
                       value={form.introduction}
                       onChange={handleInput}
+                      style={{ whiteSpace: 'pre-line' }}
                       maxLength={500}
                     />
                     <h1 className="font-light text-sm py-2">

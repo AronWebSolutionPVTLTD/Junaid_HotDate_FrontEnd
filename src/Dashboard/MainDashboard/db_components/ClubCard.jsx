@@ -33,7 +33,7 @@ const ClubCard = ({ clubs }) => {
   };
   const formattedDate = dateObj.toLocaleDateString("en-US", options);
 
-
+console.log(clubs.introduction.length)
   return (
     <div className="h-full bg-light-grey rounded-2xl">
     <div className="w-full cursor-pointer">
@@ -92,15 +92,17 @@ const ClubCard = ({ clubs }) => {
               />
             </g>
           </svg>
-         
-          {clubs?.location?.display_name}
+         {clubs?.location?.display_name<=30?<span>     {clubs?.location?.display_name}</span>:<span>     {clubs?.location?.display_name?.slice(0,30)}...</span>}
+     
         </p>
         { calculatePreciseDistance(clubs?.location?.lon,savedCred.long,clubs?.location?.lat,savedCred.lat).slice(0,3)}miles
 
         <div className="my-2 w-full  bg-light-grey rounded-lg">
       
           <p className="text-base font-body_font">
-            {clubs?.introduction.length>40? `${clubs.introduction.slice(0,40)}...` : clubs.introduction}  </p>
+{clubs?.introduction?.length<=40?<span>{clubs?.introduction}</span>:<span>{clubs?.introduction?.slice(0,40)}...</span>
+ }
+             </p>
         </div>
       </div>
       

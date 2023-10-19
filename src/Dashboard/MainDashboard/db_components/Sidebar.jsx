@@ -146,9 +146,9 @@ const Sidebar = () => {
           title: "Who viewed me",
           submenus: [],
         },
-        { title: "Newest member", submenus: [],path:"/recentuser" },
-        { title: "Near matches", submenus: [] },
-        { title: "Who is on", submenus: [] },
+        { title: "New members", submenus: [],path:"/recentuser" },
+        { title: "Near members", submenus: [] },
+        { title: "Who is on", submenus: [] ,path:"/currentuser"},
       ],
     },
     {
@@ -193,7 +193,7 @@ const Sidebar = () => {
         { title: "My profile", submenus: [], path: "/user-detail" },
         { title: "My posts", submenus: [] },
         { title: "Edit profile", submenus: [], path: "/edit-detail" },
-        { title: "Pictures", submenus: [] },
+        { title: "My Media", submenus: [] },
         { title: "Account", submenus: [] },
         { title: "Preferences", submenus: [] },
         {
@@ -208,9 +208,8 @@ const Sidebar = () => {
       ],
     },
   ];
-  const { userInfo, setUserInfo } = useContext(Context);
+  const { userInfo, setUserInfo,UserToken:userToken,setUserToken } = useContext(Context);
   // const [userInfo, setUserInfo] = useState({});
-  const [userToken, setUserToken] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();

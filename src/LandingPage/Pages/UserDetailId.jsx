@@ -140,7 +140,7 @@ const RenderedStyle={
          </div>
          <div className="flex gap-3">
                 <span className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-sm px-4 font-semibold cursor-pointer">Friend request</span>
-                <span className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-sm px-4 font-semibold cursor-pointer">Cancel request</span>
+                <span className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-sm px-4 font-semibold cursor-pointer">Message</span>
             </div>
        </div>
      </div>
@@ -149,7 +149,7 @@ const RenderedStyle={
     <h3 className="text-2xl text-orange">Slogan</h3>
    <p className="text-lg font-body_font my-2">{userInfo.slogan}</p>
    <h3 className="text-2xl text-orange mt-5">Introduction</h3>
-    <p className="text-lg font-body_font my-2">{userInfo.introduction}</p>
+    <p className="text-lg font-body_font my-2" dangerouslySetInnerHTML={{ __html: userInfo?.introduction?.replace(/\n/g, '<br />') }}></p>
    </div>
     </div>
    <div className="max-w-5xl mx-auto pt-20">

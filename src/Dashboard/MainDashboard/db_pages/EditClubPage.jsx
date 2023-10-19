@@ -309,6 +309,7 @@ const handleImageChange = (e) => {
                   name="introduction"
                   value={club.introduction}
                   onChange={handleChange}
+                  style={{ whiteSpace: 'pre-line' }}
                   autoComplete="off"
                   className="bg-black border md:rounded-l-none rounded-md md:border-none md:border-l-2 md:rounded-r-md border-orange focus:outline-none focus-visible:none w-full md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)] h-[49px] text-gray font-normal xl:text-lg rounded-r-md text-sm px-2 xl:px-4 py-2.5 text-start placeholder:text-lg placeholder:text-gray items-center flex justify-between"
                   required
@@ -391,6 +392,7 @@ const handleImageChange = (e) => {
                     name="Description"
                     value={club.Description}
                     onChange={handleChange}
+                    style={{ whiteSpace: 'pre-line' }}
                     className="bg-black focus:outline-none focus-visible:none w-full border-gradient3 text-gray font-normal xl:text-lg rounded-md text-sm px-2 xl:px-4 py-2.5 text-center md:text-start items-center flex justify-between"
                     required
                   ></textarea>

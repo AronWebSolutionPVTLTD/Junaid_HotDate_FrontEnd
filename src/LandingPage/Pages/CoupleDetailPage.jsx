@@ -134,12 +134,17 @@ const CoupleDetailPage = ({age,age2}) => {
                  
                 </div>
               </div>
-              <p className="text-lg font-body_font">{userInfo.slogan}</p>
-              <p className="text-lg font-body_font">{userInfo.introduction}</p>
+              {/* <p className="text-lg font-body_font">{userInfo.slogan}</p>
+              <p className="text-lg font-body_font">{userInfo.introduction}</p> */}
             </div>
           </div>
         </div>
-
+        <div className="p-5 bg-light-grey rounded-xl mt-6  max-w-5xl mx-auto">
+    <h3 className="text-2xl text-orange">Slogan</h3>
+   <p className="text-lg font-body_font my-2">{userInfo.slogan}</p>
+   <h3 className="text-2xl text-orange mt-5">Introduction</h3>
+  <p className="text-lg font-body_font" dangerouslySetInnerHTML={{ __html: userInfo?.introduction?.replace(/\n/g, '<br />') }}></p>
+   </div>
         <div className="max-w-5xl mx-auto pt-20">
           <div className="px-8">
             <span className="inline-block py-3 px-8 text-lg rounded-t-lg bg-white text-black min-w-[200px] text-center">

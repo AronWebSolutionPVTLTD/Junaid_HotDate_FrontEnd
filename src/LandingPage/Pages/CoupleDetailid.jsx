@@ -135,7 +135,7 @@ const CoupleDetailId = ({id}) => {
               </div>
               <div className="flex gap-3">
                 <span className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-sm px-4 font-semibold cursor-pointer">Friend request</span>
-                <span className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-sm px-4 font-semibold cursor-pointer">Cancel request</span>
+                <span className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-sm px-4 font-semibold cursor-pointer">Message</span>
             </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import {BiChevronDown} from 'react-icons/bi'
 import { IoCloseCircleSharp } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 const EditUserDetailsPage = () => {
   const [image, setImage] = useState();
@@ -291,12 +292,13 @@ console.log(userInfo)
       );
       if (data) {
         setUserInfo(data);
-        navigate("/user-detail");
+        // navigate("/user-detail");
+        toast.success("Profile edit successfully")
       }
     } catch (error) {
       console.log(error);
     }
-    navigate("/user-detail");
+    // navigate("/user-detail");
   };
 
 
@@ -1101,6 +1103,7 @@ console.log(userInfo)
                     name="introduction"
                     value={userDetails.introduction}
                     onChange={handleChange}
+                    style={{ whiteSpace: 'pre-line' }}
                     className="bg-black-20 focus:outline-none focus-visible:none w-full border-gradient3 text-white font-normal xl:text-lg rounded-md text-sm px-2 xl:px-4 py-2.5 items-center flex justify-between"
                   ></textarea>
                 </div>

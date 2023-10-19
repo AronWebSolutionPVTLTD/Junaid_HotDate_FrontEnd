@@ -333,6 +333,7 @@ const CreateTravelPage = () => {
                     rows={3}
                     name="description"
                     value={travel.description}
+                    style={{ whiteSpace: 'pre-line' }}
                     onChange={handleChange}
                     className="bg-black focus:outline-none focus-visible:none w-full border-gradient3 text-gray font-normal xl:text-lg rounded-md text-sm px-2 xl:px-4 py-2.5 text-center md:text-start items-center flex justify-between"
                     required

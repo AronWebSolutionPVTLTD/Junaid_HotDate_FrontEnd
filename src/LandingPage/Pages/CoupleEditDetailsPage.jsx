@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import {BiChevronDown} from 'react-icons/bi'
 import {MdOutlineModeEditOutline} from 'react-icons/md'
 import { IoCloseCircleSharp } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 const CoupleEditDetailPage = () => {
   const [image, setImage] = useState();
@@ -425,7 +426,8 @@ console.log(userInfo,"userinfo")
       
       if (data) {
         setUserInfo(data);
-        navigate("/user-detail");
+        // navigate("/user-detail");
+        toast.success("Profile edit successfully")
       }
     } catch (error) {
       console.log(error);
@@ -1711,6 +1713,7 @@ console.log(userInfo,"userinfo")
                     rows={4}
                     name="introduction"
                     value={userDetails.introduction}
+                    style={{ whiteSpace: 'pre-line' }}
                     onChange={handleChange}
                     className="bg-black-20 focus:outline-none focus-visible:none w-full border-gradient3 text-white font-normal xl:text-lg rounded-md text-sm px-2 xl:px-4 py-2.5 items-center flex justify-between"
                   ></textarea>

@@ -41,7 +41,6 @@
     width: 100%;
     border:1px solid;
 }
-
 .select_ctmBox {
     position: relative;
     text-align: right;
@@ -88,7 +87,6 @@
             background-repeat: no-repeat;
             background-position: center center;
 }
-
 .select_label {
     position: relative;
     padding-right: 20px;
@@ -105,7 +103,6 @@
     right: 0;
     top: 0;
 }
-
 .ctm_select_drop label{
     display: flex;
     flex-wrap: wrap;
@@ -119,10 +116,9 @@
     @apply p-3 px-4 rounded-md rounded-r-none
   }
   .ctm_select_drop .select_label{
-    @apply bg-black-20 items-center rounded-md rounded-l-none
+    @apply bg-black-20 items-center rounded-md rounded-l-none justify-start
   }
   .ctm_select_drop .select_label .select_label_icon{
     top: 50%;
     transform: translateY(-50%);
-   
   }

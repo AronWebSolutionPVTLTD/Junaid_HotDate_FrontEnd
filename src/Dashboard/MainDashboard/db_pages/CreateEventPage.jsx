@@ -394,25 +394,25 @@ const CreateEventPage = () => {
       </PlacesAutocomplete> */}
               </div>
               <div className="flex flex-col gap-30">
-                <label
-                  htmlFor="Description"
-                  className="gradient w-full h-[49px] flex items-center justify-center text-lg text-white  font-normal leading-29 rounded-md mb-6"
-                >
-                  Description
-                </label>
-                <div className="p-[2px] gradient rounded-md">
-                  <textarea
-                    type="text"
-                    id="Description"
-                    rows={3}
-                    name="Description"
-                    onChange={(e) => handleChange(e)}
-                    value={event.Description}
-                    className="bg-black focus:outline-none focus-visible:none w-full border-gradient3 text-gray font-normal xl:text-lg rounded-md text-sm px-2 xl:px-4 py-2.5 text-center md:text-start items-center flex justify-between"
-                    required
-                  ></textarea>
-                </div>
-              </div>
+      <label
+        htmlFor="Description"
+        className="gradient w-full h-[49px] flex items-center justify-center text-lg text-white font-normal leading-29 rounded-md mb-6"
+      >
+        Description
+      </label>
+      <div className="p-[2px] gradient rounded-md">
+        <textarea
+          id="Description"
+          rows={3}
+          name="Description"
+          onChange={(e) => handleChange(e)}
+          value={event.Description}
+          className="bg-black focus:outline-none focus-visible:none w-full border-gradient3 text-gray font-normal xl:text-lg rounded-md text-sm px-2 xl:px-4 py-2.5 text-center md:text-start items-center flex justify-between"
+          required
+          style={{ whiteSpace: 'pre-line' }}
+        ></textarea>
+      </div>
+    </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
                   <span className="w-6 block mr-2">
