@@ -251,7 +251,7 @@ const Sidebar = () => {
     <div className="sidebar xl:w-60">
       <div>
         <img
-          src={userInfo.image}
+          src={userInfo.image || userInfo?.gender==="male" ? "https://hotdate.onrender.com/images/maleAvatar.jpg" : "https://hotdate.onrender.com/images/femaleAvatar.png" }
           className="hidden aspect-square object-cover xl:block"
         />
         <div className="pt-0 pb-8 xl:py-4">
