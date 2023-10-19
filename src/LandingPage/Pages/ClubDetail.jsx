@@ -108,7 +108,7 @@ const [desc,setdesc]= useState("")
       />
 </div>
 
-<textarea id="message" rows="4" class="mt-4 block p-2.5 w-full text-sm  bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..." onChange={handleChange} value={desc} ></textarea>
+<textarea id="message" rows="4" class="mt-4 block p-2.5 w-full text-sm  bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-black" placeholder="Write your thoughts here..." onChange={handleChange} value={desc} ></textarea>
 <div className="flex gap-4 justify-between w-full">
           <span
             className="primary_btn gradient mt-5 px-8 bg-gradient-to-r from-[#F79220] to-[#F94A2B] rounded-lg py-2 cursor-pointer"
