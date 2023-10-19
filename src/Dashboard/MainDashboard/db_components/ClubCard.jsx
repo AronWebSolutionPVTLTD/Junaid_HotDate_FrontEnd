@@ -100,7 +100,7 @@ const ClubCard = ({ clubs }) => {
         <div className="my-2 w-full  bg-light-grey rounded-lg">
       
           <p className="text-base font-body_font">
-            {clubs.introduction}  </p>
+            {clubs?.introduction.length>20?clubs.introduction.slice(0,20)... : clubs.introduction}  </p>
         </div>
       </div>
       
