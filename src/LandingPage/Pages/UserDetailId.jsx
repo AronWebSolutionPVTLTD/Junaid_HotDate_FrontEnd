@@ -20,6 +20,7 @@ const [pendingusers,setPending]=useState([])
 const[addfriend,setAddFriend]=useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const navigate = useNavigate();
+  const ref = useRef(null)
   const BASE_URL = process.env.REACT_APP_BASE_URL;
  
   const data = useParams()
@@ -85,8 +86,10 @@ const config ={
 
 useEffect(()=>{
   if(UserToken){
-axios.get(`${BASE_URL}/api/check_req/${data.id}`,config).then((res)=>setPending(res.data.status)
-).catch((err)=>console.log(err))}
+axios.get(`${BASE_URL}/api/check_req/${data.id}`,config).then((res)=>{setPending(res.data.status)
+  ref.current=res.data?.existingRequest._id
+
+}).catch((err)=>console.log(err))}
 },[UserToken,addfriend])
 
 console.log(pendingusers,UserToken)
@@ -108,20 +111,20 @@ catch(err){
   console.log(err)
 }
 }
-// const handlecancelrequest=async()=>{
-//   try{
-//     const data= await axios.patch(`${BASE_URL}/api/cancel-pending-request/${userInfo?._id}`,{},{
-//        headers:{
-//          token:UserToken
-//        }
-//     })
+const handlecancelrequest=async()=>{
+  try{
+    const data= await axios.patch(`${BASE_URL}/api/cancel-pending-request/${userInfo?._id}`,{},{
+       headers:{
+         token:UserToken
+       }
+    })
    
-//  console.log(data,"cancel")
-//      }
-//    catch(err){
-//      console.log(err)
-//    }
-// }
+ console.log(data,"cancel")
+     }
+   catch(err){
+     console.log(err)
+   }
+}
 
   return (<>
 
@@ -189,7 +192,8 @@ catch(err){
          
          <div className="flex gap-3">
              { pendingusers!=="pending"  ?    <div className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-sm px-4 font-semibold cursor-pointer  " onClick={handlefriendrequest}>Friend request</div>
-             :<div className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-sm px-4 font-semibold cursor-pointer " >Request Sent</div>}
+                         :<div className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-sm px-4 font-semibold cursor-pointer "onClick={handlecancelrequest} >Cancel Request</div>}
+
              
 
                 <span className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-sm px-4 font-semibold cursor-pointer">Message</span>
