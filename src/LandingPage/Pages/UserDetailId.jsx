@@ -104,7 +104,7 @@ const handlefriendrequest=async()=>{
       token:UserToken
     }
  })
-
+ alert("Friend request sent!")
  setAddFriend(!addfriend)
   }
 catch(err){
@@ -118,7 +118,7 @@ const handlecancelrequest=async()=>{
          token:UserToken
        }
     })
-   
+    alert("success!")
  console.log(data,"cancel")
      }
    catch(err){
