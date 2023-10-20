@@ -119,6 +119,7 @@ const handlecancelrequest=async()=>{
        }
     })
     alert("success!")
+     setAddFriend(!addfriend)
  console.log(data,"cancel")
      }
    catch(err){
