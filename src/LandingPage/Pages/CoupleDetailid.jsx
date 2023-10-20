@@ -86,11 +86,10 @@ const ref = useRef(null)
     if(UserToken){
   axios.get(`${BASE_URL}/api/check_req/${data.id}`,config).then((res)=>{setPending(res.data.status)
     ref.current=res.data?.existingRequest._id
-
   }).catch((err)=>console.log(err))}
   },[UserToken,addfriend])
   
-  console.log(pendingusers,UserToken)
+  console.log(pendingusers,UserToken,ref.current)
   
 
   
