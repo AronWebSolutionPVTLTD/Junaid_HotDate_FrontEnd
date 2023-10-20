@@ -87,7 +87,7 @@ const config ={
 useEffect(()=>{
   if(UserToken){
 axios.get(`${BASE_URL}/api/check_req/${data.id}`,config).then((res)=>{setPending(res.data.status)
-  ref.current=res.data?.existingRequest._id
+  ref.current=res.data?.existingRequest?._id
 
 }).catch((err)=>console.log(err))}
 },[UserToken,addfriend])
@@ -113,7 +113,7 @@ catch(err){
 }
 const handlecancelrequest=async()=>{
   try{
-    const data= await axios.patch(`${BASE_URL}/api/cancel-pending-request/${userInfo?._id}`,{},{
+    const data= await axios.patch(`${BASE_URL}/api/cancel-pending-request/${ref.current}`,{},{
        headers:{
          token:UserToken
        }
