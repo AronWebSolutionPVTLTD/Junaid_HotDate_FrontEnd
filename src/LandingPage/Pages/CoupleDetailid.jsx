@@ -101,7 +101,7 @@ const ref = useRef(null)
         token:UserToken
       }
    })
- 
+ alert("Friend request sent!")
    setAddFriend(!addfriend)
     }
   catch(err){
@@ -116,7 +116,7 @@ const ref = useRef(null)
            token:UserToken
          }
       })
-     
+      alert("Cancelled friend request!")
       setAddFriend(!addfriend)
        }
      catch(err){
