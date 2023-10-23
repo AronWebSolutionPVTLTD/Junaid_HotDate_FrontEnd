@@ -256,10 +256,10 @@ const Sidebar = () => {
     <div className="sidebar xl:w-60">
       <div>
         {userInfo?.profile_type==="couple"?
-        <img src={userInfo?.image || "images/couple-avatar.jpg"}/>
+        <img src={userInfo?.image?userInfo?.image:"images/couple-avatar.jpg"}/>
       :
       <img
-          src={userInfo.image || userInfo?.gender==="male" ? "images/boy avatar.png"  :userInfo?.gender==="female" ? "images/girl avatar.png"  : "images/trans avatar.png"}
+          src={userInfo?.image?userInfo?.image: userInfo?.gender==="male" ? "images/boy avatar.png"  :userInfo?.gender==="female" ? "images/girl avatar.png"  : "images/trans avatar.png"}
           className="hidden aspect-square object-cover xl:block"
         />
       }
