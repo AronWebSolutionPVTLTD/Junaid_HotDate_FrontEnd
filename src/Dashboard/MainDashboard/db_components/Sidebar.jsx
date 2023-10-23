@@ -99,6 +99,7 @@ const MenuItem = ({
 };
 const Sidebar = () => {
   const [activeMenuItem, setActiveMenuItem] = useState(null);
+    const { userInfo, setUserInfo,UserToken:userToken,setUserToken } = useContext(Context);
   const menuItems = [
     {
       title: "Home",
@@ -192,7 +193,7 @@ const Sidebar = () => {
       submenus: [
         { title: "My Profile", submenus: [], path: "/user-detail" },
         { title: "My Posts", submenus: [] },
-        { title: "Edit Profile", submenus: [], path: "/edit-detail" },
+        { title: "Edit Profile", submenus: [], path: userInfo?.profile_type=="couple"?"/editcouple-detail" :"/edit-detail"},
         { title: "My Media", submenus: [] },
         { title: "Account", submenus: [] },
         { title: "Preferences", submenus: [] },
@@ -208,7 +209,7 @@ const Sidebar = () => {
       ],
     },
   ];
-  const { userInfo, setUserInfo,UserToken:userToken,setUserToken } = useContext(Context);
+
   // const [userInfo, setUserInfo] = useState({});
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
