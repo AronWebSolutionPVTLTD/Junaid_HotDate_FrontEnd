@@ -11,6 +11,7 @@ import { calculateAge } from "./CalculateAge";
 import ClubPage from "../../Dashboard/MainDashboard/db_pages/ClubPage";
 import { useRef } from "react";
 import { toast } from "react-toastify";
+import ConfirmPopUP from "../../Dashboard/MainDashboard/db_components/ConfirmPopUP";
 
 const CoupleDetailId = ({id}) => {
   const [favmodel, setFavModel] = useState([]);
@@ -23,6 +24,7 @@ const CoupleDetailId = ({id}) => {
   const{UserToken}=useContext(Context)
   const[addfriend,setAddFriend]=useState(false)
   const [pendingusers,setPending]=useState('')
+  const [popup, setPopup] = useState(false)
 const ref = useRef(null)
   const data = useParams()
 
@@ -111,7 +113,12 @@ const ref = useRef(null)
   }
   
   const handlecancelrequest=async()=>{
-    try{
+    setPopup(true)
+
+  }
+  
+const handleDeleteConfirm=async()=>{
+      try{
       const {data}= await axios.patch(`${BASE_URL}/api/cancel-pending-request/${ref.current}`,{},{
          headers:{
            token:UserToken
@@ -119,13 +126,12 @@ const ref = useRef(null)
       })
       toast("Cancelled friend request!")
       setAddFriend(!addfriend)
+      setPopup(false)
        }
      catch(err){
        console.log(err)
      }
-  }
-  
-
+}
 
   return (
     <div className="bg-black-20">
@@ -701,6 +707,7 @@ const ref = useRef(null)
           </h2>
         </div>
       </div>
+      <ConfirmPopUP popup={popup} setPopup={setPopup} handleDeleteConfirm={handleDeleteConfirm}/>
     </div>
   );
 };

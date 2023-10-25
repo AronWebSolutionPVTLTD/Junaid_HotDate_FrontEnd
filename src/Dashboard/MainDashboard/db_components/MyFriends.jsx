@@ -5,6 +5,7 @@ import { Context } from "../../../Context/context";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import ConfirmPopUP from "./ConfirmPopUP";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 function MyFriends(){
@@ -18,7 +19,8 @@ const config={
     }
 }
 
-
+const [popup, setPopup] = useState(false)
+const[deleteId,setDeleteId]=useState(null)
 
 useEffect(()=>{
     if(UserToken){
@@ -38,25 +40,25 @@ navigate(`/user-detail/${id}`)
 
 
 const handleDelete=async(id)=>{
-   const ans= window.confirm("Are you sure you want to remove this friend")
-   if(ans){
-    console.log(id)
-await axios.patch(`${BASE_URL}/api/cancel-pending-request/${id}`,{},config).then((res)=>{setState(!state) 
-        toast("Friend Request Deleted")}).catch((err)=>console.log(err))
-    
-   }else{
-    return
-   }
+    setPopup(true)
+    setDeleteId(id)
 }
     
+const handleDeleteConfirm=async()=>{
+
+    await axios.patch(`${BASE_URL}/api/cancel-pending-request/${deleteId}`,{},config).then((res)=>{setState(!state) 
+        setPopup(false);
+                toast("Friend Request Deleted")}).catch((err)=>console.log(err))
+
+}
 
 return(
     <>
       <div className="bg-black py-8 px-6 rounded-2xl h-full">
-            <h3 className="text-2xl sm:text-5xl leading-none font-bold mb-10">My Friends</h3>
+            <h3 className="text-2xl sm:text-5xl leading-none font-bold mb-10 text-center">My Friends</h3>
             <div className="flex flex-wrap gap-4">
     {allfriends.map((el,i)=>
-    <div className="max-w-[250px] w-full bg-light-grey shadow-lg rounded-lg my-4 flex justify-center justify-between flex-col items-center flex-wrap mt-14">
+    <div className="max-w-[250px] w-full bg-light-grey shadow-lg rounded-lg my-4 flex justify-center justify-between flex-col items-center flex-wrap mt-[10px]">
      
     <div className="py-4 px-6 pb-0 " key={i}>
      
@@ -73,10 +75,16 @@ return(
         <button className="inline-flex rounded-md items-center gap-1 p-2 bg-white  text-black text-sm sm:text-sm px-4 font-semibold cursor-pointer " onClick={()=>handleViewProfile(el.from._id===userInfo._id ? el?.to?._id: el.to._id===userInfo._id && el?.from?._id) }>View Profile</button>
         <button className="inline-flex rounded-md items-center gap-1 p-2 bg-red text-sm sm:text-sm px-4 font-semibold cursor-pointer " onClick={()=>handleDelete(el?._id) }>Delete</button>
     </div>
+
 </div>
+
 )}
 </div>
+<ConfirmPopUP handleDeleteConfirm={handleDeleteConfirm} popup={popup} setPopup={setPopup}/>
+
         </div>
+
+        
 </>
 )
 }

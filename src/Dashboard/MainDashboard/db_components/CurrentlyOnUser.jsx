@@ -37,15 +37,16 @@ console.log(err)
 
 
     return (
+        <div className="bg-black py-8 px-6 rounded-2xl h-full">
         <div className="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-5">
             {user?.map((user) => (
 
 
                 <div
-                    className="w-full cursor-pointer p-3 bg-light-grey rounded-2xl flex flex-wrap sm:grid grid-cols-2"
+                    className="w-full cursor-pointer p-3 bg-light-grey rounded-2xl flex flex-wrap"
 onClick={()=>handledetail(user?._id)}
                 >
-                    <div className="w-2/5 sm:w-full">
+                    <div className="w-[35%]">
 
 
                         <img
@@ -54,13 +55,13 @@ onClick={()=>handledetail(user?._id)}
                     
                         />
                     </div>
-                    <div className="w-3/5 sm:w-full px-4 pr-0 grid content-between relative gap-2">
+                    <div className="w-[65%] px-4 pr-0 grid content-between relative gap-2">
                 
                              <div className="flex flex-wrap sm:flex-nowrap justify-between sm:gap-5">
-             <h3 className="flex items-center text-lg sm:text-[22px] font-bold gap-2 font-body_font">
-               {user?.username}
-               <p className="flex items-center text-sm font-light gap-1">
-                 <span className="block w-3 h-3 rounded-full bg-green-500 font-body_font"></span>
+             <h3 className="flex items-start text-lg sm:text-xl font-medium font-body_font w-full">
+               <p className="w-[75%] break-all">{user?.username}</p>
+               <p className="w-[70px] pl-2 flex flex-wrap items-center text-xs mt-[6px] font-light gap-1">
+                 <span className="block w-2 h-2 rounded-full bg-green-500 font-body_font"></span>
                  Online
                </p>
              </h3>
@@ -126,6 +127,7 @@ onClick={()=>handledetail(user?._id)}
                     </div>
                 </div>
             ))}
+        </div>
         </div>
     )
 }export default CurrentlyOnUser;

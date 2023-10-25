@@ -1,15 +1,18 @@
 
 import axios from "axios";
 import { Context } from "../../../Context/context";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import ConfirmPopUP from "./ConfirmPopUP";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
 function FriendsCard({user,state,setState,type}){
     const{UserToken,setUserToken}=useContext(Context)
+    const [popup, setPopup] = useState(false)
+    const [confirm, setConfirm] = useState(null)
 const PENDING = type === "pending";
-console.log(PENDING);
+
 const config={
     headers:{
         token:UserToken
@@ -19,27 +22,30 @@ const config={
 const handleconfirm=async(id)=>{
 
     await axios.patch(`${BASE_URL}/api/accept-pending-request/${id}`,{},config).then((res)=>{ setState(!state)
+      console.log(res," ergefu")
         toast("Friend Request Accepted")}).catch((err)=>console.log(err))
    
 }
 
-const handleDelete=async(id)=>{
 
 
-    const ans= window.confirm("Are you sure you want to remove this friend")
-    if(ans){
+const handleDeleteConfirm=async()=>{
+    await axios.patch(`${BASE_URL}/api/cancel-pending-request/${confirm}`,{},config).then((res)=>{setState(!state) 
+      setPopup(false);
+toast("Friend Request Deleted")}).catch((err)=>console.log(err))
  
-     await axios.patch(`${BASE_URL}/api/cancel-pending-request/${id}`,{},config).then((res)=>{setState(!state) 
-        toast("Friend Request Deleted")}).catch((err)=>console.log(err))
-     
-    }else{
-     return
-    }
+}
 
+
+const handleDelete=async(id)=>{
+    setPopup(true)
+    setConfirm(id)
 }
 
 return(
-    <div className="max-w-[250px] w-full bg-light-grey shadow-lg rounded-lg my-4 flex justify-center justify-between flex-col items-center flex-wrap mt-14">
+    <>
+    
+    <div className="max-w-[250px] w-full bg-light-grey shadow-lg rounded-lg my-4 flex justify-center justify-between flex-col items-center flex-wrap mt-[10px] border-2">
         <div className="py-4 px-6 pb-0 ">
         <img className="w-16 mx-auto -mt-8 h-16 object-cover object-center rounded-full" 
             src={PENDING ? user?.from?.image:user?.to?.image}/>
@@ -51,6 +57,8 @@ return(
        { PENDING &&   <button className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-sm px-4 font-semibold cursor-pointer " onClick={()=>handleconfirm(user?._id)}>Confirm</button>}
             <button className="inline-flex rounded-md items-center gap-1 p-2 bg-dark-black text-sm sm:text-sm px-4 font-semibold cursor-pointer "onClick={()=>handleDelete(user?._id)}>Delete</button>
         </div>
+        <ConfirmPopUP handleDeleteConfirm={handleDeleteConfirm} setPopup={setPopup} popup={popup}  />
     </div>
+    </>
 )
 }export default FriendsCard;

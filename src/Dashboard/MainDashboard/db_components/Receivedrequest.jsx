@@ -28,9 +28,7 @@ useEffect(()=>{
 
 const getapi=async()=>{
   
-    const {data}= await axios.get(`${BASE_URL}/api/pending-requests/`,config)
- 
-    setPendingRequest(data)
+    await axios.get(`${BASE_URL}/api/pending-requests`,config).then((res)=>setPendingRequest(res.data)).catch((err)=>console.log(err))
 }
 
 
@@ -38,10 +36,10 @@ const getapi=async()=>{
     return (
 
         <div className="bg-black py-8 px-6 rounded-2xl h-full">
-            <h3 className="text-2xl sm:text-5xl leading-none font-bold mb-10">Friend requests</h3>
+            <h3 className="text-2xl sm:text-5xl leading-none font-bold mb-10 underline">Recieved Friend Requests</h3>
             <div className="flex flex-wrap gap-4">
 
-   {pendingRequest?.map((user,i)=>{ return <FriendsCard key={i} user={user} state={state} type={"pending"} setState={setState}/>})}
+   {pendingRequest.length===0 ? <p>No requests found</p> :pendingRequest?.map((user,i)=>{ return <FriendsCard key={i} user={user} state={state} type={"pending"} setState={setState}/>})}
 
 
    

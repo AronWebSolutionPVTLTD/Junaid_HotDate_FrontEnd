@@ -11,6 +11,7 @@ import CoupleDetailPage from "./CoupleDetailPage";
 import CoupleDetailId from "./CoupleDetailid";
 import { calculateAge } from "./CalculateAge";
 import { toast } from "react-toastify";
+import ConfirmPopUP from "../../Dashboard/MainDashboard/db_components/ConfirmPopUP";
 
 const UserDetailId = () => {
   const [favmodel, setFavModel] = useState([]);
@@ -23,7 +24,7 @@ const[addfriend,setAddFriend]=useState(false)
   const navigate = useNavigate();
   const ref = useRef(null)
   const BASE_URL = process.env.REACT_APP_BASE_URL;
- 
+  const [popup, setPopup] = useState(false)
   const data = useParams()
  
   useEffect(() => {
@@ -110,19 +111,38 @@ catch(err){
 }
 }
 const handlecancelrequest=async()=>{
+  setPopup(true)
+//   try{
+//     const data= await axios.patch(`${BASE_URL}/api/cancel-pending-request/${ref.current}`,{},{
+//        headers:{
+//          token:UserToken
+//        }
+//     })
+//     toast("Cancelled friend request!")
+//      setAddFriend(!addfriend)
+//  console.log(data,"cancel")
+//      }
+//    catch(err){
+//      console.log(err)
+//    }
+
+}
+
+const handleDeleteConfirm=async()=>{
   try{
-    const data= await axios.patch(`${BASE_URL}/api/cancel-pending-request/${ref.current}`,{},{
-       headers:{
-         token:UserToken
+        const data= await axios.patch(`${BASE_URL}/api/cancel-pending-request/${ref.current}`,{},{
+           headers:{
+             token:UserToken
+           }
+        })
+        toast("Cancelled friend request!")
+         setAddFriend(!addfriend)
+     console.log(data,"cancel")
+     setPopup(false);
+         }
+       catch(err){
+         console.log(err)
        }
-    })
-    toast("Cancelled friend request!")
-     setAddFriend(!addfriend)
- console.log(data,"cancel")
-     }
-   catch(err){
-     console.log(err)
-   }
 }
 
   return (<>
@@ -710,6 +730,8 @@ const handlecancelrequest=async()=>{
      </h2>
    </div>
  </div>
+
+<ConfirmPopUP popup={popup} setPopup={setPopup} handleDeleteConfirm={handleDeleteConfirm}/>
 </div>:
 <CoupleDetailId id={data.id}/>
 }

@@ -480,7 +480,7 @@ console.log(userInfo)
                           onClick={()=>setCtmSelect(!ctmSelect)}
                    >
                      {userDetails.body_hair.length === 0
-                       ? userDetails.body_hair|| "Please select"
+                       ?  "Please select"
                        : userDetails?.body_hair.map((el,i) => 
                    
                        <span>{i !== 0  && <span>, </span>}

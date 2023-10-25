@@ -16,7 +16,8 @@ const Layout = () => {
       pathname === "/create_event" ||
       pathname === "/event_edit" ||
       pathname === "/home" ||
-      pathname === "/received_request"
+      pathname === "/received_request" ||
+      pathname === "/currentuser"
       
     ) {
       setLayout("layout-1");

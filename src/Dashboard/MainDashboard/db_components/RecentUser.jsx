@@ -30,15 +30,16 @@ navigate(`/user-detail/${id}`)
 
 
     return (
+        <div className="bg-black py-8 px-6 rounded-2xl h-full">
         <div className="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-5" >
             {user?.map((user) => (
 
 
                 <div
-                    className="w-full cursor-pointer p-3 bg-light-grey rounded-2xl flex flex-wrap sm:grid grid-cols-2"
+                    className="w-full cursor-pointer p-3 bg-light-grey rounded-2xl flex flex-wrap"
                     onClick={()=>handleDetail(user?._id)}
                 >
-                    <div className="w-2/5 sm:w-full">
+                    <div className="w-[35%]">
 
 
                         <img
@@ -47,7 +48,7 @@ navigate(`/user-detail/${id}`)
                     
                         />
                     </div>
-                    <div className="w-3/5 sm:w-full px-4 pr-0 grid content-between relative gap-2">
+                    <div className="w-[65%] px-4 pr-0 grid content-between relative gap-2">
                         <div className="flex items-center gap-1 text-xs">
                        
                             <p className="text-[12px] font-medium text-bright-orange">
@@ -114,6 +115,7 @@ navigate(`/user-detail/${id}`)
                     </div>
                 </div>
             ))}
+        </div>
         </div>
     )
 } export default RecentUser;

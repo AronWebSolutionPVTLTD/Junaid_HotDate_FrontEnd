@@ -15,6 +15,7 @@ import {
   RiDeleteBin6Line,
 } from "react-icons/ri";
 import { getPreciseDistance } from "geolib";
+import ClubPage from "../../Dashboard/MainDashboard/db_pages/ClubPage";
 const ClubDetail = () => {
   const [clubData, setClubData] = useState({});
   const { clubId } = useContext(Context);
@@ -23,9 +24,12 @@ const ClubDetail = () => {
   const [cookies] = useCookies(["cookie-name"]);
   const [toggleRequest, setToggleRequest] = useState(false);
 const [popup,setPopup]=useState(false)
+const [load,setLoad]=useState(false)
 const [rating, setRating] = useState(0)
+const[edit,setEdit]=useState(false)
 const [desc,setdesc]= useState("")
   const navigate = useNavigate();
+  const[reviewId,setReviewId]=useState(null)
   const data = useParams()
   const clubid = data.id
   const calculatePreciseDistance = (fLong, sLong, fLat, sLat) => {
@@ -37,7 +41,7 @@ const [desc,setdesc]= useState("")
     return ((pdis / 100) * factor).toFixed(2);
   };
 
-  console.log(userInfo, "user")
+
 
   const getClub = async () => {
     const { data } = await axios.get(`${BASE_URL}/api/getClub/${clubid}`);
@@ -45,9 +49,10 @@ const [desc,setdesc]= useState("")
     
   };
   // console.log(clubData.reviews.length,"4564646")
+
   useEffect(() => {
     getClub();
-  }, [popup]);
+  }, [popup,load]);
   const handleSave = async () => {
       setPopup(true);
       setdesc("")
@@ -64,7 +69,7 @@ const [desc,setdesc]= useState("")
     });
   };
   const handleRating = (rate) => {
-    console.log(rate)
+
     setRating(rate)
   }
 
@@ -72,16 +77,27 @@ const [desc,setdesc]= useState("")
     setdesc(e.target.value)
   }
 
-  const submitReview = () =>{
-    const data = {
-      title:userInfo.username,
-      createdBy:userInfo._id,
-      rating:rating,
-      desc:desc
-    }
-     axios.put(`${BASE_URL}/api/reviewPost/${clubData._id}`,data).then((res)=>{
-      setPopup(false);
-     })
+  const submitReview = async() =>{
+
+if(edit){
+  await axios.patch(`${BASE_URL}/api/edit-review/${clubData?._id}`,{reviewId,rating,desc}).then((res)=>{}).catch((err)=>console.log(err))
+
+  setEdit(false)
+}
+else{
+  const data = {
+    title:userInfo.username,
+    createdBy:userInfo._id,
+    rating:rating,
+    desc:desc
+  }
+   await axios.put(`${BASE_URL}/api/reviewPost/${clubData._id}`,data).then((res)=>{
+    
+   }).catch((err)=>console.log(err))
+}
+setPopup(false);
+setdesc("")
+setRating(0)
   }
 
   const formatDate = (dateString) => {
@@ -91,6 +107,22 @@ const [desc,setdesc]= useState("")
     
     return formattedDate;
   };
+
+
+  const DeleteComment=async(id,reviewId)=>{
+  
+await axios.put(`${BASE_URL}/api/delete-review/${id}`,{reviewId}).then((res)=>{ console.log(res.data) 
+  setLoad(!load);
+  toast(res.data)}).catch((err)=>console.log(err))
+  }
+
+
+  const handleEdit=async(review)=>{
+console.log(review)
+setReviewId(review?._id)
+setdesc(review?.desc)
+setRating(review?.rating)
+  }
 
   return (
     <div className="bg-black pt-0 sm:pt-8 py-8 px-6 rounded-2xl xl:rounded-r-none min-h-full">
@@ -104,8 +136,8 @@ const [desc,setdesc]= useState("")
          Write a review
           </h3>
           <p className="mt-2">Rate this bussiness</p>
-<div class=" space-x-1 mt-4 gap-2">
-        <Rating size={50}
+<div class=" space-x-1 mt-4 gap-2"> 
+        <Rating size={50}  initialValue={rating}
         onClick={handleRating}
       />
 </div>
@@ -276,6 +308,13 @@ const [desc,setdesc]= useState("")
             <p>{reviews.title}</p>
             <p className="text-xs text-white/60">{formatDate(reviews.created)}</p>
         </div>
+        {userInfo?._id === reviews?.createdBy?._id &&   
+        <div className="flex items-center gap-1">
+          <buton class="p-1 gradient rounded py-0 cursor-pointer" onClick={()=>(setPopup(true), setEdit(true),handleEdit(reviews)) }><MdOutlineModeEditOutline /></buton>
+          <buton className="p-1 gradient rounded py-0 cursor-pointer" onClick={()=>DeleteComment(clubData._id,reviews?._id)}><RiDeleteBin6Line /></buton>
+        </div>
+        }
+      
     </div>
     <div class="flex items-center mb-1">
     <Rating size={20} initialValue={reviews.rating} readonly/>

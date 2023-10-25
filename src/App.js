@@ -55,10 +55,12 @@ import CurrentlyOnUser from "./Dashboard/MainDashboard/db_components/CurrentlyOn
 import Receivedrequest from "./Dashboard/MainDashboard/db_components/Receivedrequest";
 import SendFriendrequest from "./Dashboard/MainDashboard/db_components/SendFriendrequest";
 import MyFriends from "./Dashboard/MainDashboard/db_components/MyFriends";
+import { toast } from "react-toastify";
 
 function App() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
+
   const location = useLocation();
   const{userInfo,UserToken  }=useContext(Context)
   const { pathname } = location;
@@ -68,29 +70,33 @@ function App() {
   }, [pathname]);
 
 
-// useEffect(()=>{
-// if(userInfo._id){
-//     getAPi()}
-//   },[userInfo,UserToken])
+useEffect(()=>{
+if(userInfo?._id){
+    getAPi()}
+  },[userInfo,UserToken])
 
 
-//   const getAPi=async()=>{
-//     const config = {
-//       'headers':{
-//         'token':UserToken
-//       }
-//     };
+  const getAPi=async()=>{
+    const config = {
+      'headers':{
+        'token':UserToken
+      }
+    };
 
-//     try{
-//     const {data}=await axios.get(`${BASE_URL}/api/active/${userInfo?._id}`,config
-//       )
+    try{
+    const {data}=await axios.get(`${BASE_URL}/api/active/${userInfo?._id}`,config)
+}catch(err){
 
-
-//     }catch(err){
-//       console.log(err)
-//       removeCookie("token");
-//  }  
-// }
+      if(err?.response?.status===401){
+        await axios.post(`${BASE_URL}/api/logout/${userInfo?._id}`).then((res)=>{removeCookie("token") 
+        navigate("/login")}).catch((err)=>console.log(err))
+        toast("Your session is expired! Please login again",{toastId:"shiwu"})
+        // removeCookie("token");
+        // navigate("/login")
+      }
+     
+ }  
+}
   
   return (
     <>

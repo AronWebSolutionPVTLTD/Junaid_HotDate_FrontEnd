@@ -104,7 +104,7 @@ const ClubCard = ({ clubs }) => {
       <div className="my-2 w-full  bg-light-grey rounded-lg">
       
           <p className="text-base font-body_font">
-{clubs?.introduction?.length<=40?<span>{clubs?.introduction}</span>:<span>{clubs?.introduction?.slice(0,40)}...</span>
+{clubs?.introduction?.length<=30?<span>{clubs?.introduction}</span>:<span>{clubs?.introduction?.slice(0,30)}...</span>
  }
              </p>
         </div>
