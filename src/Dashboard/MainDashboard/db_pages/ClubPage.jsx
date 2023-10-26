@@ -171,7 +171,7 @@ const Distance=eventDistance.slice(0,3)
                 className="max-w-full cursor-pointer w-5"
                 
               />
-              <span>Add Club</span>
+              <span>Add Clubs</span>
             </div>
             <div className="inline-flex gap-1 items-center relative">
             <span className="inline-flex gap-1 items-center cursor-pointer" onClick={() => setFilterDropdown(!filterDropdown)}>
