@@ -259,7 +259,7 @@ const EventDetailPage = () => {
                     </div>
                   </div>
                 ) : eventInfo.type === "Private Event" || eventInfo.type === "Public Event" ? (
-                  hasUserPending || isJoined ? (
+                  hasUserPending || isJoined || hasUserJoined ? (
                     <div className="flex gap-2">
                       <button
                         className="primary_btn !py-1 !text-sm !leading-[28px]"
