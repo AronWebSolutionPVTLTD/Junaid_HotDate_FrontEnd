@@ -288,11 +288,7 @@ set
                       onClick={handleJoin}
                     >
                       Send Join Request
-                    </button>
-                  
-                ) : (
-                  ""
-                )}
+                    </button>) }
               </div>
               <div className="grid sm:flex flex-wrap items-start gap-1 sm:gap-1 justify-between">
                 <div className="text-sm">
