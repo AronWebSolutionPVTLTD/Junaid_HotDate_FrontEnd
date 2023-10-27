@@ -289,7 +289,7 @@ set
                     >
                       Send Join Request
                     </button>
-                  )
+                  
                 ) : (
                   ""
                 )}
