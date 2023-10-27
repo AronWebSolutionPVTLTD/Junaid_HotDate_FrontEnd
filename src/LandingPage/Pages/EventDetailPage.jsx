@@ -271,7 +271,7 @@ const EventDetailPage = () => {
                         className="primary_btn !py-1 !text-sm !leading-[28px]"
                         onClick={handleCancle}
                       >
-                        Cancle Request
+                        Cancel Request
                       </button>
                     </div>
                   ) : hasUserJoined ? (
