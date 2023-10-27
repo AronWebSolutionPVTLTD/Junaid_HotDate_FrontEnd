@@ -258,7 +258,7 @@ const EventDetailPage = () => {
                       <RiDeleteBin6Line />
                     </div>
                   </div>
-                ) : eventInfo.type === "Private Event" ? (
+                ) : eventInfo.type === "Private Event" || eventInfo.type === "Public Event" ? (
                   hasUserPending || isJoined ? (
                     <div className="flex gap-2">
                       <button
