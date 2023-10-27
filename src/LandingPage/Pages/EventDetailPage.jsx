@@ -259,7 +259,7 @@ set
                       <RiDeleteBin6Line />
                     </div>
                   </div>
-                ) : eventInfo.type === "Private Event" || eventInfo.type === "Public Event"  ? (
+                ) : eventInfo.type === "Private Event" || eventInfo.type === "Public Event"  && 
                   hasUserPending || isJoined ? (
                     <div className="flex gap-2">
                       <button
@@ -288,7 +288,8 @@ set
                       onClick={handleJoin}
                     >
                       Send Join Request
-                    </button>) }
+                    </button>) 
+      }
               </div>
               <div className="grid sm:flex flex-wrap items-start gap-1 sm:gap-1 justify-between">
                 <div className="text-sm">
