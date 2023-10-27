@@ -108,6 +108,7 @@ const EventDetailPage = () => {
     axios.post(`${BASE_URL}/api/delPart/`, requestData).then((res) => {
       setCancleRequest(true);
       setIsJoined(false);
+set
     });
   };
   const day = parsedDate.getDate();
@@ -258,8 +259,8 @@ const EventDetailPage = () => {
                       <RiDeleteBin6Line />
                     </div>
                   </div>
-                ) : eventInfo.type === "Private Event" || eventInfo.type === "Public Event" ? (
-                  hasUserPending || isJoined || hasUserJoined ? (
+                ) : eventInfo.type === "Private Event" || eventInfo.type === "Public Event"  ? (
+                  hasUserPending || isJoined ? (
                     <div className="flex gap-2">
                       <button
                         className="primary_btn !py-1 !text-sm !leading-[28px]"
@@ -287,22 +288,6 @@ const EventDetailPage = () => {
                       onClick={handleJoin}
                     >
                       Send Join Request
-                    </button>
-                  )
-                ) : eventInfo.type === "Public Event" ? (
-                  hasUserJoined || isJoined ? (
-                    <button
-                      className="primary_btn !py-1 !text-sm !leading-[28px]"
-                      disabled
-                    >
-                      Joined
-                    </button>
-                  ) : (
-                    <button
-                      className="primary_btn !py-1 !text-sm !leading-[28px]"
-                      onClick={handleJoin}
-                    >
-                      Join Now
                     </button>
                   )
                 ) : (
