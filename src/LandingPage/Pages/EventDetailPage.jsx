@@ -21,7 +21,7 @@ const EventDetailPage = () => {
   const [eventInfo, setEventInfo] = useState({});
   const [usertoken, setUsertoken] = useState("");
   const [isJoined, setIsJoined] = useState(false);
-  const { userInfo, eventId, savedCred, setSavedCred } = useContext(Context);
+  const { userInfo, savedCred, setSavedCred } = useContext(Context);
   const [pendingUser, setPendingUser] = useState([]);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [cookies] = useCookies(["cookie-name"]);
@@ -40,8 +40,8 @@ const EventDetailPage = () => {
   };
 
   const [cancleRequest, setCancleRequest] = useState(false);
- 
-  console.log(eventId)
+
+
   const getEvent = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/api/get_event/${eventid}`);
@@ -73,7 +73,8 @@ const EventDetailPage = () => {
   };
 
   useEffect(() => {
-    console.log(" Hitting it now");
+
+
     getEvent();
     const token = cookies["token"];
     setUsertoken(token);
@@ -101,15 +102,19 @@ const EventDetailPage = () => {
     "Dec",
   ];
   const handleCancle = () => {
+
     const requestData = {
-      eventId: eventId,
+      eventId: eventid,
       userId: userInfo._id,
     };
+
     axios.post(`${BASE_URL}/api/delPart/`, requestData).then((res) => {
       setCancleRequest(true);
       setIsJoined(false);
     });
   };
+
+
   const day = parsedDate.getDate();
   const monthIndex = parsedDate.getMonth();
   const year = parsedDate.getFullYear();
@@ -137,11 +142,11 @@ const EventDetailPage = () => {
       minute: "2-digit",
     });
   }
-  console.log(endformattedDate);
+
   const handleJoin = async () => {
     try {
       const { data } = await axios.post(
-        `${BASE_URL}/api/events/${eventId}/participants`,
+        `${BASE_URL}/api/events/${eventid}/participants`,
         {},
         {
           headers: {
@@ -178,7 +183,7 @@ const EventDetailPage = () => {
   const handlePendingUser = async (userId, status) => {
     try {
       const { data } = await axios.post(
-        `${BASE_URL}/api/events/${eventId}/${userId}`,
+        `${BASE_URL}/api/events/${eventid}/${userId}`,
         { status },
         {
           headers: {
@@ -203,7 +208,7 @@ const EventDetailPage = () => {
 
   const deleteEvent = (e) => {
     axios.delete(`${BASE_URL}/api/delete_event/${e}`).then((res) => {
-      console.log(res);
+
       if (res.data === "Event is deleted successfully") {
         toast.success("Event deleted successfully");
         navigate("/event-page");
@@ -211,7 +216,7 @@ const EventDetailPage = () => {
     });
   };
   // const locationData=JSON.parse(eventInfo?.location)
-  console.log(eventInfo, "l");
+
 
   return (
     <div className="bg-black pt-0 sm:pt-8 py-8 px-6 rounded-2xl xl:rounded-r-none min-h-full">
@@ -220,7 +225,7 @@ const EventDetailPage = () => {
           Event Details
         </h3>
         <div className="flex flex-wrap gap-4 justify-end">
-          <span className="primary_btn cursor-pointer !text-sm !py-2" onClick={()=>navigate('/event-participants')}>
+          <span className="primary_btn cursor-pointer !text-sm !py-2" onClick={() => navigate('/event-participants')}>
             Guest list
           </span>
           <span className="primary_btn cursor-pointer !text-sm !py-2">
@@ -236,11 +241,11 @@ const EventDetailPage = () => {
             className="w-full aspect-4/3 rounded-2xl object-cover border-[3px] border-white"
           />
         </div>
-        <div className="w-full md:w-[55%] md:pl-10 mt-5 md:mt-0">
+        <div className="w-full md:w-[55%] xl:pl-5 xxl:pl-10 mt-5 md:mt-0">
           <div className="text-white h-full bg-light-grey rounded-2xl ">
             <div className="p-5">
-              <div className="flex items-center justify-between gap-5 mb-4">
-                <h3 className="text-2xl sm:text-4xl font-semibold">
+              <div className="flex flex-wrap items-center justify-between gap-y-1 gap-x-5 mb-4">
+                <h3 className="text-2xl xxl:text-4xl font-semibold">
                   {eventInfo.eventName}
                 </h3>
                 {eventInfo.userId?._id === userInfo._id ? (
@@ -260,27 +265,38 @@ const EventDetailPage = () => {
                   </div>
                 ) : eventInfo.type === "Private Event" ? (
                   hasUserPending || isJoined ? (
-                    <div className="flex gap-2">
+                    <div className="flex gap-3">
                       <button
-                        className="primary_btn !py-1 !text-sm !leading-[28px]"
+                        // className="primary_btn !py-1 !text-sm !leading-[28px]"
+                        className="text-red-500"
                         disabled
                       >
-                        Request Sent
+                        Awaiting for Approval..
                       </button>
                       <button
                         className="primary_btn !py-1 !text-sm !leading-[28px]"
                         onClick={handleCancle}
+
                       >
                         Cancel Request
                       </button>
                     </div>
                   ) : hasUserJoined ? (
-                    <button
-                      className="primary_btn !py-1 !text-sm !leading-[28px]"
-                      disabled
-                    >
-                      Joined
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        className="primary_btn !py-1 !text-sm !leading-[28px]"
+                        disabled
+                      >
+                        Joined
+                      </button>
+                      <button
+                        className="primary_btn !py-1 !text-sm !leading-[28px]"
+                        onClick={handleCancle}
+
+                      >
+                        Cancel Request
+                      </button>
+                    </div>
                   ) : (
                     <button
                       className="primary_btn !py-1 !text-sm !leading-[28px]"
@@ -291,12 +307,19 @@ const EventDetailPage = () => {
                   )
                 ) : eventInfo.type === "Public Event" ? (
                   hasUserJoined || isJoined ? (
-                    <button
-                      className="primary_btn !py-1 !text-sm !leading-[28px]"
-                      disabled
-                    >
-                      Joined
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        className="primary_btn !py-1 !text-sm !leading-[28px]"
+                        disabled
+                      >
+                        Joined
+                      </button>
+                      <button
+                        className="primary_btn !py-1 !text-sm !leading-[28px]"
+                        onClick={handleCancle}
+                      >
+                        Cancel Request
+                      </button></div>
                   ) : (
                     <button
                       className="primary_btn !py-1 !text-sm !leading-[28px]"
@@ -410,7 +433,7 @@ const EventDetailPage = () => {
                 </p>
                 <p className="text-base">
                   <span className="font-semibold">
-                    Total Number of Participants :{" "}
+                    Total Number of Participants :
                     <span className="font-body_font font-normal">
                       {eventInfo.participants?.length - pendingUser.length}
                     </span>
@@ -424,9 +447,8 @@ const EventDetailPage = () => {
           <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400">
             <li className="mr-2">
               <span
-                className={`inline-block px-2 py-3 rounded-lg  cursor-pointer hover:bg-gray-100  ${
-                  !toggleRequest ? "bg-orange" : "hover:text-orange"
-                }`}
+                className={`inline-block px-2 py-3 rounded-lg  cursor-pointer hover:bg-gray-100  ${!toggleRequest ? "bg-orange" : "hover:text-orange"
+                  }`}
                 aria-current="page"
                 onClick={() =>
                   navigate("/event-detail-media", {
@@ -443,9 +465,8 @@ const EventDetailPage = () => {
             {eventInfo.userId?._id === userInfo._id && (
               <li className="mr-2">
                 <span
-                  className={`inline-block px-2 py-3 rounded-lg  cursor-pointer hover:bg-gray-100  ${
-                    toggleRequest ? "bg-orange" : "hover:text-orange"
-                  }`}
+                  className={`inline-block px-2 py-3 rounded-lg  cursor-pointer hover:bg-gray-100  ${toggleRequest ? "bg-orange" : "hover:text-orange"
+                    }`}
                   onClick={() => setToggleRequest(true)}
                 >
                   Pending Request ( {pendingUser.length} )
