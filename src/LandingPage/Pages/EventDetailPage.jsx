@@ -216,7 +216,7 @@ const EventDetailPage = () => {
     });
   };
   // const locationData=JSON.parse(eventInfo?.location)
-
+console.log(eventInfo,"event")
 
   return (
     <div className="bg-black pt-0 sm:pt-8 py-8 px-6 rounded-2xl xl:rounded-r-none min-h-full">

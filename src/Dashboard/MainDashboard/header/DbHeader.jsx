@@ -225,10 +225,19 @@ const DbHeader = () => {
                 className="ml-4 h-10 w-10 cursor-pointer flex items-center"
                 onClick={() => setSidebar(!sidebar)}
               >
-                <img
+                {/* <img
                   src={userInfo.image}
                   className="block w-full h-full rounded-md object-contain"
-                />
+                /> */}
+
+{userInfo?.profile_type==="couple"?
+        <img src={userInfo?.image?userInfo?.image:"images/couple-avatar.jpg"}/>
+      :
+      <img
+          src={userInfo?.image?userInfo?.image: userInfo?.gender==="male" ? "images/boy avatar.png"  :userInfo?.gender==="female" ? "images/girl avatar.png"  : "images/trans avatar.png"}
+          className="hidden aspect-square object-cover xl:block"
+        />
+      }
                 <span className="flex xl:hidden text-base">
                   <HiChevronDown />
                 </span>

@@ -10,6 +10,7 @@ import { Context } from "../../../Context/context";
 import Multiselect from "multiselect-react-dropdown";
 import {IoCloseCircleSharp} from 'react-icons/io5'
 import ClubPage from "./ClubPage";
+import Loading from "./Loading";
 const EditEventPage = () => {
   const [event, setEvent] = useState({
     event_name: "",
@@ -35,14 +36,14 @@ const EditEventPage = () => {
   const [cookies] = useCookies(["cookie-name"]);
   const options = ["M", "F", "MF", "MM", "FF","T"];
   const currentDate = new Date().toISOString().slice(0, 16)
- 
+ const [loading,setLoading]=useState(false)
   const data = useParams()
 
   const eventid = data.id
   const getEventInfo = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/api/get_event/${eventid}`);
-      console.log(data,"data")
+
       setEvent({
         event_name: data.eventName,
         Startdate: data.Startdate,
@@ -65,7 +66,6 @@ const EditEventPage = () => {
     }
   };
 
-  console.log(selectedImage, "SELECt")
 
   useEffect(() => {
     const token = cookies["token"];
@@ -173,7 +173,7 @@ const file = Array.from(e.target.files);
   const handleUpdateEvent = async (e) => {
     e.preventDefault();
     let formData = new FormData();
-    console.log(selectedImage,selectedVideo);
+  
     if (selectedImage) {
       selectedImage.forEach((image) => formData.append("images", image));
     }
@@ -195,6 +195,11 @@ const file = Array.from(e.target.files);
       token: userToken,
     };
     try {
+     if(!event.event_name||!event.Startdate||!event.EndDate||!event.Location||!event.Description||!event.event_type||!selectedOption){
+      toast("all fields required")
+     }
+     else{
+      setLoading(true)
       const data = await axios.put(
         `${BASE_URL}/api/update_event/${eventid}`,
         formData,
@@ -203,6 +208,7 @@ const file = Array.from(e.target.files);
         }
       );
       if (!data) {
+        setLoading(false)
         toast.error("🦄 Failed to Edit Event!", {
           position: "top-right",
           autoClose: 2000,
@@ -214,6 +220,7 @@ const file = Array.from(e.target.files);
           theme: "colored",
         });
       } else {
+        setLoading(false)
         toast.success("Event Edited Successfully!", {
           position: "top-right",
           autoClose: 2000,
@@ -236,8 +243,11 @@ const file = Array.from(e.target.files);
         setselectedVideo(null);
         setSelectedOption([]);
         navigate(`/event-detail/${eventid}`);
+     }
+      
       }
     } catch (error) {
+      setLoading(false)
       console.log(error);
     }
   };
@@ -535,12 +545,16 @@ const file = Array.from(e.target.files);
                 // displayValue="label" // Property name to display in the dropdown options
                 isObject={false}
               />
-              <button
-                className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
-                onClick={handleUpdateEvent}
-              >
-                Submit
-              </button>
+              {!loading?
+    <button
+    className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
+    onClick={handleUpdateEvent}
+  >
+    Submit
+  </button>:
+  <Loading/>
+              }
+          
             </form>
           </div>
         </div>

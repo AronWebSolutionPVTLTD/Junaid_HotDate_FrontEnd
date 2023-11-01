@@ -17,6 +17,8 @@ import {
   IoCloseCircleSharp,
   IoCloudyNight,
 } from "react-icons/io5";
+import Loading from "./Loading";
+
 const CreateEventPage = () => {
   const [event, setEvent] = useState({
     event_name: "",
@@ -41,8 +43,9 @@ const CreateEventPage = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [cookies] = useCookies(["cookie-name"]);
   const currentDate = new Date().toISOString().slice(0, 16);
+  const [loading,setLoading]=useState(false)
   useEffect(() => {
-    console.log(userInfo);
+    
     const token = cookies["token"];
     if (token) {
       const decodedToken = jwtDecode(token);
@@ -58,7 +61,6 @@ const CreateEventPage = () => {
     setSelectedOptions(data);
   }
 
-  console.log(video, "video");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEvent({ ...event, [name]: value });
@@ -75,7 +77,7 @@ const CreateEventPage = () => {
           .get(url)
           .then((res) => {
             setAreaName(res.data);
-            console.log(res.data);
+         
           })
           .catch((err) => console.log(err));
         setEvent({ ...event, ["Location"]: value });
@@ -94,7 +96,7 @@ const CreateEventPage = () => {
       )
       .then((res) => {
         setAreaName(res.data);
-        console.log(res.data);
+      
       })
       .catch((err) => console.log(err));
   }, [event["Location"]]);
@@ -109,7 +111,7 @@ const CreateEventPage = () => {
       setEventmages([...eventimages, URL.createObjectURL(e.target.files[0])]);
     }
   };
-  console.log(selectedImage);
+
   
   const handleCoverImage = (e) => {
     // setCoverImage(e.target.files[0]);
@@ -125,7 +127,7 @@ const CreateEventPage = () => {
 
   const handleVideoChange = (e) => {
     const file = Array.from(e.target.files);
-    console.log(file, "file", URL.createObjectURL(e.target.files[0]));
+  
     setselectedVideo(file);
     if (!file) {
       return;
@@ -133,20 +135,21 @@ const CreateEventPage = () => {
       setVideo([...video, URL.createObjectURL(e.target.files[0])]);
     }
   };
-  console.log(video, "video");
+
 
   const handleEventimages = (index) => {
     const update = eventimages.filter((el, i) => i !== index);
     setEventmages(update);
   };
-  console.log(selectedImage, eventimages, coverImage);
+ 
 
   const handlevideo = (index) => {
     const update = video.filter((el, i) => i !== index);
     setVideo(update);
   };
   const handleCreateEvent = async (e) => {
-    console.log(userInfo);
+    
+  
     e.preventDefault();
     let formData = new FormData();
     if (selectedImage) {
@@ -167,6 +170,7 @@ const CreateEventPage = () => {
     formData.append("accepted_type", JSON.stringify(selectedOptions));
 
     try {
+      setLoading(true)
       const data = await axios.post(`${BASE_URL}/api/createEvent`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -174,6 +178,7 @@ const CreateEventPage = () => {
         },
       });
       if (!data) {
+        setLoading(false)
         toast.error("🦄 Failed to Create Event!", {
           position: "top-right",
           autoClose: 2000,
@@ -185,6 +190,7 @@ const CreateEventPage = () => {
           theme: "colored",
         });
       } else {
+        setLoading(false)
         toast.success("Event Created Successfully!", {
           position: "top-right",
           autoClose: 2000,
@@ -209,7 +215,18 @@ const CreateEventPage = () => {
         navigate("/event-page");
       }
     } catch (error) {
-      console.log(error);
+    
+      setLoading(false);
+      toast.error(error?.response?.data, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
   const [address, setAddress] = useState("");
@@ -224,14 +241,14 @@ const CreateEventPage = () => {
     try {
       const results = await geocodeByAddress(selectedAddress);
       const latLng = await getLatLng(results[0]);
-      console.log("Latitude and Longitude:", latLng);
+      
       // You can use latLng or selectedAddress as needed
     } catch (error) {
       console.error("Error getting geolocation:", error);
     }
   };
 
-  console.log(selectlocation, "lofation");
+ 
   return (
     <div className="bg-white rounded-40px">
       <div className="text-center p-5 py-10 text-black">
@@ -571,12 +588,16 @@ const CreateEventPage = () => {
                   },
                 }}
               />
-              <button
-                className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
-                onClick={handleCreateEvent}
-              >
-                Submit
-              </button>
+              {!loading?
+                   <button
+                   className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
+                   onClick={handleCreateEvent}
+                 >
+                   Submit
+                 </button>
+                 :
+               <Loading/>}
+         
             </form>
           </div>
         </div>

@@ -458,7 +458,7 @@ console.log(userInfo)
 
                   <option value="male">Male</option>
                   <option value="female">Female</option>
-                  <option value="others">Others</option>
+                  <option value="transgender">Transgender</option>
                 </select>
               </div>
 

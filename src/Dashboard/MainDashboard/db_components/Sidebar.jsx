@@ -251,7 +251,7 @@ const Sidebar = () => {
 await axios.post(`${BASE_URL}/api/logout/${userInfo?._id}`).then((res)=>{removeCookie("token") 
 navigate("/login")}).catch((err)=>console.log(err))
   };
-console.log(userInfo)
+
 
   return (
     <div className="sidebar xl:w-60">
