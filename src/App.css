@@ -164,6 +164,9 @@ span.chip{
   visibility: hidden;
   transition: all 0.25s ease;
   z-index: 1;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: left;
 }
 .filter_dropdown.Active{
   visibility: visible;
@@ -196,6 +199,7 @@ span.chip{
   display: grid;
   grid-template-columns: 52px 1fr;
   align-items: center;
+  text-align: left;
 }
 
 .toggle_switch .toggle_circle {

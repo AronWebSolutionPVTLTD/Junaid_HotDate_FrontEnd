@@ -97,7 +97,7 @@ const EventCard = ({ event,loc }) => {
         className="w-full object-cover aspect-11/10 rounded-t-2xl"
          onClick={() => handleEvent(event._id)}
       />
-      <div className="bg-light-grey p-4 rounded-b-2xl grid gap-1">
+      <div className="bg-light-grey py-4 xl:px-2 2xl:px-4 rounded-b-2xl grid gap-1">
       <h3 className="text-2xl font-semibold">{event?.eventName}</h3>
         <div className="grid gap-1">
         <p className="text-sm">

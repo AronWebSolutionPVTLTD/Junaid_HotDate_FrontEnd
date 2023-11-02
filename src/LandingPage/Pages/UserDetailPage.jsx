@@ -118,7 +118,7 @@ const RenderedStyle={
        
        />:
         // {userInfo?.gender==="male"?<img src="images/boy avatar.png"/>:userInfo?.gender==="female"?<image src="images/girl avatar.png"/>:<image src="images/trans avatar.png"/>} 
-     (  userInfo?.gender==="male"?(<img src="images/boy avatar.png" alt="boy" />):userInfo.gender==="female"? (<img src="images/girl avatar.png" alt="girl"  />)
+     (  userInfo?.gender==="male"?(<img src="images/dummyBoy.jpg" alt="boy" />):userInfo.gender==="female"? (<img src="images/dummygirl.jpg" alt="girl"  />)
                :(<img src="images/trans avatar.png" alt="trans"  />))
       }
      </div>

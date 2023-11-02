@@ -6,6 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Context } from "../../../Context/context";
 import { IoCloseCircleSharp } from "react-icons/io5";
+import Loading from "./Loading";
 const CreateClubPage = () => {
   const [club, setClub] = useState({
     club_name: "",
@@ -28,6 +29,7 @@ const CreateClubPage = () => {
   const [cookies] = useCookies(["cookie-name"]);
   const { userInfo } = useContext(Context);
   const [areaname, setAreaName] = useState([]);
+  const[loading,setLoading]=useState(false)
   const [selectlocation, setSelectedLocation] = useState([]);
   useEffect(() => {
     const token = cookies["token"];
@@ -177,45 +179,54 @@ const CreateClubPage = () => {
     formData.append("ownerId", userInfo._id);
 
     try {
-      const data = await axios.post(`${BASE_URL}/api/create_club`, formData);
-      if (!data) {
-        toast.error("🦄 Failed to Create Event!", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      } else {
-        toast.success("🦄Club Created Successfully!", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        setClub({
-          club_name: "",
-          Location: "",
-          introduction: "",
-          Description: "",
-          website: "",
-          email: "",
-          contact: "",
-          club_type: "",
-        });
-        setSelectedImage([]);
-        setSelectedVideo([]);
-navigate("/club-page")
+      if(!club.club_name||!club.Description||!club.website||!club.email||!club.contact||!club.club_type||!club.introduction||!club.Location){
+        toast("Fill All The Fields")
+      }
+      else{
+        setLoading(true)
+        const data = await axios.post(`${BASE_URL}/api/create_club`, formData);
+        if (!data) {
+          toast.error("🦄 Failed to Create Event!", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          setLoading(false)
+          toast.success("🦄Club Created Successfully!", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          setClub({
+            club_name: "",
+            Location: "",
+            introduction: "",
+            Description: "",
+            website: "",
+            email: "",
+            contact: "",
+            club_type: "",
+          });
+          setSelectedImage([]);
+          setSelectedVideo([]);
+  navigate("/club-page")
+      }
+      
 
       }
     } catch (error) {
+      setLoading(false)
       console.log(error);
     }
   };
@@ -527,7 +538,7 @@ navigate("/club-page")
                 </label>
 
 
-       <div>
+       <div className="preview_img_wrapper">
                   {clubvideo.map((el, i) => (
                     <div
                       key={i}
@@ -599,12 +610,16 @@ navigate("/club-page")
                 </div>
               </div>
               {/* <p>{formErrors.introduction}</p> */}
-              <button
-                className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
-                onClick={handleClub}
-              >
-                Submit
-              </button>
+              {!loading?
+                 <button
+                 className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
+                 onClick={handleClub}
+               >
+                 Submit
+               </button>:
+               <Loading/>
+              }
+           
             </form>
           </div>
         </div>

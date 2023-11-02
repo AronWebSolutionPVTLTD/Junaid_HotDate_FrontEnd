@@ -563,7 +563,7 @@ const ModelDetailForm = () => {
                       ></textarea>
                     </div>
 
-                    <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="grid sm:grid-cols-2 gap-4 items-start">
                       <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
                         <span className="w-6 block mr-2">
                           <img

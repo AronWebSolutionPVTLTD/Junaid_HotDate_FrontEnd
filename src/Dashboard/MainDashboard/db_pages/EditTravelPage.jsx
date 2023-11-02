@@ -3,12 +3,13 @@ import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { Context } from "../../../Context/context";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { Cookies, useCookies } from "react-cookie";
+import Loading from "./Loading";
 function EditTravelPage() {
     const [cookies] = useCookies(["cookie-name"]);
-    const { travelid, setTravelid } = useContext(Context)
+   
     const BASE_URL = process.env.REACT_APP_BASE_URL;
     const [areaname, setAreaName] = useState([]);
     const currentDate = new Date().toISOString().slice(0, 16);
@@ -22,12 +23,15 @@ function EditTravelPage() {
         end_date: "",
         description: "",
     });
-console.log(travelid,"id")
+    const [loading,setLoading]=useState(false)
+const data=useParams()
+const travelId=data.id
+
 const navigate=useNavigate();
 
     const getTravel = async () => {
         try {
-            const { data } = await axios.get(`${BASE_URL}/api/travel/${travelid}`)
+            const { data } = await axios.get(`${BASE_URL}/api/travel/${travelId}`)
             console.log(data,"data")
             setTravel({
                 Location: data?.locationto?.display_name,
@@ -124,20 +128,24 @@ const handleTravelSubmit=async(e)=>{
         token: userToken,
       };
 try{
-    const data=await axios.put(`${BASE_URL}/api/update_travel?travelId=${travelid}`,
+    setLoading(true)
+    const data=await axios.put(`${BASE_URL}/api/update_travel?travelId=${travelId}`,
     formdata,{
         headers:headers
     }
    )
 
     if(data){
+        setLoading(false)
         toast.success("Travel updated successfully")
         navigate("/my-travel")
     }
     else{
+        setLoading(false)
         toast.error("Something went wrong")
     }
 }catch(error){
+    setLoading(false)
     console.log(error)
 }
 
@@ -149,8 +157,8 @@ try{
 
         <div className="bg-white rounded-40px">
             <div className="text-center p-5 py-10 text-black">
-                <h3 className="text-2xl sm:text-4xl mb-2">Edit Your Travel Page</h3>
-                <p className="text-lg">Let’s Create a Notorious Travel</p>
+                <h3 className="text-2xl sm:text-4xl mb-2">Edit Your Situationship Page</h3>
+                <p className="text-lg">Let’s Create a Notorious Situationship</p>
             </div>
             <div className="flex flex-wrap bg-black rounded-40px ">
                 <div className="w-full md:w-3/5 xl:w-full 2xl:w-3/5 ">
@@ -303,12 +311,16 @@ try{
                                     ></textarea>
                                 </div>
                             </div>
+                            {!loading?
+                           
                             <button
                                 className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
                             onClick={handleTravelSubmit}
                             >
                                 Submit
-                            </button>
+                            </button>:
+                            <Loading/>
+                             }
                         </form>
                     </div>
                 </div>

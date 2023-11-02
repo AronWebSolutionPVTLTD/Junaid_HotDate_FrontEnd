@@ -79,7 +79,7 @@ console.log(savedCred);
 
  
   return (
-    <div className="home_page bg-black py-8 px-6 rounded-2xl">
+    <div className="home_page bg-black py-8 px-3 2xl:px-6 rounded-2xl">
       {/* event section starts */}
       {event.length === 0 ? (
         ""
@@ -93,7 +93,7 @@ console.log(savedCred);
               View More
             </Link>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-3 2xl:gap-6">
             {event.slice(0, 6).map((el, i) => (
               <div className="h-full bg-light-grey rounded-2xl">
               <EventCard key={i} event={el} />
@@ -116,7 +116,7 @@ console.log(savedCred);
               View More
             </Link>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3 2xl:gap-6">
             {clubs.slice(0, 6).map((el, i) => (
               <ClubCard key={i} clubs={el} />
             ))}

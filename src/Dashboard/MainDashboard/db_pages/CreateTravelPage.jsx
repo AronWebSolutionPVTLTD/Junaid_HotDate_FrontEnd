@@ -5,12 +5,14 @@ import axios from "axios";
 import { Context } from "../../../Context/context"
 import Multiselect from "multiselect-react-dropdown";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const CreateTravelPage = () => {
   const [areaname, setAreaName] = useState([]);
   const [selectlocation, setSelectedLocation] = useState([])
   const [selectedOptions, setSelectedOptions] = useState();
   const options = ["M", "F", "MF", "MM", "FF", "T"];
+  const [loading,setLoading]=useState(false)
   const [travel, setTravel] = useState({
     Location: "",
     start_date: "",
@@ -84,31 +86,31 @@ const CreateTravelPage = () => {
     e.preventDefault();
     const formdata = new FormData();
     formdata.append("image", userInfo.image);
-    // formdata.append("age", age);
-    // formdata.append("age2", age2);
+  
     formdata.append("name",userInfo.username)
-    // formdata.append("userInfo",userInfo.profile_type)
-    // formdata.append("locationfrom", travel.loc_from);
+  
     formdata.append("locationto", JSON.stringify(selectlocation));
     formdata.append("startDate", travel.start_date);
     formdata.append("endDate", travel.end_date);
-    // formdata.append("website_url", travel.url);
+    
     formdata.append("interested",JSON.stringify(selectedOptions));
     formdata.append("description", travel.description);
     formdata.append("userId", userInfo._id);
 
     if(!travel.Location||!travel.description||!travel.end_date||!travel.start_date|| selectedOptions.length === 0 ){
-      toast.error(" Please fill in all the required fields.")
+      toast.error(" Please fill all the required fields.")
       return
     }
 
     try {
+      setLoading(true)
       const data = await axios.post(`${BASE_URL}/api/createTravle`, formdata);
 
 
 
 
       if (!data) {
+        setLoading(false)
         toast.error("🦄 Failed to Create Travel!", {
           position: "top-right",
           autoClose: 2000,
@@ -120,6 +122,7 @@ const CreateTravelPage = () => {
           theme: "colored",
         });
       } else {
+        setLoading(false)
         toast.success("🦄Travel Created Successfully!", {
           position: "top-right",
           autoClose: 2000,
@@ -140,6 +143,7 @@ const CreateTravelPage = () => {
          navigate("/travel-page");
       }
     } catch (error) {
+      setLoading(false)
       console.log(error);
     }
   };
@@ -147,8 +151,8 @@ const CreateTravelPage = () => {
   return (
     <div className="bg-white rounded-40px">
       <div className="text-center p-5 py-10 text-black">
-        <h3 className="text-2xl sm:text-4xl mb-2">Create Your Travel Page</h3>
-        <p className="text-lg">Let’s Create a Notorious Travel</p>
+        <h3 className="text-2xl sm:text-4xl mb-2">Create Your Situationship Page</h3>
+        <p className="text-lg">Let’s Create a Notorious Situationship</p>
       </div>
       <div className="flex flex-wrap bg-black rounded-40px ">
         <div className="w-full md:w-3/5 xl:w-full 2xl:w-3/5 ">
@@ -340,12 +344,17 @@ const CreateTravelPage = () => {
                   ></textarea>
                 </div>
               </div>
+              {!loading?
+             
               <button
                 className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
                 onClick={handleTravelSubmit}
               >
                 Submit
               </button>
+              :
+              <Loading/>
+               }
             </form>
           </div>
         </div>

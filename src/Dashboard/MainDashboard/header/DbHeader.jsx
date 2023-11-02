@@ -148,7 +148,7 @@ const DbHeader = () => {
                         : "text-white hover:text-orange"
                     }`}
                   >
-                    <Link to="/travel-page">Travel</Link>
+                    <Link to="/travel-page">Situationship</Link>
                   </li>
                 </ul>
               </div>
@@ -225,10 +225,21 @@ const DbHeader = () => {
                 className="ml-4 h-10 w-10 cursor-pointer flex items-center"
                 onClick={() => setSidebar(!sidebar)}
               >
-                <img
+                {/* <img
                   src={userInfo.image}
                   className="block w-full h-full rounded-md object-contain"
-                />
+                /> */}
+
+<div className="bg-white">
+{userInfo?.profile_type==="couple"?
+        <img src={userInfo?.image?userInfo?.image:"images/couple-avatar.jpg"}/>
+      :
+      <img
+          src={userInfo?.image?userInfo?.image: userInfo?.gender==="male" ? "images/dummyBoy.jpg"  :userInfo?.gender==="female" ? "images/dummygirl.jpg"  : "images/trans avatar.png"}
+          className="hidden aspect-square object-cover xl:block"
+        />
+      }
+      </div>
                 <span className="flex xl:hidden text-base">
                   <HiChevronDown />
                 </span>

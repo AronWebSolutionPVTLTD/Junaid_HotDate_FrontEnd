@@ -10,12 +10,14 @@ import { Context } from "../../../Context/context";
 import Multiselect from "multiselect-react-dropdown";
 import {IoCloseCircleSharp} from 'react-icons/io5'
 import ClubPage from "./ClubPage";
+import Loading from "./Loading";
 const EditEventPage = () => {
   const [event, setEvent] = useState({
     event_name: "",
     Startdate: "",
     EndDate:"",
     Location: "",
+    contact:"",
     Description: "",
     event_type: "",
   });
@@ -35,14 +37,14 @@ const EditEventPage = () => {
   const [cookies] = useCookies(["cookie-name"]);
   const options = ["M", "F", "MF", "MM", "FF","T"];
   const currentDate = new Date().toISOString().slice(0, 16)
- 
+ const [loading,setLoading]=useState(false)
   const data = useParams()
 
   const eventid = data.id
   const getEventInfo = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/api/get_event/${eventid}`);
-      console.log(data,"data")
+
       setEvent({
         event_name: data.eventName,
         Startdate: data.Startdate,
@@ -50,7 +52,7 @@ const EditEventPage = () => {
         Location: data.location?.display_name,
         Description: data.description,
         event_type: data.type,
-        
+        contact:data.contact,
       });
       setselectedImage(data.images)
       setCoverImage(data.mainImage)
@@ -65,7 +67,6 @@ const EditEventPage = () => {
     }
   };
 
-  console.log(selectedImage, "SELECt")
 
   useEffect(() => {
     const token = cookies["token"];
@@ -173,7 +174,7 @@ const file = Array.from(e.target.files);
   const handleUpdateEvent = async (e) => {
     e.preventDefault();
     let formData = new FormData();
-    console.log(selectedImage,selectedVideo);
+  
     if (selectedImage) {
       selectedImage.forEach((image) => formData.append("images", image));
     }
@@ -188,6 +189,7 @@ const file = Array.from(e.target.files);
     formData.append("description", event.Description);
     formData.append("mainImage", coverImage);
     formData.append("type", event.event_type);
+    formData.append("contact",event.contact)
     formData.append("accepted_type", JSON.stringify(selectedOption));
 
     const headers = {
@@ -195,6 +197,11 @@ const file = Array.from(e.target.files);
       token: userToken,
     };
     try {
+     if(!event.event_name||!event.Startdate||!event.EndDate||!event.Location||!event.contact||!event.Description||!event.event_type||!selectedOption){
+      toast("all fields required")
+     }
+     else{
+      setLoading(true)
       const data = await axios.put(
         `${BASE_URL}/api/update_event/${eventid}`,
         formData,
@@ -203,6 +210,7 @@ const file = Array.from(e.target.files);
         }
       );
       if (!data) {
+        setLoading(false)
         toast.error("🦄 Failed to Edit Event!", {
           position: "top-right",
           autoClose: 2000,
@@ -214,6 +222,7 @@ const file = Array.from(e.target.files);
           theme: "colored",
         });
       } else {
+        setLoading(false)
         toast.success("Event Edited Successfully!", {
           position: "top-right",
           autoClose: 2000,
@@ -236,8 +245,11 @@ const file = Array.from(e.target.files);
         setselectedVideo(null);
         setSelectedOption([]);
         navigate(`/event-detail/${eventid}`);
+     }
+      
       }
     } catch (error) {
+      setLoading(false)
       console.log(error);
     }
   };
@@ -361,7 +373,30 @@ const file = Array.from(e.target.files);
                         
                           </div>
               </div>
-
+              <div className="flex flex-wrap rounded-md input_field_2">
+                <label
+                  htmlFor="contact"
+                  className="rounded-l-md w-full md:w-[120px] xl:w-[195px] sm:h-[49px] flex items-center justify-start sm:px-2 lg:px-4 text-sm mb-1 sm:mb-0 md:text-text-xs xl:text-lg text-white  font-normal leading-5 xl:leading-29 text-center 
+                                            lg:text-start"
+                >
+                  Contact Info
+                </label>
+                <input
+                  type="text"
+                  id="contact"
+                  onKeyPress={(event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                      event.preventDefault();
+                    }
+                  }}
+                  name="contact"
+                  onChange={handleChange}
+                  value={event.contact}
+                  autocomplete="off"
+                  className="bg-black border md:rounded-l-none rounded-md md:border-none md:border-l-2 md:rounded-r-md border-orange focus:outline-none focus-visible:none w-full md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)] h-[49px] text-gray font-normal xl:text-lg rounded-r-md text-sm px-2 xl:px-4 py-2.5 text-start placeholder:text-lg placeholder:text-gray items-center flex justify-between"
+                  required
+                />
+              </div>
               <div className="flex flex-col gap-30">
                 <label
                   htmlFor="Description"
@@ -387,7 +422,7 @@ const file = Array.from(e.target.files);
                
              <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
                   <span className="w-6 block mr-2">
-                    <img src="images/gallery-icon.png" alt="gallery-icon" />
+                    <img src="/images/gallery-icon.png" alt="gallery-icon" />
                   </span>
                   Upload Cover Image
                   <input
@@ -397,22 +432,22 @@ const file = Array.from(e.target.files);
                     onChange={(e) => handleCoverImage(e)}
                   />
                 </label>
-                <div className="relative w-full">
-                  <div className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
+                <div className="relative w-full preview_img_wrapper">
+                
                  
                     {image && 
-                    <>
+                      <div className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
                        <img className="w-full object-contain max-h-[100px]" src={image} />
                     <span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange 
                     text-black" onClick={(e)=>setImage('')}><IoCloseCircleSharp /></span>
-                    </>
+                    </div>
                     }
-                  </div>
+                  
                 </div>
             
                 <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
                   <span className="w-6 block mr-2">
-                    <img src="images/gallery-icon.png" alt="gallery-icon" />
+                    <img src="/images/gallery-icon.png" alt="gallery-icon" />
                   </span>
                   Upload Event Images
                   <input
@@ -422,20 +457,20 @@ const file = Array.from(e.target.files);
                     onChange={(e) => handleImageChange(e)}
                   />
                 </label>
-                <div className="grid grid-cols-2 gap-2"> 
+                <div className="grid grid-cols-2 gap-2 preview_img_wrapper"> 
                 {eventimages.map((el,i)=>(
                   <>
-                    <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
+                   
                   
                     {eventimages && 
-                    <>
+                    <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
                       <img className="w-full object-contain max-h-[100px]" src={el} />
                     <span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange text-black"
                      onClick={()=>handleEventimages(i)}>
                       <IoCloseCircleSharp /></span>
-                      </>
+                      </div>
                       }
-                  </div>
+               
                   </>
                 ))}
                   
@@ -443,7 +478,7 @@ const file = Array.from(e.target.files);
                 <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
                   <span className="w-6 block mr-2">
                     <img
-                      src="images/video-upload-icon.png"
+                      src="/images/video-upload-icon.png"
                       alt="gallery-icon"
                     />
                   </span>
@@ -455,7 +490,7 @@ const file = Array.from(e.target.files);
                     onChange={(e) => handleVideoChange(e)}
                   />
                 </label>
-                <div>
+                <div className="preview_img_wrapper">
 {video.map((el,i)=>
   <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
 
@@ -535,12 +570,16 @@ const file = Array.from(e.target.files);
                 // displayValue="label" // Property name to display in the dropdown options
                 isObject={false}
               />
-              <button
-                className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
-                onClick={handleUpdateEvent}
-              >
-                Submit
-              </button>
+              {!loading?
+    <button
+    className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
+    onClick={handleUpdateEvent}
+  >
+    Submit
+  </button>:
+  <Loading/>
+              }
+          
             </form>
           </div>
         </div>

@@ -2,10 +2,11 @@ import { useContext, useState, useEffect } from "react";
 
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Context } from "../../../Context/context";
 import { IoCloseCircleSharp } from "react-icons/io5";
+import Loading from "./Loading";
 function EditClubPage() {
   const { clubId, userInfo } = useContext(Context);
   const[areaname,setAreaName]=useState([]);
@@ -17,9 +18,12 @@ const[coverimage,setCoverImage]=useState(null)
   const [SelectedImage, setSelectedImage] = useState([]);
   const [SelectedVideo, setSelectedVideo] = useState(null);
   const [usertoken, setUsertoken] = useState("");
+  const [loading,setLoading]=useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
+  const data=useParams()
+  const clubid = data.id
   const [club, setClub] = useState({
     club_name: "",
     Location: "",
@@ -32,8 +36,9 @@ const[coverimage,setCoverImage]=useState(null)
     club_type: "",
   });
 
+ 
   const getClub = async () => {
-    const { data } = await axios.get(`${BASE_URL}/api/getClub/${clubId}`);
+    const { data } = await axios.get(`${BASE_URL}/api/getClub/${clubid}`);
 
     setClub({
       club_name: data.clubname,
@@ -173,8 +178,14 @@ const handleImageChange = (e) => {
     formData.append("ownerId", userInfo._id);
 
     try {
+      if(!club.club_name||!club.Description||!club.website||!club.email||!club.contact||!club.club_type||!club.introduction||!club.Location){
+        toast("Fill All The Fields")
+      }else{
+
+     
+      setLoading(true)
       const { data } = await axios.put(
-        `${BASE_URL}/api/update_club/${clubId}`,
+        `${BASE_URL}/api/update_club/${clubid}`,
         formData,
 
         {
@@ -185,6 +196,7 @@ const handleImageChange = (e) => {
       );
 
       if (data) {
+        setLoading(false)
         setClub({
           club_name: "",
           Location: "",
@@ -209,6 +221,7 @@ const handleImageChange = (e) => {
         });
         navigate("/club-page");
       } else {
+        setLoading(false)
         toast.error("🦄 Failed to Update Event!", {
           position: "top-right",
           autoClose: 2000,
@@ -220,7 +233,9 @@ const handleImageChange = (e) => {
           theme: "colored",
         });
       }
+      }
     } catch (error) {
+      setLoading(false)
       console.log(error);
     }
   };
@@ -398,11 +413,11 @@ const handleImageChange = (e) => {
                   ></textarea>
                 </div>
               </div>
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 gap-4 items-start">
                
               <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
                   <span className="w-6 block mr-2">
-                    <img src="images/gallery-icon.png" alt="gallery-icon" />
+                    <img src="/images/gallery-icon.png" alt="gallery-icon" />
                   </span>
                   Upload Cover  Image
                   <input
@@ -412,23 +427,25 @@ const handleImageChange = (e) => {
                     onChange={(e)=>handleCoverChange(e)}
                   />
                 </label>
-                <div className="relative w-full">
+                <div className="relative w-full preview_img_wrapper">
+                {image && 
                   <div className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
                  
-                    {image && 
+                    
                     <>
                        <img className="w-full object-contain max-h-[100px]" src={image} />
                     <span className="preview_close absolute top-0 transform translate-x-[40%] -translate-y-[50%] right-0 object-contain text-xl z-[1] w-5 h-5 rounded-full bg-orange 
                     text-black" onClick={(e)=>setImage('')}><IoCloseCircleSharp/></span>
                     </>
-                    }
+                    
                   </div>
+                }
                 </div>
                
                
                 <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
                   <span className="w-6 block mr-2">
-                    <img src="images/gallery-icon.png" alt="gallery-icon" />
+                    <img src="/images/gallery-icon.png" alt="gallery-icon" />
                   </span>
                   Upload Club Images
                   <input
@@ -439,7 +456,7 @@ const handleImageChange = (e) => {
                   />
                 </label>
 
-                <div className="grid grid-cols-2 gap-2"> 
+                <div className="grid grid-cols-2 gap-2 preview_img_wrapper"> 
                 {clubimages.map((el,i)=>(
                   <>
                     <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
@@ -462,7 +479,7 @@ const handleImageChange = (e) => {
                 <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
                   <span className="w-6 block mr-2">
                     <img
-                      src="images/video-upload-icon.png"
+                      src="/images/video-upload-icon.png"
                       alt="gallery-icon"
                     />
                   </span>
@@ -476,7 +493,7 @@ const handleImageChange = (e) => {
                 </label>
 
 
-                <div>
+                <div className="preview_img_wrapper">
 {video.map((el,i)=>
   <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
 
@@ -552,18 +569,23 @@ const handleImageChange = (e) => {
                 </div>
               </div>
               {/* <p>{formErrors.introduction}</p> */}
-              <button
-                className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
-                onClick={handleUpdate}
-              >
-                Update
-              </button>
+              {!loading?
+                 <button
+                 className="gradient !py-3 w-full !text-lg xl:!text-25px capitalize !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
+                 onClick={handleUpdate}
+               >
+                 Update
+               </button>
+               :
+               <Loading/>
+              }
+           
             </form>
           </div>
         </div>
         <div className="md:w-2/5 xl:w-full 2xl:w-2/5">
           <img
-            src="images/create-club-mod.png"
+            src="/images/create-club-mod.png"
             alt="Create-club"
             className="block h-full w-full rounded-t-40px md:p-0 p-5 rounded-b-40px md:rounded-b-none md:rounded-br-40px md:rounded-r-40px xl:rounded-b-40px xl:rounded-tl-40px 2xl:rounded-l-none 2xl:rounded-r-40px object-cover object-center aspect-square md:aspect-auto xl:aspect-square 2xl:md:aspect-auto"
           />

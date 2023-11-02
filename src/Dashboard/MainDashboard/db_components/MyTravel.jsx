@@ -19,7 +19,7 @@ export default function MyTravel(){
     useEffect(()=>{
         axios.get(`${BASE_URL}/api/search_travel?q=`).then((res)=>{
             const data = res.data
-            const filterData = data.filter((data)=>data.userId._id===userInfo._id)
+            const filterData = data.filter((data)=>data?.userId?._id===userInfo?._id)
             setTravel(filterData)
         })
     },[])
@@ -61,7 +61,7 @@ export default function MyTravel(){
       } else {
     
         setAge(calculateAge(travel?.userId?.couple?.person1.DOB));
-        setage2(calculateAge(travel.userId.couple.person2.DOB));
+        setage2(calculateAge(travel?.userId?.couple.person2.DOB));
       }
     })}
    
@@ -80,7 +80,7 @@ axios.delete(`${BASE_URL}/api/delete_travel/${id}`).then((res)=>{
 const handleEdit=(id)=>{
 
   setTravelid(id)
-  navigate("/edit_travel")
+  navigate(`/edit_travel/${id}`)
 }
 
 const handleTravel = (id) => {
@@ -102,7 +102,7 @@ const handleTravel = (id) => {
             <span className="flex items-center">
               <TiPlus />
             </span>
-            Travel Plan
+            Situationship Plan
           </span>
         </div>
         <div className="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-5">
@@ -166,19 +166,19 @@ const handleTravel = (id) => {
 )} */}
 
 
-{travel.userId.profile_type === "single" ? (
+{travel?.userId?.profile_type === "single" ? (
     <div className="text-[12px] gap-1 flex items-center">
-      <span className={travel.userId.gender === "male" ? "text-[#3A97FE]" : travel.userId.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
+      <span className={travel?.userId?.gender === "male" ? "text-[#3A97FE]" : travel?.userId?.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
         {age}
       </span>
     </div>
   ) : (
     <div className="text-[12px] gap-1 flex items-center">
-      <span className={travel.userId.couple.person1.gender === "male" ? "text-[#3A97FE]" :travel.userId.couple.person1.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
+      <span className={travel?.userId?.couple?.person1?.gender === "male" ? "text-[#3A97FE]" :travel?.userId?.couple?.person1?.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
         {age} 
       </span>
    |
-      <span className={travel.userId.couple.person2.gender === "male" ? "text-[#3A97FE]" :travel.userId.couple.person2.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
+      <span className={travel?.userId?.couple?.person2?.gender === "male" ? "text-[#3A97FE]" :travel?.userId?.couple?.person2?.gender === "female"? "text-[#FF2A90]":"text-[#cf00cf]"}>
         {age2} 
       </span>
     </div>
@@ -210,32 +210,32 @@ const handleTravel = (id) => {
           </div>
           <div className="flex w-[75%] flex-wrap items-center gap-1">
               {travel?.interested.includes("M") ? (
-                <img src="images/Male.png" alt="male-user" className="h-[18px]"/>
+                <img src="/images/Male.png" alt="male-user" className="h-[18px]"/>
               ) : (
                 ""
               )}
               {travel?.interested.includes("F") ? (
-                <img src="images/Female.png" alt="woman" className="h-[18px]" />
+                <img src="/images/Female.png" alt="woman" className="h-[18px]" />
               ) : (
                 ""
               )}
               {travel?.interested.includes("MF") ? (
-                <img src="images/malefemale.png" alt="couple" className="h-[15px]"  />
+                <img src="/images/malefemale.png" alt="couple" className="h-[15px]"  />
               ) : (
                 ""
               )}
                   {travel?.interested.includes("MM") ? (
-                <img src="images/malemale.png" alt="couple"  className="h-[15px]" />
+                <img src="/images/malemale.png" alt="couple"  className="h-[15px]" />
               ) : (
                 ""
               )}
                    {travel?.interested.includes("FF") ? (
-                <img src="images/femaleFemale.png" alt="couple"  className="h-[15px]"  />
+                <img src="/images/femaleFemale.png" alt="couple"  className="h-[15px]"  />
               ) : (
                 ""
               )}
                        {travel?.interested.includes("T") ? (
-                <img src="images/Trans.png" alt="couple"  className="h-[15px]"  />
+                <img src="/images/Trans.png" alt="couple"  className="h-[15px]"  />
               ) : (
                 ""
               )}
@@ -254,19 +254,19 @@ const handleTravel = (id) => {
           </div>
           <div className="flex text-[#FF0000] text-[12px] flex-wrap gap-1 leading">
           <img src="images/loc-icon.png" alt="Location-icon" />
-          {travel.locationto.display_name.length<=20 ?
-         <span className="font-body_font">{travel.locationto.display_name}</span> :
-         <span className="font-body_font">{travel.locationto.display_name.slice(0,17)}...</span>
+          {travel?.locationto?.display_name?.length<=20 ?
+         <span className="font-body_font">{travel?.locationto?.display_name}</span> :
+         <span className="font-body_font">{travel?.locationto?.display_name?.slice(0,17)}...</span>
         }
             {/* { calculatePreciseDistance(travel?.location?.lon,savedCred.long,travel?.location?.lat,savedCred.lat).slice(0,3)}miles */}
             {/* <span>14min</span> */}
             {/* <span>|</span> */}
             <span className="font-body_font">
-            {formatDate(travel.startDate)} to {formatDate(travel.endDate)}
+            {formatDate(travel?.startDate)} to {formatDate(travel?.endDate)}
             </span>
           </div>
           <div className="flex justify-between gap-2 items-start">
-          <p className="travel_desc text-sm font-body_font">{travel.description}</p>
+          <p className="travel_desc text-sm font-body_font">{travel?.description}</p>
           <div className="flex gap-2">
                     <div
                       className="inline-flex items-center text-xl"

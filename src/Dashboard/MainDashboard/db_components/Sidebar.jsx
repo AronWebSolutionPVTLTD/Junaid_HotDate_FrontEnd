@@ -164,7 +164,7 @@ const Sidebar = () => {
         { title:"My Events",submenus:[], path:"/my-event"},
         { title: "Clubs", submenus: [], path: "/club-page" },
         { title: "Hot or Not (Tinder)", submenus: [] },
-        { title: "Travel Calendar", submenus: [], path: "/travel-page" },
+        { title: "Situationship", submenus: [], path: "/travel-page" },
         {
           title: "Live Action",
           submenus: [
@@ -185,7 +185,7 @@ const Sidebar = () => {
       submenus: [],
     },
     {
-      title: "Travel",
+      title: "Situationship",
       submenus: [],
       path: "/travel-page",
     },
@@ -251,19 +251,21 @@ const Sidebar = () => {
 await axios.post(`${BASE_URL}/api/logout/${userInfo?._id}`).then((res)=>{removeCookie("token") 
 navigate("/login")}).catch((err)=>console.log(err))
   };
-console.log(userInfo)
+
 
   return (
     <div className="sidebar xl:w-60">
       <div>
+      <div className="bg-white">
         {userInfo?.profile_type==="couple"?
         <img src={userInfo?.image?userInfo?.image:"images/couple-avatar.jpg"}/>
       :
       <img
-          src={userInfo?.image?userInfo?.image: userInfo?.gender==="male" ? "images/boy avatar.png"  :userInfo?.gender==="female" ? "images/girl avatar.png"  : "images/trans avatar.png"}
+          src={userInfo?.image?userInfo?.image: userInfo?.gender==="male" ? "/images/dummyBoy.jpg"  :userInfo?.gender==="female" ? "/images/dummygirl.jpg"  : "/images/trans avatar.png"}
           className="hidden aspect-square object-cover xl:block"
         />
       }
+      </div>
       
         <div className="pt-0 pb-8 xl:py-4">
           <h3 className="font-semibold text-22px mb-3 ">{userInfo.username}</h3>

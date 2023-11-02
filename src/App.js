@@ -56,6 +56,7 @@ import Receivedrequest from "./Dashboard/MainDashboard/db_components/Receivedreq
 import SendFriendrequest from "./Dashboard/MainDashboard/db_components/SendFriendrequest";
 import MyFriends from "./Dashboard/MainDashboard/db_components/MyFriends";
 import { toast } from "react-toastify";
+import OtoOChat from "./One To One Chat/OtoOChat";
 
 function App() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -131,7 +132,7 @@ if(userInfo?._id){
           <Route path="/received_request" element={<Receivedrequest />} />
           <Route path="/send_request" element={<SendFriendrequest/>} />
           <Route path="/currentuser" element={<CurrentlyOnUser />} />
-          <Route path="/edit_travel" element={<EditTravelPage />} />
+          <Route path="/edit_travel/:id" element={<EditTravelPage />} />
           <Route path="/create_event" element={<CreateEventPage />} />
           <Route path="/event_edit/:id" element={<EditEventPage />} />
           <Route path="/editclubpage/:id" element={<EditClubPage />} />
@@ -151,6 +152,7 @@ if(userInfo?._id){
           <Route path="/agency-travel-page" element={<AgencyTravelPage />} />
           <Route path="/member-models" element={<MembersModels />} />
           <Route path="/wishlist" element={<WishlishtPage />} />
+          <Route path="/chat" element={<OtoOChat />} />
         </Route>
       </Routes>
     </>

@@ -94,7 +94,7 @@ const ClubCard = ({ clubs }) => {
             </g>
           </svg>
           </span>
-         {clubs?.location?.display_name<=30?<span>     {clubs?.location?.display_name}</span>:<span>     {clubs?.location?.display_name?.slice(0,30)}...</span>}
+         {clubs?.location?.display_name<=30?<span>     {clubs?.location?.display_name}</span>:<span>     {clubs?.location?.display_name?.slice(0,10)}...</span>}
      
         </p>
         <p className="w-[35%] px-2">{ calculatePreciseDistance(clubs?.location?.lon,savedCred.long,clubs?.location?.lat,savedCred.lat).slice(0,3)}miles</p>
@@ -104,7 +104,7 @@ const ClubCard = ({ clubs }) => {
       <div className="my-2 w-full  bg-light-grey rounded-lg">
       
           <p className="text-base font-body_font">
-{clubs?.introduction?.length<=30?<span>{clubs?.introduction}</span>:<span>{clubs?.introduction?.slice(0,30)}...</span>
+{clubs?.introduction?.length<=50?<span>{clubs?.introduction}</span>:<span>{clubs?.introduction?.slice(0,50)}...</span>
  }
              </p>
         </div>
