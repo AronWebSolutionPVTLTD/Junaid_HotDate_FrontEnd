@@ -235,7 +235,7 @@ const DbHeader = () => {
         <img src={userInfo?.image?userInfo?.image:"images/couple-avatar.jpg"}/>
       :
       <img
-          src={userInfo?.image?userInfo?.image: userInfo?.gender==="male" ? "images/dummyBoy.jpg"  :userInfo?.gender==="female" ? "images/dummygirl.jpg"  : "images/trans avatar.png"}
+          src={userInfo?.image?userInfo?.image: userInfo?.gender==="male" ? "images/dummyboy.jpg"  :userInfo?.gender==="female" ? "images/dummygirl.jpg"  : "images/trans avatar.png"}
           className="hidden aspect-square object-cover xl:block"
         />
       }
