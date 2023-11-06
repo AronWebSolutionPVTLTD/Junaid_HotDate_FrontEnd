@@ -1,27 +1,30 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
-import { CookiesProvider } from "react-cookie";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { ToastContainer } from "react-toastify";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { ContextProvider } from "./Context/context";
-const root = ReactDOM.createRoot(document.getElementById("root"));
+import App from './App';
+import './index.css';
+import { ContextProvider } from ".//Context/context";
+import store from './redux/store';
+import reportWebVitals from './reportWebVitals';
 const CLIENT_KEY = process.env.REACT_APP_GOOGLE_CLIENT_KEY;
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ContextProvider>
-    <BrowserRouter>
-      <ToastContainer />
-      <GoogleOAuthProvider clientId={CLIENT_KEY}>
-        <CookiesProvider>
-          <App />
-        </CookiesProvider>
-      </GoogleOAuthProvider>
-    </BrowserRouter>
-  </ContextProvider>
+  <React.StrictMode>
+    <GoogleOAuthProvider clientId={CLIENT_KEY}> 
+    <Provider store={store}>
+      <Router>
+        <ContextProvider>
+        <App />
+        </ContextProvider>
+      </Router>
+    </Provider>
+    <ToastContainer />
+    </GoogleOAuthProvider>
+   </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

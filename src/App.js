@@ -1,162 +1,146 @@
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import "./App.css";
-import LandingPage from "./LandingPage/Pages/LandingPage";
-import Signup from "./Dashboard/Signup_Login/Signup";
-import Login from "./Dashboard/Signup_Login/Login";
-import Layout from "./Dashboard/Layout";
-import HomePage from "./Dashboard/MainDashboard/db_pages/HomePage";
-import CreateEventPage from "./Dashboard/MainDashboard/db_pages/CreateEventPage";
-import ModelDetailForm from "./Dashboard/MainDashboard/db_pages/ModelDetailForm";
-import CreateClubPage from "./Dashboard/MainDashboard/db_pages/CreateClubPage";
-import EventPage from "./Dashboard/MainDashboard/db_pages/EventPage";
-import ClubPage from "./Dashboard/MainDashboard/db_pages/ClubPage";
-import TravelPage from "./Dashboard/MainDashboard/db_pages/TravelPage";
-import AgencyTravelPage from "./Dashboard/MainDashboard/db_pages/AgencyTravelPage";
-import MembersModels from "./Dashboard/MainDashboard/db_pages/MembersModels";
-import LandingLayout from "./LandingPage/LandingLayout";
-import ContactPage from "./LandingPage/Pages/ContactPage";
-import AboutPage from "./LandingPage/Pages/AboutPage";
-import LiveChatPage from "./LandingPage/Pages/LiveChatPage";
-import ClubBookingPage from "./LandingPage/Pages/ClubBookingPage";
-import ModelBookingPage from "./LandingPage/Pages/ModelBookingPage";
-import FaqPage from "./LandingPage/Pages/FaqPage";
-import WithdrawlPage from "./LandingPage/Pages/WithdrawlPage";
-import UserDetailPage from "./LandingPage/Pages/UserDetailPage";
-import CreateTravelPage from "./Dashboard/MainDashboard/db_pages/CreateTravelPage";
-import EditUserDetailsPage from "./LandingPage/Pages/EditUserDetailsPage";
-import ForgotPage from "./Dashboard/Signup_Login/ForgotPage";
-import ModelPage from "./Dashboard/MainDashboard/db_pages/ModelPage";
-import WishlishtPage from "./Dashboard/MainDashboard/db_pages/WishlishtPage";
-import EventDetailPage from "./LandingPage/Pages/EventDetailPage";
-import EditClubPage from "./Dashboard/MainDashboard/db_pages/EditClubPage";
-import { useContext, useEffect } from "react";
-import EditEventPage from "./Dashboard/MainDashboard/db_pages/EditEventPage";
-import VerifyEmail from "./Dashboard/Signup_Login/VerifyEmail";
-import EmailVerified from "./Dashboard/Signup_Login/EmailVerified";
-import SinglePersonSignUp from "./Dashboard/Signup_Login/singlePersonsign";
-import SignUpCouple from "./Dashboard/Signup_Login/SignUpCouples";
-import CoupleDetailPage from "./LandingPage/Pages/CoupleDetailPage";
-import Myevents from "./Dashboard/MainDashboard/db_components/Myevent";
-import CoupleEditDetailPage from "./LandingPage/Pages/CoupleEditDetailsPage";
-import EventDetailMedia from "./LandingPage/Pages/EventDetailMedia";
-import EventParticipants from "./Dashboard/MainDashboard/db_pages/EventParticipants";
-import ClubDetail from "./LandingPage/Pages/ClubDetail";
-import ClubDetailMedia from "./LandingPage/Pages/ClubDetailMedia";
-import MyTravel from "./Dashboard/MainDashboard/db_components/MyTravel";
-import UserDetailId from "./LandingPage/Pages/UserDetailId";
-import CoupleDetailId from "./LandingPage/Pages/CoupleDetailid";
-import EditTravelPage from "./Dashboard/MainDashboard/db_pages/EditTravelPage";
-import RecentUser from "./Dashboard/MainDashboard/db_components/RecentUser";
-import { Context } from "./Context/context";
-import axios from "axios";
-
-import { useCookies } from "react-cookie";
-import CurrentlyOnUser from "./Dashboard/MainDashboard/db_components/CurrentlyOnUser";
-import Receivedrequest from "./Dashboard/MainDashboard/db_components/Receivedrequest";
-import SendFriendrequest from "./Dashboard/MainDashboard/db_components/SendFriendrequest";
-import MyFriends from "./Dashboard/MainDashboard/db_components/MyFriends";
-import { toast } from "react-toastify";
-import OtoOChat from "./One To One Chat/OtoOChat";
-
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import './App.css';
+import ClubDetail from './components/Club/ClubDetail';
+import ClubDetailMedia from './components/Club/ClubDetailMedia';
+import CreateClubPage from './components/Club/CreateClubPage';
+import EditClubPage from './components/Club/EditClubPage';
+import CreateEventPage from './components/Event/CreateEventPage';
+import EditEventPage from './components/Event/EditEventPage';
+import EventDetailMedia from './components/Event/EventDetailMedia';
+import EventDetailPage from './components/Event/EventDetailPage';
+import EventParticipants from './components/Event/EventParticipants';
+import Myevents from './components/Event/Myevent';
+import Main_Layout from './components/Layout/HOME/Layout/Main_Layout';
+import { Layout } from './components/Layout/Layout';
+import CoupleEditDetailPage from './components/Profile/Edit/CoupleEditDetailsPage';
+import EditUserDetailsPage from './components/Profile/Edit/EditUserDetailsPage';
+import SignUpCouple from './components/Profile/SignUpCouples';
+import SinglePerson from './components/Profile/SinglePerson';
+import EmailVerified from './components/Profile/Verification/EmailVerified';
+import VerifyEmail from './components/Profile/Verification/VerifyEmail';
+import CreateTravelPage from './components/Travel/CreateTravelPage';
+import EditTravelPage from './components/Travel/EditTravelPage';
+import MyTravel from './components/Travel/MyTravel';
+import CurrentlyOnUser from './components/Users/CurrentlyOnUser';
+import MyFriends from './components/Users/MyFriends';
+import Receivedrequest from './components/Users/Receivedrequest';
+import RecentUser from './components/Users/RecentUser';
+import SendFriendrequest from './components/Users/SendFriendrequest';
+import UserDetailId from './components/Users/UserDetailId';
+import AboutPage from './pages/AboutPage';
+import ForgotPassword from './pages/Auth/ForgotPassword';
+import Login from './pages/Auth/Login';
+import Signup from './pages/Auth/Register';
+import ClubPage from './pages/ClubPage';
+import ContactPage from './pages/ContactPage';
+import EventPage from './pages/EventPage';
+import FaqPage from './pages/FaqPage';
+import { Home } from './pages/Landing/Home';
+import LiveChatPage from './pages/Landing/LiveChat';
+import Main_Home from './pages/Main_Home';
+import TravelPage from './pages/TravelPage';
+import UserDetailPage from './pages/UserDetailPage';
+import { loadUser } from './redux/actions/auth';
+import { LOGOUT } from './redux/actions/types';
+import store from './redux/store';
+import setAuthToken from './utils/setAuthToken';
+import NotFound from './pages/NotFound';
 function App() {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-  const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
-
-  const location = useLocation();
-  const{userInfo,UserToken  }=useContext(Context)
-  const { pathname } = location;
-  const navigate=useNavigate();
+const {isAuthenticated} = useSelector((state)=>state.auth);
+let location = useLocation();
+const { pathname } = location;
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, [pathname]);
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    const token = localStorage.token
+    if (token) {
+      setAuthToken(token);    
+    }
+    store.dispatch(loadUser());
 
-
-useEffect(()=>{
-if(userInfo?._id){
-    getAPi()}
-  },[userInfo,UserToken])
-
-
-  const getAPi=async()=>{
-    const config = {
-      'headers':{
-        'token':UserToken
+    window.addEventListener('storage', () => {
+      if (!token){ 
+        store.dispatch({ type: LOGOUT });
       }
-    };
+    });
+  }, []);
 
-    try{
-    const {data}=await axios.get(`${BASE_URL}/api/active/${userInfo?._id}`,config)
-}catch(err){
 
-      if(err?.response?.status===401){
-        await axios.post(`${BASE_URL}/api/logout/${userInfo?._id}`).then((res)=>{removeCookie("token") 
-        navigate("/login")}).catch((err)=>console.log(err))
-        toast("Your session is expired! Please login again",{toastId:"shiwu"})
-        // removeCookie("token");
-        // navigate("/login")
-      }
-     
- }  
-}
-  
   return (
     <>
-      <Routes>
-        <Route path="/" element={<LandingLayout />}>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/live-chat" element={<LiveChatPage />} />
-          <Route path="/club-booking" element={<ClubBookingPage />} />
-          <Route path="/model-booking" element={<ModelBookingPage />} />
-          <Route path="/faq" element={<FaqPage />} />
-          <Route path="/verify_email" element={<VerifyEmail />} />
-          <Route path="/verified/:id" element={<EmailVerified />} />
-          <Route path="/withdraw" element={<WithdrawlPage />} />
-          <Route path="/user-detail" element={<UserDetailPage />} />
-          <Route path="/user-detail/:id" element={<UserDetailId />} />
-          <Route path="/couple-detail-id" element={<CoupleDetailId />} />
-          <Route path="/edit-detail" element={<EditUserDetailsPage />} />
-          <Route path="editcouple-detail" element={<CoupleEditDetailPage/>}/>
-        </Route>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/single" element={<SinglePersonSignUp />} />
-        <Route path="/couple" element={<SignUpCouple />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgot" element={<ForgotPage />} />
-        <Route path="/model_form" element={<ModelDetailForm />} />
-        <Route path="/" element={<Layout />}>
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/recentuser" element={<RecentUser />} />
-          <Route path="/my_friends" element={<MyFriends/>} />
-          <Route path="/received_request" element={<Receivedrequest />} />
-          <Route path="/send_request" element={<SendFriendrequest/>} />
-          <Route path="/currentuser" element={<CurrentlyOnUser />} />
-          <Route path="/edit_travel/:id" element={<EditTravelPage />} />
-          <Route path="/create_event" element={<CreateEventPage />} />
-          <Route path="/event_edit/:id" element={<EditEventPage />} />
-          <Route path="/editclubpage/:id" element={<EditClubPage />} />
-          <Route path="/create_club" element={<CreateClubPage />} />
-          <Route path="/create_travel" element={<CreateTravelPage />} />
-          <Route path="/event-page" element={<EventPage />} />
-          <Route path="/event-detail/:id" element={<EventDetailPage />} />
-          <Route path="/club-detail/:id" element={<ClubDetail />} />
-          <Route path="/event-detail-media" element={<EventDetailMedia />} />
-          <Route path="/club-detail-media" element={<ClubDetailMedia/>}/>
-          <Route path="/club-page" element={<ClubPage />} />
-          <Route path="/event-participants" element={<EventParticipants />} />
-          <Route path="/my-event" element={<Myevents/>} />
-          <Route path="/my-travel" element={<MyTravel/>}/>
-          <Route path="/travel-page" element={<TravelPage />} />
-          <Route path="/model-page" element={<ModelPage />} />
-          <Route path="/agency-travel-page" element={<AgencyTravelPage />} />
-          <Route path="/member-models" element={<MembersModels />} />
-          <Route path="/wishlist" element={<WishlishtPage />} />
-          <Route path="/chat" element={<OtoOChat />} />
-        </Route>
-      </Routes>
+    <Routes>
+    <Route path="/contact" element={<Layout><ContactPage /></Layout>} />
+   <Route path="/about" element={<Layout><AboutPage /></Layout>} />
+   <Route path="live-chat" element={<Layout><LiveChatPage /></Layout>} />
+   <Route path="/faq" element={<Layout><FaqPage /></Layout>} />
+    
+    <Route path='/' element={<Layout><Home/></Layout>} />
+    <Route path="signup" element={<Layout><Signup /> </Layout>} />
+   <Route path="login" element={<Layout><Login /></Layout>} />
+   <Route path="forgot" element={<Layout><ForgotPassword /></Layout>} />
+   <Route path="/single/:userId" element={<SinglePerson/>} />
+   <Route path="/couple/:userId" element={<SignUpCouple/>} />
+   <Route path="/verify_email" element={<Layout><VerifyEmail/></Layout>} />
+   <Route path="/verified/:id" element={<Layout><EmailVerified/></Layout>} />
+   <Route path="/forgot" element={<Layout><ForgotPassword/></Layout>} />
+ 
+{/* USER  */}
+<Route path="/user-detail" element={<Layout><UserDetailPage /></Layout>} />
+<Route path="/user-detail/:id" element={<Layout><UserDetailId /></Layout>} />
+<Route path="/edit-detail" element={<Layout><EditUserDetailsPage /></Layout>} />
+<Route path="editcouple-detail" element={<Layout><CoupleEditDetailPage/></Layout>}/>
+
+<Route path='/' element={<Main_Layout/>}>
+
+{/* HOME */}
+<Route path='/home' element={<Main_Home/>} />
+
+{/* EVENTS */}
+<Route path="/event-page" element={<EventPage />} />
+<Route path="/create_event" element={<CreateEventPage />} />
+<Route path="/event_edit/:id" element={<EditEventPage />} />
+<Route path='/event-detail/:id' element={<EventDetailPage/>} />
+<Route path="/event-detail-media" element={<EventDetailMedia />} />
+<Route path="/my-event" element={<Myevents/>} />
+<Route path="/event-participants" element={<EventParticipants />} />
+
+{/* CLUBS */}
+<Route path="/club-page" element={<ClubPage />} />
+<Route path="/create_club" element={<CreateClubPage />} />
+<Route path="/club-detail/:id" element={<ClubDetail />} />
+<Route path="/club-detail-media" element={<ClubDetailMedia/>}/>
+<Route path="/editclubpage/:clubId" element={<EditClubPage />} />
+
+
+{/* TRAVEL */}
+<Route path="/travel-page" element={<TravelPage />} />
+<Route path="/my-travel" element={<MyTravel/>}/>
+<Route path="/create_travel" element={<CreateTravelPage />} />
+<Route path="/edit_travel/:travelid" element={<EditTravelPage />} />
+
+{/* USER: FRIENDS */}
+<Route path="/recentuser" element={<RecentUser />} />
+<Route path="/my_friends" element={<MyFriends/>} />
+<Route path="/received_request" element={<Receivedrequest />} />
+<Route path="/send_request" element={<SendFriendrequest/>} />
+<Route path="/currentuser" element={<CurrentlyOnUser />} />
+
+</Route>
+   </Routes>
+   
     </>
-  );
+  )
 }
 
-export default App;
+export default App
+
+
+
+// const {user} = useSelector((state)=>state.auth);
+// const [userInfo,setUserInfo]=useState(user);
+// useEffect(()=>{
+//   setUserInfo(user)
+// },[])
