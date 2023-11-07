@@ -52,6 +52,7 @@ function App() {
 const {isAuthenticated} = useSelector((state)=>state.auth);
 let location = useLocation();
 const { pathname } = location;
+const navigate = useNavigate()
 useEffect(() => {
   window.scrollTo(0, 0);
 }, [pathname]);
@@ -68,6 +69,12 @@ useEffect(() => {
       }
     });
   }, []);
+
+  useEffect(()=>{
+if(isAuthenticated){
+  navigate("/home")
+}
+  },[isAuthenticated])
 
 
   return (
