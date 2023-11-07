@@ -47,6 +47,7 @@ import { LOGOUT } from './redux/actions/types';
 import store from './redux/store';
 import setAuthToken from './utils/setAuthToken';
 import NotFound from './pages/NotFound';
+import ProtectedRoute from './Context/ProtectedRoute';
 function App() {
 const {isAuthenticated} = useSelector((state)=>state.auth);
 let location = useLocation();
@@ -88,45 +89,45 @@ useEffect(() => {
    <Route path="/forgot" element={<Layout><ForgotPassword/></Layout>} />
  
 {/* USER  */}
-<Route path="/user-detail" element={<Layout><UserDetailPage /></Layout>} />
-<Route path="/user-detail/:id" element={<Layout><UserDetailId /></Layout>} />
-<Route path="/edit-detail" element={<Layout><EditUserDetailsPage /></Layout>} />
-<Route path="editcouple-detail" element={<Layout><CoupleEditDetailPage/></Layout>}/>
+<Route path="/user-detail" element={<Layout><ProtectedRoute><UserDetailPage /></ProtectedRoute></Layout>} />
+<Route path="/user-detail/:id" element={<Layout><ProtectedRoute><UserDetailId /></ProtectedRoute></Layout>} />
+<Route path="/edit-detail" element={<Layout><ProtectedRoute><EditUserDetailsPage /></ProtectedRoute></Layout>} />
+<Route path="editcouple-detail" element={<Layout><ProtectedRoute><CoupleEditDetailPage/></ProtectedRoute></Layout>}/>
 
 <Route path='/' element={<Main_Layout/>}>
 
 {/* HOME */}
-<Route path='/home' element={<Main_Home/>} />
+<Route path='/home' element={<ProtectedRoute><Main_Home/></ProtectedRoute>} />
 
 {/* EVENTS */}
-<Route path="/event-page" element={<EventPage />} />
-<Route path="/create_event" element={<CreateEventPage />} />
-<Route path="/event_edit/:id" element={<EditEventPage />} />
-<Route path='/event-detail/:id' element={<EventDetailPage/>} />
-<Route path="/event-detail-media" element={<EventDetailMedia />} />
-<Route path="/my-event" element={<Myevents/>} />
-<Route path="/event-participants" element={<EventParticipants />} />
+<Route path="/event-page" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
+<Route path="/create_event" element={<ProtectedRoute><CreateEventPage /></ProtectedRoute>} />
+<Route path="/event_edit/:id" element={<ProtectedRoute><EditEventPage /></ProtectedRoute>} />
+<Route path='/event-detail/:id' element={<ProtectedRoute><EventDetailPage/></ProtectedRoute>} />
+<Route path="/event-detail-media" element={<ProtectedRoute><EventDetailMedia /></ProtectedRoute>} />
+<Route path="/my-event" element={<ProtectedRoute><Myevents/></ProtectedRoute>} />
+<Route path="/event-participants" element={<ProtectedRoute><EventParticipants /></ProtectedRoute>} />
 
 {/* CLUBS */}
-<Route path="/club-page" element={<ClubPage />} />
-<Route path="/create_club" element={<CreateClubPage />} />
-<Route path="/club-detail/:id" element={<ClubDetail />} />
-<Route path="/club-detail-media" element={<ClubDetailMedia/>}/>
-<Route path="/editclubpage/:clubId" element={<EditClubPage />} />
+<Route path="/club-page" element={<ProtectedRoute><ClubPage /></ProtectedRoute>} />
+<Route path="/create_club" element={<ProtectedRoute><CreateClubPage /></ProtectedRoute>} />
+<Route path="/club-detail/:id" element={<ProtectedRoute><ClubDetail /></ProtectedRoute>} />
+<Route path="/club-detail-media" element={<ProtectedRoute><ClubDetailMedia/></ProtectedRoute>}/>
+<Route path="/editclubpage/:clubId" element={<ProtectedRoute><EditClubPage /></ProtectedRoute>} />
 
 
 {/* TRAVEL */}
-<Route path="/travel-page" element={<TravelPage />} />
-<Route path="/my-travel" element={<MyTravel/>}/>
-<Route path="/create_travel" element={<CreateTravelPage />} />
-<Route path="/edit_travel/:travelid" element={<EditTravelPage />} />
+<Route path="/travel-page" element={<ProtectedRoute><TravelPage /></ProtectedRoute>} />
+<Route path="/my-travel" element={<ProtectedRoute><MyTravel/></ProtectedRoute>}/>
+<Route path="/create_travel" element={<ProtectedRoute><CreateTravelPage /></ProtectedRoute>} />
+<Route path="/edit_travel/:travelid" element={<ProtectedRoute><EditTravelPage /></ProtectedRoute>} />
 
 {/* USER: FRIENDS */}
-<Route path="/recentuser" element={<RecentUser />} />
-<Route path="/my_friends" element={<MyFriends/>} />
-<Route path="/received_request" element={<Receivedrequest />} />
-<Route path="/send_request" element={<SendFriendrequest/>} />
-<Route path="/currentuser" element={<CurrentlyOnUser />} />
+<Route path="/recentuser" element={<ProtectedRoute><RecentUser /></ProtectedRoute>} />
+<Route path="/my_friends" element={<ProtectedRoute><MyFriends/></ProtectedRoute>} />
+<Route path="/received_request" element={<ProtectedRoute><Receivedrequest /></ProtectedRoute>} />
+<Route path="/send_request" element={<ProtectedRoute><SendFriendrequest/></ProtectedRoute>} />
+<Route path="/currentuser" element={<ProtectedRoute><CurrentlyOnUser /></ProtectedRoute>} />
 
 </Route>
    </Routes>

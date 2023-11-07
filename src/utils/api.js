@@ -1,8 +1,7 @@
 import axios from 'axios';
-import store from '../redux/store';
-import { LOGOUT } from '../redux/actions/types';
 import { toast } from 'react-toastify';
-import { Navigate } from 'react-router-dom';
+import { LOGOUT } from '../redux/actions/types';
+import store from '../redux/store';
 
 // Create an instance of axios
 const api = axios.create({
@@ -27,10 +26,10 @@ api.interceptors.response.use(
         toastId: 'error401',
     })  
       }
-      setTimeout(()=>{
+
       localStorage.clear();
       store.dispatch({ type: LOGOUT });
-      },2000)
+
     }
     return Promise.reject(err);
   }
