@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import "./signup_login.css";
-import Footer from "./Footer";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../../LandingPage/header/Header";
 import { toast } from "react-toastify";
+import "./signup_login.css";
 
 const ForgotPage = () => {
   const [email, setEmail] = useState("");
@@ -131,9 +129,6 @@ const ForgotPage = () => {
     }
   };
   return (
-    <div className="min-h-screen bg-black-20 text-white grid content-between">
-      <div className="overflow-hidden">
-        <Header />
         <div className="sign_up__block pt-65px mt-40 forgot_page">
           <div className="container mx-auto relative z-1 !px-0 md:!px-5">
             <div className="sign-up__header pt-14 pb-24 bg-white flex flex-col justify-center items-center rounded-t-3xl md:rounded-t-86">
@@ -355,9 +350,6 @@ const ForgotPage = () => {
             </div> */}
           </div>
         </div>
-      </div>
-      <Footer />
-    </div>
   );
 };
 

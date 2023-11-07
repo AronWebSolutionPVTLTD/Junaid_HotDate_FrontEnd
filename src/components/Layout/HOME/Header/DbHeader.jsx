@@ -59,7 +59,7 @@ const DbHeader = () => {
     <header className="py-8 bg-black-20 sticky top-0 z-[99] xl:static xl:bg-transparent xl:pt-10 xl:py-0">
       <div className="flex flex-wrap justify-between xl:justify-center items-center xl:items-start px-5">
         <div className="w-1/5 pr-5 flex justify-end">
-          <Link to="/" className="flex justify-center w-full max-w-[15rem]">
+          <Link to={user?"/home":"/"} className="flex justify-center w-full max-w-[15rem]">
             <img
               src="landingPage/images/landing-logo.png"
               alt="Logo"
@@ -86,7 +86,7 @@ const DbHeader = () => {
               <RxCross1 />
             </span>
             <Link
-              to="/"
+              to={user?"/home":"/"}
               className="absolute top-[60px] left-5 w-full max-w-[100px] block xl:hidden"
             >
               <img
@@ -113,7 +113,7 @@ const DbHeader = () => {
                 <ul className="xl:flex items-center justify-between mt-10 grid gap-y-2">
                   <li
                     className={`${
-                      pathname === "/"
+                      pathname === "/home"
                         ? "text-orange"
                         : "text-white hover:text-orange"
                     }`}
