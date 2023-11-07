@@ -362,7 +362,7 @@ const file = Array.from(e.target.files);
                   />
                 </label>
                 <div className="relative w-full">
-                  <div className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
+                  <div className="preview_img relative z-[1] bg-white/50 rounded-md">
                  
                     {image && 
                     <>
@@ -389,7 +389,7 @@ const file = Array.from(e.target.files);
                 <div className="grid grid-cols-2 gap-2"> 
                 {eventimages.map((el,i)=>(
                   <>
-                    <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
+                    <div key={i} className="preview_img relative z-[1] bg-white/50 rounded-md">
                   
                     {eventimages && 
                     <>
@@ -421,7 +421,7 @@ const file = Array.from(e.target.files);
                 </label>
                 <div>
 {video.map((el,i)=>
-  <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
+  <div key={i} className="preview_img relative z-[1] bg-white/50 rounded-md">
 
  
 

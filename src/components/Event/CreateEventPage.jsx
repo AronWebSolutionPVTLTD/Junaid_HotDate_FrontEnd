@@ -366,7 +366,7 @@ const CreateEventPage = () => {
 
                 <div className="relative w-full">
                 {image && (
-                  <div className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
+                  <div className="preview_img relative z-[1] bg-white/50 rounded-md">
                     <img
                       className="w-full object-contain max-h-[100px]"
                       src={image}
@@ -397,12 +397,12 @@ const CreateEventPage = () => {
                   />
                 </label>
 
-                <div className="grid grid-cols-2 gap-2 preview_img_wrapper">
+                <div className="gap-2 preview_img_wrapper">
                   {eventimages.map((el, i) => (
                     <>
                       <div
                         key={i}
-                        className="preview_img w-full relative z-[1] bg-white/50 rounded-md"
+                        className="preview_img relative z-[1] bg-white/50 rounded-md"
                       >
                         <img
                           className="w-full object-contain max-h-[100px]"
@@ -442,7 +442,7 @@ const CreateEventPage = () => {
                   {video.map((el, i) => (
                     <div
                       key={i}
-                      className="preview_img w-full relative z-[1] bg-white/50 rounded-md"
+                      className="preview_img relative z-[1] bg-white/50 rounded-md"
                     >
                       <video src={el} width="750" height="500" controls></video>
                       {video && (

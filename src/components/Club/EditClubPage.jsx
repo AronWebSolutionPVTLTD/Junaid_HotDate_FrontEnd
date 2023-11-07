@@ -397,7 +397,7 @@ const handleImageChange = (e) => {
                   />
                 </label>
                 <div className="relative w-full">
-                  <div className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
+                  <div className="preview_img relative z-[1] bg-white/50 rounded-md">
                  
                     {image && 
                     <>
@@ -426,7 +426,7 @@ const handleImageChange = (e) => {
                 <div className="grid grid-cols-2 gap-2"> 
                 {clubimages.map((el,i)=>(
                   <>
-                    <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
+                    <div key={i} className="preview_img relative z-[1] bg-white/50 rounded-md">
                   
                     {clubimages && 
                     <>
@@ -462,7 +462,7 @@ const handleImageChange = (e) => {
 
                 <div>
 {video.map((el,i)=>
-  <div key={i} className="preview_img w-full relative z-[1] bg-white/50 rounded-md">
+  <div key={i} className="preview_img relative z-[1] bg-white/50 rounded-md">
 
  
 

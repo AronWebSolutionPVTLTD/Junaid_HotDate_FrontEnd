@@ -17,13 +17,9 @@ const DbHeader = () => {
   const [sidebar, setSidebar] = useState(false);
   const location = useLocation();
   const { pathname } = location;
-  const navigate = useNavigate()
-  const {user,isAuthenticated} = useSelector((state)=>state.auth);
+  const {user} = useSelector((state)=>state.auth);
   const [userInfo,setUserInfo]=useState(user);
   useEffect(()=>{
-    if(!isAuthenticated){
-      navigate("/")
-    }
     setUserInfo(user)
   },[])
   const {
