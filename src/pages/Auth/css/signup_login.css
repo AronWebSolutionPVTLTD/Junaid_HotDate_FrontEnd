@@ -14,7 +14,7 @@
 }
 @media ( min-width:640px ){
     .input_field{
-        padding: 2px;
+        padding: 2px !important;
         background: linear-gradient(46deg, #F79220 55.15%, #F94A2B 82%);
     }
     .input_field label{

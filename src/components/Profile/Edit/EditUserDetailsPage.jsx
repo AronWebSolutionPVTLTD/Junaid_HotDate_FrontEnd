@@ -303,7 +303,7 @@ console.log(userInfo)
   console.log(image,"image")
   
   return (
-    <div className="bg-black-20">
+<div className="bg-black-20">
       <div className="min-h-[350px] md:min-h-[400px] flex justify-center items-end bg-black rounded-b-50px">
         <div className="container mx-auto pb-20 text-center">
           <h3 className="font-secondary_font text-40px">Edit User Details</h3>
@@ -443,8 +443,8 @@ console.log(userInfo)
                        ?  "Please select"
                        : userDetails?.body_hair.map((el,i) => 
                    
-                       <span>{i !== 0  && <span>, </span>}
-                        {el}</span>)
+                       <span>{el}{ i!==userDetails?.body_hair.length-1  && <span> ,</span>}
+                        </span>)
                  }
                         <span className="select_label_icon"><BiChevronDown /></span>
                    </div>
@@ -482,58 +482,6 @@ console.log(userInfo)
           
               </div>
 
-
-  
-
-              {/* <div>
-                <div className="flex flex-wrap rounded-md input_field">
-                  <label
-                    htmlFor="email"
-                    className="rounded-l-md w-full md:w-[120px] xl:w-[195px] md:h-[49px] flex items-center justify-start md:px-2 lg:px-4 text-sm mb-1 md:mb-0 md:text-text-xs xl:text-base text-orange md:text-white  font-normal leading-5 xl:leading-29 text-center lg:text-start"
-                  >
-                    Sexual Orientation
-                  </label>
-                  <select
-                    name="sexual_orientation"
-                    id="reason"
-                    className="bg-black-20 border rounded-md md:rounded-none md:border-none md:border-l-2 md:rounded-r-md border-orange focus:outline-none focus-visible:none w-full md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)] h-[49px] text-white font-normal xl:text-lg rounded-r-md text-sm px-2 xl:px-4 py-2.5 text-start placeholder:text-lg placeholder:text-gray items-center flex justify-between"
-                    value={userDetails.sexual_orientation}
-                    onChange={handleChange}
-                  >
-                    <option value="" disabled>
-                      Select an option
-                    </option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="others">Others</option>
-                  </select>
-                </div>
-              </div> */}
-
-              {/* <div>
-                <div className="flex flex-wrap rounded-md input_field">
-                  <label
-                    htmlFor="marital_status"
-                    className="rounded-l-md w-full md:w-[120px] xl:w-[195px] md:h-[49px] flex items-center justify-start md:px-2 lg:px-4 text-sm mb-1 md:mb-0 md:text-text-xs xl:text-base text-orange md:text-white  font-normal leading-5 xl:leading-29 text-center lg:text-start"
-                  >
-                    Marital Status
-                  </label>
-                  <select
-                    name="marital_status"
-                    id="marital_status"
-                    className="bg-black-20 border rounded-md md:rounded-none md:border-none md:border-l-2 md:rounded-r-md border-orange focus:outline-none focus-visible:none w-full md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)] h-[49px] text-white font-normal xl:text-lg rounded-r-md text-sm px-2 xl:px-4 py-2.5 text-start placeholder:text-lg placeholder:text-gray items-center flex justify-between"
-                    value={userDetails.marital_status}
-                    onChange={handleChange}
-                  >
-                    <option value="" disabled>
-                      Select an option
-                    </option>
-
-                    <option value="unmarried">Unmarried</option>
-                    <option value="married">Married</option>
-                  </select>
-                </div>
-              </div> */}
                         <div className="flex flex-wrap rounded-md input_field">
                 <label
                   htmlFor="body_type"

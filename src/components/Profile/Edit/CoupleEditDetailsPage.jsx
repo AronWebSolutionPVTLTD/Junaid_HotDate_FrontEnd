@@ -595,8 +595,8 @@ setPerson2({...person2,[name]:value})
                      {userDetails.body_hair.length === 0
                        ?  "Please select"
                        : userDetails?.body_hair.map((el,i) => <span>
-                        {i !== 0  && <span>, </span>}
-                        {el}
+                        {el} {i!==userDetails?.body_hair.length-1  && <span>, </span>}
+                       
 
                         </span>)}
                         <span className="select_label_icon"><BiChevronDown /></span>
@@ -1200,7 +1200,7 @@ setPerson2({...person2,[name]:value})
                      {person2.body_hair.length === 0
                        ? person2.body_hair|| "Please select"
                        : person2?.body_hair.map((el,i) => <span>
-                        {i !== 0  && <span>, </span>}{el}</span>)}
+                        {el}{i!==person2?.body_hair.length-1 && <span>, </span>}</span>)}
                         <span className="select_label_icon"><BiChevronDown /></span>
                    </div>
                      

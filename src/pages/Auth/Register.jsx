@@ -2,12 +2,11 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import "./css/signup_login.css";
-import { register } from "../../redux/actions/auth";
-import { useDispatch } from 'react-redux';
 import api from "../../utils/api";
+import "./css/signup_login.css";
 const Signup = () => {
   const [form, setForm] = useState({
     profile_type: "",
