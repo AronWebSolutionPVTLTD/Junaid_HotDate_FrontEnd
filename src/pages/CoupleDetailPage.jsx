@@ -310,8 +310,8 @@ useEffect(()=>{
                           style={RenderedStyle}
                           key={i}
                         >
-                          {i !== 0 && <span>, </span>}
-                          {el}
+                           {el} {i!==0 && i !== userInfo.couple?.person1?.body_hair && <span>, </span>}
+                        
                         </span>
                       ))}
                     </div>
@@ -322,8 +322,8 @@ useEffect(()=>{
                           style={RenderStyle2}
                           key={i}
                         >
-                          {i !== 0 && <span>, </span>}
-                          {el}
+                           {el}{i!==0 && i !== userInfo.couple?.person2?.body_hair.length-1 && <span>, </span>}
+                         
                         </span>
                       ))}
                     </div>
