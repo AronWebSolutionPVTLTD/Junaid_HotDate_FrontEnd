@@ -240,8 +240,8 @@ const RenderedStyle={
                <span className="block text-right">
                {userInfo.body_hair?.map((el, i) => (
                  <span className={` font-body_font`} style={RenderedStyle} key={i}>
-           {i !== 0  && <span>, </span>}
-                   {el}
+           {el} {i!==0 && i !== userInfo?.body_hair.length-1  && <span>, </span>}
+                  
                  </span>
                ))}
                </span>
