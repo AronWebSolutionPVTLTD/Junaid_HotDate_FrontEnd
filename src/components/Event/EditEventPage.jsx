@@ -1,12 +1,13 @@
 import axios from "axios";
 import Multiselect from "multiselect-react-dropdown";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 const EditEventPage = () => {
+  const DEBOUNCE_DELAY = 300
   const [event, setEvent] = useState({
     event_name: "",
     Startdate: "",
@@ -29,18 +30,21 @@ const EditEventPage = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const options = ["M", "F", "MF", "MM", "FF","T"];
   const currentDate = new Date().toISOString().slice(0, 16)
- 
+  const [showResults, setShowResults] = useState(false);
+
+  const debouncedSearch = useRef(null);
   const data = useParams()
 
   const eventid = data.id
   const getEventInfo = async () => {
     try {
       const { data } = await api.get(`/get_event/${eventid}`);
+      console.log(data)
       setEvent({
         event_name: data.eventName,
         Startdate: data.Startdate,
         EndDate:data.EndDate,
-        Location: data.location?.display_name,
+        Location: data.location,
         Description: data.description,
         event_type: data.type,
         
@@ -66,30 +70,38 @@ const EditEventPage = () => {
   }, []);
 
 
-  useEffect(()=>{
-    axios.get(`https://us1.locationiq.com/v1/search?key=pk.9f0f98671dda49d28f0fdd64e6aa2634&q=${event['Location']}&format=json`).then((res)=>{ setAreaName(res.data)
-    //  console.log(res.data);
-     }).catch((err)=>console.log(err))
- },[event['Location']])
+  const handleLocation = (e) => {
+    const value = e.target.value;
+    setEvent({ ...event, ['Location']: value });
+    setShowResults(true);
 
-
- const handleLocation =async(e)=>{;
-  let value= e.target.value;
-  const url= value?`https://us1.locationiq.com/v1/search?key=pk.9f0f98671dda49d28f0fdd64e6aa2634&q=${value}&format=json`:'';
-  try{
-    if(url){
-      await axios.get(url).then((res)=>{ setAreaName(res.data)
-      console.log(res.data);
-      }).catch((err)=>console.log(err))
-      setEvent({...event,['Location']:value})
-     
-    }else{
-      setEvent({...event,['Location']:value})
+    if (debouncedSearch.current) {
+      clearTimeout(debouncedSearch.current);
     }
-  }catch(err){
-    console.log(err)
-  }
-}
+
+    debouncedSearch.current = setTimeout(async () => {
+      try {
+        const url = value
+          ? `https://us1.locationiq.com/v1/search?key=pk.9f0f98671dda49d28f0fdd64e6aa2634&q=${value}&format=json`
+          : '';
+
+        if (url) {
+          const res = await axios.get(url);
+          setAreaName(res.data);
+        } else {
+          setAreaName([]);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }, DEBOUNCE_DELAY);
+  };
+
+  const handleResultClick = (result) => {
+    console.log(result)
+    setEvent({ ...event, ['Location']: (result) });
+    setShowResults(false);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -156,7 +168,7 @@ const file = Array.from(e.target.files);
     formData.append("eventName", event.event_name);
     formData.append("Startdate", event.Startdate);
     formData.append("EndDate",event.EndDate);
-    formData.append("location", JSON.stringify(selectlocation));
+    formData.append("location", JSON.stringify(event.Location));
     formData.append("description", event.Description);
     formData.append("mainImage", coverImage);
     formData.append("type", event.event_type);
@@ -295,7 +307,7 @@ const file = Array.from(e.target.files);
                 <label
                   htmlFor="Location"
                   className="rounded-l-md w-full md:w-[120px] xl:w-[195px] sm:h-[49px] flex items-center justify-start sm:px-2 lg:px-4 text-sm mb-1 sm:mb-0 md:text-text-xs xl:text-lg text-white  font-normal leading-5 xl:leading-29 text-center 
-                                                lg:text-start"
+                                            lg:text-start"
                 >
                   Location
                 </label>
@@ -304,27 +316,24 @@ const file = Array.from(e.target.files);
                   id="Location"
                   name="Location"
                   onChange={(e) => handleLocation(e)}
-                  value={event.Location}
+                  value={event.Location?.display_name || event.Location}
                   autocomplete="off"
                   className="bg-black border md:rounded-l-none rounded-md md:border-none md:border-l-2 md:rounded-r-md border-orange focus:outline-none focus-visible:none w-full md:w-[calc(100%-120px)] xl:w-[calc(100%-195px)] h-[49px] text-gray font-normal xl:text-lg rounded-r-md text-sm px-2 xl:px-4 py-2.5 text-start placeholder:text-lg placeholder:text-gray items-center flex justify-between"
                   required
                 />
-
-<div>
-            
-            {areaname.length!==0 && areaname.map((el,i)=>(
-              <div style={{display:"flex",direction:"column", gap:"20px"}}>
-               <div onClick={()=>{
-                 setEvent({...event,['Location']:el.display_name})
-                 setSelectedLocation(el)
-             setAreaName([])
-             }} style={{width:"100%",border:0,borderBottom:"3px solid black",padding:"3px"}}>
-           {el.display_name}</div>
+                <div>
+                {showResults && (
+        <ul>
+          {areaname.map((result) => (
+            <li style={{padding:"8px",width:"100%"}} key={result.place_id} onClick={() => handleResultClick(result)}>
+              {result.display_name}
+            </li>
+          ))}
+        </ul>
+      )}
+                </div>
               </div>
-            ))} 
-                        
-                          </div>
-              </div>
+         
 
               <div className="flex flex-col gap-30">
                 <label
@@ -351,7 +360,7 @@ const file = Array.from(e.target.files);
                
              <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
                   <span className="w-6 block mr-2">
-                    <img src="images/gallery-icon.png" alt="gallery-icon" />
+                    <img src="/images/gallery-icon.png" alt="gallery-icon" />
                   </span>
                   Upload Cover Image
                   <input
@@ -376,7 +385,7 @@ const file = Array.from(e.target.files);
             
                 <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
                   <span className="w-6 block mr-2">
-                    <img src="images/gallery-icon.png" alt="gallery-icon" />
+                    <img src="/images/gallery-icon.png" alt="gallery-icon" />
                   </span>
                   Upload Event Images
                   <input
@@ -407,7 +416,7 @@ const file = Array.from(e.target.files);
                 <label className="flex w-full bg-gray-900 py-[10px] px-4 text-lg items-center cursor-pointer rounded-md">
                   <span className="w-6 block mr-2">
                     <img
-                      src="images/video-upload-icon.png"
+                      src="/images/video-upload-icon.png"
                       alt="gallery-icon"
                     />
                   </span>
@@ -510,9 +519,9 @@ const file = Array.from(e.target.files);
         </div>
         <div className="md:w-2/5 xl:w-full 2xl:w-2/5">
           <img
-            src="images/create-event-page.png"
+            src="/images/create-event-page.png"
             alt="create-event"
-            className="block h-full w-full rounded-b-40px md:rounded-b-none md:rounded-br-40px md:rounded-r-40px xl:rounded-b-40px xl:rounded-tr-none 2xl:rounded-l-none 2xl:rounded-r-40px object-cover aspect-video md:aspect-auto xl:aspect-video 2xl:md:aspect-auto"
+            className="block h-auto w-full rounded-b-40px md:rounded-b-none md:rounded-br-40px md:rounded-r-40px xl:rounded-b-40px xl:rounded-tr-none 2xl:rounded-l-none 2xl:rounded-r-40px object-cover aspect-video md:aspect-auto xl:aspect-video 2xl:md:aspect-auto"
           />
         </div>
       </div>
