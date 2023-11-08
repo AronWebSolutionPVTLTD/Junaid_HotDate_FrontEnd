@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loading from "../../components/M_used/Loading";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [value,setValue]=useState(false)
@@ -18,6 +19,7 @@ const ForgotPassword = () => {
     otp5: "",
     otp6: "",
   });
+  const [loading,setLoading]=useState(false);
   const [formErrors, setformErrors] = useState({});
   const [otpsend, setotpsend] = useState(false);
   const navigate = useNavigate();
@@ -54,13 +56,17 @@ const ForgotPassword = () => {
   const sendOtp = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const { data } = await axios.post(`${BASE_URL}/api/forget`, {
         email: email,
       },{withCredentials:true});
       if (data) {
+        setValue(true)
+        setLoading(false)
         toast.success("OTP Sent");
       }
     } catch (error) {
+      setLoading(false)
       toast.error(error?.response?.data)
       console.log(error);
     }
@@ -93,18 +99,30 @@ const ForgotPassword = () => {
       otp.otp1 + otp.otp2 + otp.otp3 + otp.otp4 + otp.otp5 + otp.otp6;
 
     try {
+      setLoading(true)
       const { data } = await axios.post(`${BASE_URL}/api/verifyOtp`, {
         email: email,
         otp: finalOtp,
       });
       if (data) {
+        setLoading(false)
         setotpsend(true);
         toast.success("OTP Verified");
       }
     } catch (error) {
+      setLoading(false)
       console.log(error);
       toast.error(error.response.data);
     }
+    setOtp({
+      value: "",
+      otp1: "",
+      otp2: "",
+      otp3: "",
+      otp4: "",
+      otp5: "",
+      otp6: "",
+    })
   };
 
   const handleNewPassword = (e) => {
@@ -116,15 +134,20 @@ const ForgotPassword = () => {
     e.preventDefault();
     if (Object.keys(formErrors).length === 0) {
       if (confirmPassword.password === confirmPassword.cpassword) {
+        setLoading(true)
         const { data } = await axios.post(`${BASE_URL}/api/reset_pass`, {
           email: email,
           new_password: confirmPassword.password,
           confirm_password: confirmPassword.cpassword,
         });
         if (data) {
+          setLoading(false)
           toast.success("Password Successfully Changed");
           navigate("/login");
+        }else{
+          toast.error("Something went wrong!");
         }
+        setLoading(false)
       }
     }
   };
@@ -168,12 +191,13 @@ const ForgotPassword = () => {
                           />
                         </div>
                       </div>
-                      <button
+                    { loading && !value ? <Loading/> : <button
                         className="gradient !py-3 w-full !text-lg xl:!text-25px uppercase !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
                         onClick={sendOtp}
                       >
-                      { otpsend ?'Send OTP':"Send OTP again"}
-                      </button>
+                      { !otpsend ?'Send OTP':"Send OTP again"}
+                      </button>}
+                    {value &&  <>
                       <div className="flex justify-center">
                         <div>
                           <input
@@ -254,12 +278,12 @@ const ForgotPassword = () => {
                           />
                         </div>
                       </div>
-                      <button
+                      { loading? <Loading/>  :  <button
                         className="gradient !py-3 w-full !text-lg xl:!text-25px uppercase !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
                         onClick={confirmOtp}
                       >
                         Confirm OTP
-                      </button>
+                      </button>}</>}
                     </>
                   )}
 
@@ -310,12 +334,12 @@ const ForgotPassword = () => {
                         </div>
                         {formErrors.cpassword && <p>{formErrors.cpassword}</p>}
                       </div>
-                      <button
+                   { loading? <Loading/>  :<button
                         className="gradient !py-3 w-full !text-lg xl:!text-25px uppercase !font-bold flex justify-center items-center text-white rounded-xl primary_btn"
                         onClick={SubmitPassword}
                       >
                         Submit
-                      </button>
+                      </button>}
                     </>
                   )}
                 </form>
@@ -336,18 +360,6 @@ const ForgotPassword = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="audit-dating__block relative my-16">
-              <div className="flex flex-col md:flex-row justify-center items-center text-center gap-6 py-71px">
-                <img
-                  src="images/avn_award2-1.png"
-                  alt="award"
-                  className="max-w-200px md:max-w-full"
-                />
-                <h2 className="text-white text-2xl sm:text-3xl xl:text-40px">
-                  #Best Adult Dating Site
-                </h2>
-              </div>
-            </div> */}
           </div>
         </div>
   );
