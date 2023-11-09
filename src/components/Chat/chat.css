@@ -1,0 +1,11 @@
+.str-chat__avatar-fallback {
+  background-color: orange;
+}
+
+.str-chat__message-simple-timestamp{
+  font-size: 13px;
+}
+
+.str-chat__message-name, .str-chat__message-simple-name {
+font-size: 13px
+}

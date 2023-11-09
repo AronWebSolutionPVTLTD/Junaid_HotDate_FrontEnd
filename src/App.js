@@ -48,6 +48,7 @@ import store from './redux/store';
 import setAuthToken from './utils/setAuthToken';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './Context/ProtectedRoute';
+import OtoOChat from './components/Chat/OtoOChat';
 function App() {
 const {isAuthenticated} = useSelector((state)=>state.auth);
 let location = useLocation();
@@ -80,6 +81,7 @@ if(isAuthenticated){
   return (
     <>
     <Routes>
+    <Route path="*" element={<NotFound/>} />
     <Route path="/contact" element={<Layout><ContactPage /></Layout>} />
    <Route path="/about" element={<Layout><AboutPage /></Layout>} />
    <Route path="live-chat" element={<Layout><LiveChatPage /></Layout>} />
@@ -101,6 +103,7 @@ if(isAuthenticated){
 <Route path="/edit-detail" element={<Layout><ProtectedRoute><EditUserDetailsPage /></ProtectedRoute></Layout>} />
 <Route path="editcouple-detail" element={<Layout><ProtectedRoute><CoupleEditDetailPage/></ProtectedRoute></Layout>}/>
 
+{isAuthenticated &&
 <Route path='/' element={<Main_Layout/>}>
 
 {/* HOME */}
@@ -136,7 +139,9 @@ if(isAuthenticated){
 <Route path="/send_request" element={<ProtectedRoute><SendFriendrequest/></ProtectedRoute>} />
 <Route path="/currentuser" element={<ProtectedRoute><CurrentlyOnUser /></ProtectedRoute>} />
 
-</Route>
+<Route path="/chat" element={<ProtectedRoute><OtoOChat/></ProtectedRoute>} />
+
+</Route>}
    </Routes>
    
     </>
