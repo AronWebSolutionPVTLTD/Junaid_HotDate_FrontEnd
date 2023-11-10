@@ -59,9 +59,6 @@ const Footer = () => {
                   <Link>Terms of Use</Link>
                 </li>
                 <li className="my-1">
-                  <Link>Sitemap</Link>
-                </li>
-                <li className="my-1">
                   <Link>Do Not Sell My Personal Information</Link>
                 </li>
                 <li className="my-1">
