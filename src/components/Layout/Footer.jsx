@@ -50,7 +50,7 @@ const Footer = () => {
             <div className="footer-menu text-sm w-full md:w-1/5">
               <ul className="font-body_font">
                 <li className="my-1">
-                  <Link> Become an Affiliate</Link>
+                  <Link>SWINXTER Inc</Link>
                 </li>
                 <li className="my-1">
                   <Link>Privacy Policy / Cookies</Link>
@@ -83,7 +83,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li className="my-1">
-                  <Link>Questions? Call us: (669)208-0363</Link>
+                <a href="tel:+14076025244">Questions? Call us:+1-407-602-5244</a>
                 </li>
               </ul>
             </div>

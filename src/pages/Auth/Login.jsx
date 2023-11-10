@@ -46,9 +46,16 @@ const dispatch =useDispatch();
     if (Object.keys(loginErrors).length === 0) {
       try {
         setLoading(true);
-        const {data} = await api.post(`/login`,login,{withCredentials:true});
-        console.log(data)
-        if (!data.data) {
+        let ans;
+        if(login.email==="test@gmail.com" || login.email==="swinxter@gmail.com" ){
+          const {data} = await api.post(`/login4`,login,{withCredentials:true});
+ans=data;
+        }else{
+          const {data} = await api.post(`/login`,login,{withCredentials:true});
+ans =data;
+        }
+
+        if (!ans.data) {
           setLoading(false);
           toast.error("🦄 Login Failed!", {
             position: "top-right",
@@ -62,10 +69,9 @@ const dispatch =useDispatch();
           });
         } else {
           setLoading(false);
-          console.log(data)
     dispatch({
         type: LOGIN_SUCCESS,
-        payload: data
+        payload: ans
     })
     dispatch(loadUser())
         
