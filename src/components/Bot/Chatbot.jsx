@@ -80,7 +80,7 @@ export const Chatbot = () => {
                         id: 'help',
                         component: <Link to="/faq">Click here</Link>,
                         asMessage: true,
-                        trigger:8
+                        trigger:4
                       },
                     {
                         id: 'gender',
