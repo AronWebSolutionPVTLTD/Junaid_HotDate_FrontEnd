@@ -54,15 +54,33 @@ export const Chatbot = () => {
                       },
                     {
                         id: 'live',
-                        component: <Link to="/live-chat">Click here</Link>,
-                        asMessage: true,
-                        trigger:4
+                        message:"You'll be able to use this feature soon!",
+                        trigger:8
+                      },
+                    {
+                        id: '8',
+                        message:"Welcome to Swinxter® Family ",
+                        trigger:'9'
+                      },{
+                        id: '9',
+                        message: 'What is your name?',
+                        trigger: 'name',
+                      },
+                      {
+                        id: 'name',
+                        user: true,
+                        trigger: '10',
+                      },
+                      {
+                        id: '10',
+                        message: 'Hi {previousValue}! What is your gender?',
+                        trigger: 'gender',
                       },
                     {
                         id: 'help',
                         component: <Link to="/faq">Click here</Link>,
                         asMessage: true,
-                        trigger:4
+                        trigger:5
                       },
                     {
                         id: 'gender',
