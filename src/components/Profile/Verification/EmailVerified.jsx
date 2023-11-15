@@ -23,7 +23,7 @@ const [success,setSuccess]=useState(false)
 
   return (
     <div className="bg-black-20">
-      <div className="min-h-[350px] md:min-h-[400px] flex justify-center items-end bg-black rounded-b-50px">
+      <div className="min-h-[350px] md:min-h-[320px] flex justify-center items-end bg-black rounded-b-50px">
         {success?
         <div className="container mx-auto pb-20 text-center">
           <h3 className="font-secondary_font text-40px">Email Verified</h3>

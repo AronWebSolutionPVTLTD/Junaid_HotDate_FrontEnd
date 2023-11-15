@@ -1145,7 +1145,7 @@ const SinglePerson = () => {
                     <span className="block w-full">
                       By creating your account, you consider yourself/yourselves
                       above 18 and you agree to the Terms of Service and Privacy
-                      Policy of Kaizen Globe
+                      Policy of Swinxter®
                     </span>
                   </div>
 

@@ -1764,7 +1764,7 @@ if(form2['gender_2']){
                     <span className="block">
                       By creating your account, you consider yourself/yourselves
                       above 18 and you agree to the Terms of Service and Privacy
-                      Policy of Kaizen Globe
+                      Policy of Swinxter®
                     </span>
                   </div>
                   <div className="flex justify-center my-5">

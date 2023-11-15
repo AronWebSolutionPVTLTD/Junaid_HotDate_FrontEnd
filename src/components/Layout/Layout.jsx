@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import BotMessage from '../Floating_Btn/Bot'
 // import "../../pages/Auth/css/signup_login.css";
 export const Layout = ({children}) => {
   return (

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import BotMessage from '../../components/Floating_Btn/Bot';
 
 export const Home = () => {
 
   return (
     <>
   <section className="relative min-h-[80vh] sm:min-h-[95vh] rounded-b-2xl sm:rounded-b-50px hero_section z-[99] flex items-center">
-   
       <div className="container mx-auto relative">
         <div className="text-white max-w-xs sm:max-w-470px sm:ml-auto">
           <p className="text-2xl sm:text-40px font-secondary_font ">
@@ -21,7 +21,6 @@ export const Home = () => {
         </div>
       </div>
     </section>
-
     <section className="text-with-image text-white py-6 md:py-8 lg:py-20 find_partner relative z-0 ">
       <div
         className="container mx-auto relative z-0 before:absolute before:content-[''] before:w-[502px] before:h-[502px] before:right-0
@@ -92,7 +91,7 @@ export const Home = () => {
                 Join now and experience the excitement first-hand!
               </p>
               {/* <h2 className="text-2xl md:text-4xl xl:text-50px sm:leading-75 sm:mb-0 mb-3 font-bold">
-                Kaizen Globe®
+                Swinxter®
               </h2> */}
               <p className="text-sm md:text-base xl:text-lg mb-4 leading-29 max-w-420px font-body_font">
                 Experience the ultimate convenience with adult dating at
@@ -163,7 +162,7 @@ export const Home = () => {
               Step into the vibrant world of the Swinxter®
             </p>
             <h2 className="text-2xl md:text-4xl xl:text-50px font-bold">
-              <span className="font-normal block">Kaizen Globe®</span>
+              <span className="font-normal block">Swinxter®</span>
               Adult Community
             </h2>
             <p className="text-sm md:text-base xl:text-lg mb-4 leading-29 font-body_font">
@@ -216,7 +215,8 @@ export const Home = () => {
           </div>
         </div>
       </div>
-    </section>
+     
+    </section> <BotMessage/>
     </>
   )
 }

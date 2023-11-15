@@ -90,7 +90,7 @@ const Footer = () => {
       <section className="copyright__block py-6 bg-black text-white">
         <div className="container mx-auto">
           <p className="text-center text-sm">
-            Copyright © 1998-2023 Kaizen Globe. All Rights Reserved.
+            Copyright © 1998-2023 Swinxter®. All Rights Reserved.
           </p>
         </div>
       </section>

@@ -13,7 +13,6 @@ import reportWebVitals from './reportWebVitals';
 const CLIENT_KEY = process.env.REACT_APP_GOOGLE_CLIENT_KEY;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <GoogleOAuthProvider clientId={CLIENT_KEY}> 
     <Provider store={store}>
       <Router>
@@ -24,7 +23,6 @@ root.render(
     </Provider>
     <ToastContainer />
     </GoogleOAuthProvider>
-   </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

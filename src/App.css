@@ -527,3 +527,22 @@ h1::first-letter,h2::first-letter,h3::first-letter,h4::first-letter,h5::first-le
   flex-wrap: wrap;
   gap: 1rem;
 }
+/* 
+Chatbot */
+.jpJyWr {
+  color: #000;
+}
+.fab-container {
+  z-index: 999;
+}
+
+.fab-item {
+  background: #F79220;
+  width: 74px !important;
+  height: 74px !important;
+}
+
+.gkhNlr {
+  display: flex;
+  gap: 7px;
+}

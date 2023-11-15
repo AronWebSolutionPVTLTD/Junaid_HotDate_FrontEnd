@@ -436,7 +436,7 @@ setPerson2({...person2,[name]:value})
 
   return (
     <div className="bg-black-20">
-      <div className="min-h-[350px] md:min-h-[400px] flex justify-center items-end bg-black rounded-b-50px">
+      <div className="min-h-[350px] md:min-h-[320px] flex justify-center items-end bg-black rounded-b-50px">
         <div className="container mx-auto pb-20 text-center">
           <h3 className="font-secondary_font text-40px">Edit User Details</h3>
           <p className="text-lg">Lorem Ipsum is dummy content</p>

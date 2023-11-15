@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
+import ProtectedRoute from './Context/ProtectedRoute';
+import OtoOChat from './components/Chat/OtoOChat';
 import ClubDetail from './components/Club/ClubDetail';
 import ClubDetailMedia from './components/Club/ClubDetailMedia';
 import CreateClubPage from './components/Club/CreateClubPage';
@@ -40,15 +42,13 @@ import FaqPage from './pages/FaqPage';
 import { Home } from './pages/Landing/Home';
 import LiveChatPage from './pages/Landing/LiveChat';
 import Main_Home from './pages/Main_Home';
+import NotFound from './pages/NotFound';
 import TravelPage from './pages/TravelPage';
 import UserDetailPage from './pages/UserDetailPage';
 import { loadUser } from './redux/actions/auth';
 import { LOGOUT } from './redux/actions/types';
 import store from './redux/store';
 import setAuthToken from './utils/setAuthToken';
-import NotFound from './pages/NotFound';
-import ProtectedRoute from './Context/ProtectedRoute';
-import OtoOChat from './components/Chat/OtoOChat';
 function App() {
 const {isAuthenticated} = useSelector((state)=>state.auth);
 let location = useLocation();
@@ -143,17 +143,10 @@ if(isAuthenticated){
 
 </Route>}
    </Routes>
-   
+
     </>
   )
 }
 
 export default App
 
-
-
-// const {user} = useSelector((state)=>state.auth);
-// const [userInfo,setUserInfo]=useState(user);
-// useEffect(()=>{
-//   setUserInfo(user)
-// },[])
