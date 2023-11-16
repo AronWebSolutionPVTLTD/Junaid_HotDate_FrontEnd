@@ -535,6 +535,7 @@ Chatbot */
 .fab-container {
   z-index: 999;
   right: 3vw !important;
+  bottom: 1rem !important;
 }
 
 .fab-item {

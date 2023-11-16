@@ -23,14 +23,20 @@ function Icon({ id, open }) {
 
 const FaqPage = () => {
   const [open, setOpen] = useState(0);
+  const [alwaysOpen, setAlwaysOpen] = React.useState(true);
   const handleOpen = (value) => {
+    if(alwaysOpen){
+      setAlwaysOpen(false)
+    }
     setOpen(open === value ? 0 : value);
   };
+  const handleAlwaysOpen = () => {
+    if(open!==0){
+      setOpen(0)
+    }
+    setAlwaysOpen((cur) => !cur)
+  };
   const faqs = [
-    {
-      question: 'Can I use the Hot-Date app on multiple devices?',
-      answer: 'Yes, you can use the Hot-Date app on multiple devices. Simply log in with your account credentials, and your data will be synchronized across all your devices.',
-    },
     {
       question: 'How do I report inappropriate behavior or profiles?',
       answer: 'If you encounter inappropriate behavior or profiles, use the reporting feature within the app. This helps us maintain a safe and enjoyable community. Our team will review the report and take appropriate action.',
@@ -70,82 +76,115 @@ const FaqPage = () => {
       question: 'Is there a chat feature on Hot-Date app?',
       answer: 'Yes, Hot-Date app includes a chat feature. Once you match with someone or become friends, you can start chatting within the app. Use the chat to get to know each other better, plan events, or share exciting updates.',
     },
+    {
+      question: "What is the swinger lifestyle?",
+      answer:
+        "The swinger lifestyle is a form of consensual non-monogamy where individuals or couples engage in sexual activities with others outside their primary relationship. It often involves couples swapping partners for sexual experiences, but the extent of involvement varies from soft swaps (limited to certain activities) to full swaps (engaging in intercourse)."
+    },
+    {
+      question: "Is swinging the same as an open relationship or polyamory?",
+      answer:
+        "No, swinging is distinct from open relationships and polyamory. Swinging primarily focuses on sexual exploration and typically involves couples engaging in sexual activities with others. Open relationships and polyamory, on the other hand, emphasize emotional connections and can involve multiple romantic and sexual partners."
+    },
+    {
+      question: "How do I find other swingers or lifestyle events?",
+      answer:
+        "There are various ways to connect with the swinger community:\n" +
+        "- Online swinger websites and forums: Many dedicated websites and forums exist where swingers can create profiles, interact with others, and find events in their area.\n" +
+        "- Swinger clubs and parties: Many cities have swinger clubs or host lifestyle parties where like-minded individuals can meet and socialize.\n" +
+        "- Social media: Some swingers use social media platforms to connect and organize events discreetly."
+    },
+    {
+      question: "How can I ensure safety in the swinger lifestyle?",
+      answer:
+        "Safety is paramount in the swinger community. Here are some key safety tips:\n" +
+        "- Communicate openly with your partner(s) about boundaries, desires, and limits.\n" +
+        "- Use protection, such as condoms, to prevent the spread of sexually transmitted infections.\n" +
+        "- Verify consent from all parties involved before engaging in any sexual activity.\n" +
+        "- Get to know potential partners and exchange relevant health information.\n" +
+        "- Trust your instincts and leave any situation that makes you uncomfortable."
+    },
+    {
+      question: "What should I expect at a swinger event or party?",
+      answer:
+        "Expectations can vary depending on the event and location. Typically, swinger events provide a safe, non-judgmental space for adults to socialize, dance, and potentially engage in sexual activities if they choose to. It’s important to respect the rules and guidelines of the event and obtain clear consent before initiating any sexual activity."
+    },
+    {
+      question: "Can anyone become a swinger?",
+      answer:
+        "Swinging is consensual, and participation is entirely voluntary. Anyone interested in exploring the lifestyle can do so, provided they communicate openly, respect boundaries, and prioritize safety and consent. It’s essential to be honest about your intentions and desires with potential partners."
+    },
+    {
+      question: "How do I deal with jealousy in the swinger lifestyle?",
+      answer:
+        "Jealousy is a common emotion in any non-monogamous relationship. Open and honest communication with your partner(s) is key to addressing jealousy. Establish boundaries and agreements that make both partners comfortable. It’s also essential to work on self-confidence and self-esteem to better manage jealousy when it arises."
+    },
+    {
+      question: "Are swingers at risk of contracting sexually transmitted infections (STIs)?",
+      answer:
+        "Any sexual activity carries some risk of STIs. Swingers should use protection, get regular STI testing, and be open about their sexual health with potential partners. Responsible sexual behavior and safer sex practices are essential in minimizing these risks."
+    },
+    {
+      question: "What are the key considerations in the swinger lifestyle?",
+      answer:
+        "Remember that the swinger lifestyle is about consent, communication, and exploring consensual sexual experiences with like-minded individuals. It’s important to prioritize the emotional and physical well-being of all parties involved in any swinger encounter."
+    }
   ];
   
+  
+  const accordioncss={
+    color:"orange",
+    fontWeignt:"500",
+    fontSize:"16px"
+  }
+
   return (
     <div className="bg-black-20">
       <div className="min-h-[350px] md:min-h-[320px] flex justify-center items-end bg-black rounded-b-50px">
         <div className="container mx-auto pb-20 text-center">
           <h3 className="font-secondary_font text-40px">FAQ</h3>
-          <p className="text-lg">Lorem Ipsum is dummy content</p>
+          <p className="text-lg">Frequently Asked Questions</p>
         </div>
       </div>
       <div className="pt-10 container mx-auto">
         <div className="grid gap-y-2 max-w-6xl mx-auto">
-          {
-            faqs.map((el,i)=>(
-              <Accordion key={i} open={open === i} icon={<Icon id={i} open={open} />}>
-              <AccordionHeader
-                className="text-lg font-normal"
-                onClick={() => handleOpen(i)}
-              >
-               {el.question}
-              </AccordionHeader>
-              <AccordionBody>
-                {el.answer}
-              </AccordionBody>
-            </Accordion>
+          
+    
+   <Accordion style={{ borderLeft: alwaysOpen  ? '4px solid #f19815' : 'none',paddingLeft: alwaysOpen ? '4px' : 'none' }} open={alwaysOpen}>
+        <AccordionHeader onClick={handleAlwaysOpen}>Can I use the Hot-Date app on multiple devices?</AccordionHeader>
+        <AccordionBody style={{color:"orange",fontSize:"16px"}}>Yes, you can use the Hot-Date app on multiple devices. Simply log in with your account credentials, and your data will be synchronized across all your devices.
+
+        </AccordionBody>
+      </Accordion>
+      {
+  faqs.map((el, i) => (
+    <Accordion key={i + 1} open={open === i + 1}  style={{ borderLeft: open === i + 1 ? '4px solid #f19815' : 'none',paddingLeft: open === i + 1 ? '4px' : 'none' }} icon={<Icon id={i + 1} open={open} /> }>
+      <AccordionHeader
+        className="text-lg font-medium"
+        onClick={() => handleOpen(i + 1)}
+      >
+        {el.question}
+      </AccordionHeader>
+      <AccordionBody style={open === i + 1 && accordioncss}>
+        {el.answer.includes('\n-') ? (
+          <ul>
+            {el.answer.split('\n-').map((item, index) => (
+              <li key={index}>{index>=1 && `${index}).`}{item}</li>
             ))
-          }
-{/*         
-          <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
-            <AccordionHeader
-              className="text-lg font-normal"
-              onClick={() => handleOpen(2)}
-            >
-              What is Lorem Ipsum?
-            </AccordionHeader>
-            <AccordionBody>
-              We're not always in the position that we want to be at. We're
-              constantly growing. We're constantly making mistakes. We're
-              constantly trying to express ourselves and actualize our dreams.
-            </AccordionBody>
-          </Accordion>
-          <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
-            <AccordionHeader
-              className="text-lg font-normal"
-              onClick={() => handleOpen(3)}
-            >
-              What is Lorem Ipsum?
-            </AccordionHeader>
-            <AccordionBody>
-              We're not always in the position that we want to be at. We're
-              constantly growing. We're constantly making mistakes. We're
-              constantly trying to express ourselves and actualize our dreams.
-            </AccordionBody>
-          </Accordion>
-          <Accordion open={open === 4} icon={<Icon id={4} open={open} />}>
-            <AccordionHeader
-              className="text-lg font-normal"
-              onClick={() => handleOpen(4)}
-            >
-              What is Lorem Ipsum?
-            </AccordionHeader>
-            <AccordionBody>
-              We're not always in the position that we want to be at. We're
-              constantly growing. We're constantly making mistakes. We're
-              constantly trying to express ourselves and actualize our dreams.
-            </AccordionBody>
-          </Accordion> */}
+            }
+          </ul>
+        ) : (
+          el.answer
+        )}
+      </AccordionBody>
+    </Accordion>
+  ))
+}
+
         </div>
       </div>
       <div className="audit-dating__block relative py-4 md:py-16 md:pt-0 container mx-auto mt-14">
         <div className="flex flex-col md:flex-row justify-center items-center text-center gap-6 py-71px">
-          {/* <img
-            src="images/avn_award2-1.png"
-            alt="award"
-            className="max-w-200px md:max-w-full"
-          /> */}
           <h2 className="text-white text-2xl sm:text-3xl xl:text-40px">
             #Best Adult Dating Site
           </h2>

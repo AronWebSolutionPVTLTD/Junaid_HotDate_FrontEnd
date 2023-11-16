@@ -11,7 +11,6 @@ import "./css/eventCard.css";
 import api from "../../utils/api";
 import { useSelector } from "react-redux";
 const EventCard = ({ event,loc }) => {
-  const [username, setUserName] = useState("");
   const [isJoined, setIsJoined] = useState(false);
   const { savedCred } = useContext(Context);
   const navigate = useNavigate();
@@ -20,12 +19,8 @@ const EventCard = ({ event,loc }) => {
   const [userInfo,setUserInfo]=useState(user);
   useEffect(()=>{
     setUserInfo(user)
-    getUser()
   },[])
-  const getUser = async () => {
-    const { data } = await api.get(`/findOne/${event?.userId}`);
-    setUserName(data.username);
-  };
+
   const calculatePreciseDistance = (fLong,sLong,fLat,sLat) => {
     var pdis = getPreciseDistance(
       { latitude: Number(fLat), longitude: Number(fLong) },
@@ -89,7 +84,7 @@ const EventCard = ({ event,loc }) => {
         ) : (
         <span className="text-green-500">{event?.type} </span>
          )}
-          <span className="text-white-2 font-body_font">by {username}</span>
+          <span className="text-white-2 font-body_font">by {event?.userId?.username}</span>
         </p>
         <div className="date_picker relative ">
             <img
