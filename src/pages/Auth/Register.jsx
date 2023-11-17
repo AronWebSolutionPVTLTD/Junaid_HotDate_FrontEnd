@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import api from "../../utils/api";
 import "./css/signup_login.css";
+import BotMessage from "../../components/Floating_Btn/Bot";
 const Signup = () => {
   const [form, setForm] = useState({
     profile_type: "",
@@ -408,6 +409,7 @@ const Signup = () => {
               </div>
             </div>
           </div>
+          <BotMessage/>
         </div>
      
   );

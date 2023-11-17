@@ -55,7 +55,7 @@ export const Chatbot = () => {
                     {
                         id: 'live',
                         message:"You'll be able to use this feature soon!",
-                        trigger:8
+                        trigger:4
                       },
                     {
                         id: '8',

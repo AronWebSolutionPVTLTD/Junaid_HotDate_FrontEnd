@@ -8,6 +8,7 @@ import api from "../../utils/api";
 import { useDispatch } from "react-redux";
 import { LoginA, loadUser } from "../../redux/actions/auth"
 import { LOGIN_SUCCESS } from "../../redux/actions/types";
+import BotMessage from "../../components/Floating_Btn/Bot";
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState({ email: "", password: "" });
@@ -320,6 +321,7 @@ ans =data;
               </div>
             </div>
           </div>
+          <BotMessage/>
         </div>
      
   );

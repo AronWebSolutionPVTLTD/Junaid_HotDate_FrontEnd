@@ -81,6 +81,7 @@ if(isAuthenticated){
   return (
     <>
     <Routes>
+  
     <Route path="*" element={<NotFound/>} />
     <Route path="/contact" element={<Layout><ContactPage /></Layout>} />
    <Route path="/about" element={<Layout><AboutPage /></Layout>} />

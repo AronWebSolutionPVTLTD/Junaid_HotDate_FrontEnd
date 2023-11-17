@@ -1,7 +1,10 @@
 import React from "react";
 import MemberCard from "../../components/LandingPage/LiveEvent/MemberCard";
+import { useSelector } from "react-redux";
+import BotMessage from "../../components/Floating_Btn/Bot";
 
 const LiveChatPage = () => {
+  const {isAuthenticated} = useSelector((state)=>state.auth);
   return (
     <div className="bg-black-20">
       <div className="live_chat_sec min-h-[700px] relative flex items-end justify-start z-1">
@@ -72,6 +75,7 @@ const LiveChatPage = () => {
           </h2>
         </div>
       </div>
+      {!isAuthenticated && <BotMessage/> }
     </div>
   );
 };
