@@ -49,10 +49,12 @@ const {email,username,reason,message}=form;
             Contact Us
           </h3>
           <p className="text-sm md:text-lg">
-            If you need immediate help, please call our Customer Service support
+            {/* If you need immediate help, please call our Customer Service support
             line: (669) 208-0363 24 hours a day, seven days a week. For billing
             questions, please call us toll-free: (888) 575-8383 or (669)
-            208-0364
+            208-0364 */}
+
+If you need immediate help, please call our Customer Service support line: (+1-407-602-5244)
           </p>
         </div>
         <form
