@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import ProtectedRoute from './Context/ProtectedRoute';
@@ -49,11 +48,14 @@ import { loadUser } from './redux/actions/auth';
 import { LOGOUT } from './redux/actions/types';
 import store from './redux/store';
 import setAuthToken from './utils/setAuthToken';
+import { useSelector } from 'react-redux';
 function App() {
 const {isAuthenticated} = useSelector((state)=>state.auth);
 let location = useLocation();
 const { pathname } = location;
 const navigate = useNavigate()
+const from = location.state?.from?.pathname || "/home";
+
 useEffect(() => {
   window.scrollTo(0, 0);
 }, [pathname]);
@@ -73,10 +75,10 @@ useEffect(() => {
 
   useEffect(()=>{
 if(isAuthenticated){
-  navigate("/home")
+  console.log("first");
+  navigate(from, { replace: true })
 }
   },[isAuthenticated])
-
 
   return (
     <>
@@ -104,8 +106,8 @@ if(isAuthenticated){
 <Route path="/edit-detail" element={<Layout><ProtectedRoute><EditUserDetailsPage /></ProtectedRoute></Layout>} />
 <Route path="editcouple-detail" element={<Layout><ProtectedRoute><CoupleEditDetailPage/></ProtectedRoute></Layout>}/>
 
-{isAuthenticated &&
-<Route path='/' element={<Main_Layout/>}>
+
+<Route  element={<Main_Layout/>}>
 
 {/* HOME */}
 <Route path='/home' element={<ProtectedRoute><Main_Home/></ProtectedRoute>} />
@@ -142,7 +144,7 @@ if(isAuthenticated){
 
 <Route path="/chat" element={<ProtectedRoute><OtoOChat/></ProtectedRoute>} />
 
-</Route>}
+</Route>
    </Routes>
 
     </>

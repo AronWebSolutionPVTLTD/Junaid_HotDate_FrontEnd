@@ -172,7 +172,7 @@ const Sidebar = () => {
     {
       title: "FAQ",
       submenus: [
-        { title: "Know Your Kinky ABCs!", submenus: [], path: "/faq" },
+        { title: "Know Your Kinky FAQ!", submenus: [], path: "/faq" },
       ],
     },
     {

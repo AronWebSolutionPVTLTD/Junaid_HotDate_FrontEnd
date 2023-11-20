@@ -4,7 +4,7 @@ import { LOGOUT } from '../redux/actions/types';
 import store from '../redux/store';
 
 const api = axios.create({
-  baseURL: 'https://hotdate.onrender.com/api',
+  baseURL: `${process.env.REACT_APP_BASE_URL}/api`,
   withCredentials:true
 });
 

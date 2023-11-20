@@ -61,7 +61,7 @@ const DbHeader = () => {
         <div className="w-1/5 pr-5 flex justify-end">
           <Link to={user?"/home":"/"} className="flex justify-center w-full max-w-[15rem]">
             <img
-              src="landingPage/images/landing-logo.png"
+              src="/landingPage/images/landing-logo.png"
               alt="Logo"
               className="cursor-pointer max-w-100px block"
             />
@@ -90,7 +90,7 @@ const DbHeader = () => {
               className="absolute top-[60px] left-5 w-full max-w-[100px] block xl:hidden"
             >
               <img
-                src="landingPage/images/landing-logo.png"
+                src="/landingPage/images/landing-logo.png"
                 alt="Logo"
                 className="cursor-pointer max-w-100px block"
               />

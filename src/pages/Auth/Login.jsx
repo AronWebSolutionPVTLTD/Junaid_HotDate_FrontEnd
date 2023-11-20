@@ -1,7 +1,7 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./css/signup_login.css";
 import api from "../../utils/api";
@@ -10,6 +10,8 @@ import { LoginA, loadUser } from "../../redux/actions/auth"
 import { LOGIN_SUCCESS } from "../../redux/actions/types";
 import BotMessage from "../../components/Floating_Btn/Bot";
 const Login = () => {
+  const location = useLocation();
+    const from = location.state?.from?.pathname || "/home";
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState({ email: "", password: "" });
   const [loginErrors, setLoginErrors] = useState({});
@@ -88,7 +90,7 @@ ans =data;
             progress: undefined,
             theme: "colored",
           });
-          navigate("/home");
+          navigate(from, { replace: true });
         }
       } catch (error) {
         setLoading(false);
