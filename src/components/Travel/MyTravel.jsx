@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../../utils/api";
+import { FaArrowLeft } from "react-icons/fa6";
 export default function MyTravel(){
   const [age, setAge] = useState("");
   const [age2,setage2]=useState("")
@@ -95,7 +96,11 @@ const handleTravel = (id) => {
     return(
         <>
         <div className="bg-black py-8 px-6 rounded-2xl xl:rounded-r-none">
-        <div className="flex gap-2 flex-wrap justify-end mb-5">
+          
+        <div className="flex gap-2 flex-wrap justify-between mb-5">
+        <span className="primary_btn cursor-pointer !text-sm  !px-3 !leading-2 !py-3" onClick={()=>navigate(-1)}>
+        <span className="text-sm inline-flex items-center mr-2"><FaArrowLeft /></span>Back
+      </span>
         <span
             className="inline-flex rounded-md items-center gap-1 p-2 bg-orange text-sm sm:text-xl font-semibold cursor-pointer"
             onClick={() => navigate("/create_travel")}
