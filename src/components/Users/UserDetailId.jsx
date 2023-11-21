@@ -74,6 +74,7 @@ const handleDeleteConfirm=async()=>{
 {loading ? <MidLoading /> :
 userInfo.profile_type==="single"?
  <div className="bg-black-20">
+  Back
  <div className="min-h-[130px] md:min-h-[130px] flex justify-center items-end bg-black rounded-b-50px">
 
  </div>

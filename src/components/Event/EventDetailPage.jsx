@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { Context } from "../../Context/context";
 import api from "../../utils/api";
 import { MidLoading } from "../M_used/Loading";
+import { FaArrowLeft } from "react-icons/fa6";
 const EventDetailPage = () => {
   const [eventInfo, setEventInfo] = useState({});
   const [isJoined, setIsJoined] = useState(false);
@@ -195,10 +196,14 @@ setUserInfo(user)
 
   return (
     <div className="bg-black pt-0 sm:pt-8 py-8 px-6 rounded-2xl xl:rounded-r-none min-h-full">
+      
     {!loading?
   <>
-  
+  <span className="primary_btn cursor-pointer !text-sm !py-2 !px-3 !leading-none !py-3" onClick={()=>navigate(-1)}>
+        <span className="text-sm inline-flex items-center mr-2"><FaArrowLeft /></span>Back
+      </span>
     <div className="flex justify-between items-center max-w-7xl">
+    
       <h3 className="clipped_text bg-gradient-to-r from-orange to-red-500 bg-clip-text text-base sm:text-3xl md:text-5xl font-bold mb-5 pt-5">
         Event Details
       </h3>

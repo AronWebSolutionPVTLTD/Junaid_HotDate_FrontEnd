@@ -1,6 +1,7 @@
 import axios from "axios";
 import Multiselect from "multiselect-react-dropdown";
 import React, { useEffect, useRef, useState } from "react";
+import { FaArrowLeft } from "react-icons/fa6";
 import {
   IoCloseCircleSharp
 } from "react-icons/io5";
@@ -13,6 +14,7 @@ import { toast } from "react-toastify";
 import api from "../../utils/api";
 import { useSelector } from "react-redux";
 import Loading from "../M_used/Loading";
+import { BackBtn } from "../M_used/BackBtn";
 const CreateEventPage = () => {
   const DEBOUNCE_DELAY = 300
   const [event, setEvent] = useState({
@@ -200,14 +202,18 @@ const CreateEventPage = () => {
   
   return (
     <div className="bg-white rounded-40px">
-      <div className="text-center p-5 py-10 text-black">
+     
+      <div className="text-center p-5 py-10 text-black px-10 relative">
         <h3 className="text-2xl sm:text-4xl mb-2">
           Event/Hot date registration
         </h3>
+  <BackBtn/>
+    
         <p className="text-lg">Create your Event / Hot Date</p>
       </div>
       <div className="flex flex-wrap bg-black rounded-40px ">
         <div className="w-full md:w-3/5 xl:w-full 2xl:w-3/5 ">
+          
           <div className="sign-up__form flex flex-col justify-center gap-30 py-6 px-6 lg:py-11 lg:px-14">
             <h2 className="text-white text-2xl sm:text-3xl xl:text-5xl text-center xl:text-start font-bold mb-6">
               Find Your Date

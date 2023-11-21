@@ -12,6 +12,7 @@ import { Rating } from 'react-simple-star-rating';
 import { toast } from "react-toastify";
 import { Context } from "../../Context/context";
 import api from "../../utils/api";
+import { FaArrowLeft } from "react-icons/fa6";
 const ClubDetail = () => {
   const [clubData, setClubData] = useState({});
   const {savedCred } = useContext(Context);
@@ -154,6 +155,9 @@ setRating(review?.rating)
         </div> 
         </div>
       </div>
+      <span className="primary_btn cursor-pointer !text-sm !py-2 !px-3 !leading-none !py-3" onClick={()=>navigate(-1)}>
+        <span className="text-sm inline-flex items-center mr-2"><FaArrowLeft /></span>Back
+      </span>
       <div className="flex justify-between items-center max-w-7xl">
         <h3 className="clipped_text bg-gradient-to-r from-orange to-red-500 bg-clip-text text-base sm:text-3xl md:text-5xl font-bold mb-5 pt-5">
           Club Details

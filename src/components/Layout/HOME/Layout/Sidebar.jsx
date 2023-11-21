@@ -150,15 +150,10 @@ const Sidebar = () => {
     },
     {
       title: "Actions",
-      submenus: [
-        {
-          title: "Speed Date ",
-          submenus: [],
-        },
+      submenus: [ 
         { title: "Events", submenus: [], path: "/event-page" },
         { title:"My Events",submenus:[], path:"/my-event"},
         { title: "Clubs", submenus: [], path: "/club-page" },
-        { title: "Hot or Not (Tinder)", submenus: [] },
         { title: "Situationship Calendar", submenus: [], path: "/travel-page" },
         {
           title: "Live Action",
@@ -192,7 +187,6 @@ const Sidebar = () => {
         { title: "Edit Profile", submenus: [], path: userInfo?.profile_type=="couple"?"/editcouple-detail" :"/edit-detail"},
         { title: "My Media", submenus: [] },
         { title: "Account", submenus: [] },
-        { title: "Preferences", submenus: [] },
         {
           title: "My Points",
           submenus: [{ title: "Top up points", submenus: [] }],
