@@ -191,7 +191,7 @@ const Sidebar = () => {
           title: "My Points",
           submenus: [{ title: "Top up points", submenus: [] }],
         },
-        { title: "Billing", submenus: [] },
+        { title: "Membership", submenus: [] },
         { title: "Support", submenus: [] },
         { title: "About", submenus: [], path: "/about" },
         { title: "Blocked", submenus: [] }

@@ -69,7 +69,7 @@ const Navbar = ({ Lplayout }) => {
                       : "text-black lg:text-white hover:text-orange"
                   } uppercase px-5`}
                 >
-                  {!isAuthenticated ? <Link to="/">Homepage</Link> : ""}
+                  {!isAuthenticated ? <Link to="/">Homepage</Link> : <Link to="/home">Home</Link>}
                 </li>
                 {isAuthenticated ? (
                   <li

@@ -204,10 +204,11 @@ const CreateEventPage = () => {
     <div className="bg-white rounded-40px">
      
       <div className="text-center p-5 py-10 text-black px-10 relative">
+      <BackBtn/>
         <h3 className="text-2xl sm:text-4xl mb-2">
           Event/Hot date registration
         </h3>
-  <BackBtn/>
+  
     
         <p className="text-lg">Create your Event / Hot Date</p>
       </div>

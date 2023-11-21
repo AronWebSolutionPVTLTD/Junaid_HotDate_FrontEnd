@@ -6,6 +6,7 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 import api from "../../utils/api";
 import { useSelector } from "react-redux";
 import Loading from "../M_used/Loading";
+import { BackBtn } from "../M_used/BackBtn";
 const CreateClubPage = () => {
   const [club, setClub] = useState({
     club_name: "",
@@ -214,7 +215,8 @@ navigate("/club-page")
   
   return (
     <div className="bg-white rounded-40px">
-    <div className="text-center p-5 py-10 text-black">
+    <div className="text-center p-5 py-10 text-black px-10 relative">
+      <BackBtn />
       <h3 className="text-2xl sm:text-4xl mb-2">Create your Club</h3>
       <p className="text-lg">Let’s Create a Notorious Club</p>
     </div>

@@ -1,10 +1,16 @@
 import React from "react";
 import { BsChevronRight } from "react-icons/bs";
+import { FaArrowLeft } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const EventParticipants = () => {
+  const navigate = useNavigate()
   return (
     <div className="bg-black pt-0 sm:pt-8 py-8 px-6 rounded-2xl xl:rounded-r-none min-h-full">
-      <div className="grid grid-cols-3 gap-5">
+      <span className="primary_btn cursor-pointer !text-sm !py-2 !px-3 !leading-none !py-3" onClick={()=>navigate(-1)}>
+        <span className="text-sm inline-flex items-center mr-2"><FaArrowLeft /></span>Back
+      </span>
+      <div className="grid grid-cols-3 gap-5 mt-5">
         <div
           className="w-full cursor-pointer p-3 bg-light-grey rounded-2xl flex flex-wrap sm:grid grid-cols-2 items-stretch"
           //   onClick={() => handleClick(clubs._id)}
