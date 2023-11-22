@@ -154,7 +154,7 @@ const Sidebar = () => {
         { title: "Events", submenus: [], path: "/event-page" },
         { title:"My Events",submenus:[], path:"/my-event"},
         { title: "Clubs", submenus: [], path: "/club-page" },
-        { title: "Situationship Calendar", submenus: [], path: "/travel-page" },
+        // { title: "Situationship Calendar", submenus: [], path: "/travel-page" },
         {
           title: "Live Action",
           submenus: [
