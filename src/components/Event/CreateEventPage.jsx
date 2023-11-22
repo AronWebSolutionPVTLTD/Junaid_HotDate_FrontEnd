@@ -206,11 +206,11 @@ const CreateEventPage = () => {
       <div className="text-center p-5 py-10 text-black px-10 relative">
       <BackBtn/>
         <h3 className="text-2xl sm:text-4xl mb-2">
-          Event/Hot date registration
+          Event registration
         </h3>
   
     
-        <p className="text-lg">Create your Event / Hot Date</p>
+        <p className="text-lg">Create your Event</p>
       </div>
       <div className="flex flex-wrap bg-black rounded-40px ">
         <div className="w-full md:w-3/5 xl:w-full 2xl:w-3/5 ">

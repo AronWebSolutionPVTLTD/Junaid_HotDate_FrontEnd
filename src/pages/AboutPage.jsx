@@ -33,7 +33,7 @@ const AboutPage = () => {
             <div className="w-full lg:w-2/5 left-block flex justify-center text-center lg:text-start items-center">
               <div className="inner-block max-w-[415px]">
                 <p className="text-2xl md:text-3xl lg:text-35px lg:leading-45 font-light max-w-[270px] mb-5 mx-auto lg:mx-0 ">
-                  Welcome to Hot Date Swinxter
+                  Welcome to Swinxter
                 </p>
                 <p className="text-sm md:text-base xl:text-lg mb-5 lg:leading-29 mx-auto lg:mx-0 font-body_font">
                   where embracing your adult self is celebrated! We encourage

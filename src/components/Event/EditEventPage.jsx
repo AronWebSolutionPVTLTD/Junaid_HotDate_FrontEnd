@@ -226,9 +226,9 @@ const file = Array.from(e.target.files);
     <div className="bg-white rounded-40px">
       <div className="text-center p-5 py-10 text-black">
         <h3 className="text-2xl sm:text-4xl mb-2">
-          Event/Hot date registration
+          Event registration
         </h3>
-        <p className="text-lg">Edit your Event / Hot Date</p>
+        <p className="text-lg">Edit your Event</p>
       </div>
       <div className="flex flex-wrap bg-black rounded-40px ">
         <div className="w-full md:w-3/5 xl:w-full 2xl:w-3/5 ">
